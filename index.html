@@ -65,8 +65,9 @@
 
         async function fetchAIVerdict() {
             try {
-                // KRX Stock JSONBin ID
-                const res = await fetch('https://api.jsonbin.io/v3/b/69d071f9856a682189f9f7c7?meta=false');
+                // 부서진 외부 JSONBin 대신 깃허브 배포 폴더 내부의 자체 AI 시그널(.json)을 직접 로드합니다.
+                // 깃허브 캐시 방지를 위해 랜덤 꼬리표를 붙입니다.
+                const res = await fetch(`whale_signals.json?t=${new Date().getTime()}`);
                 const data = await res.json();
                 
                 if(Array.isArray(data)) {
