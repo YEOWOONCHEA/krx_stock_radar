@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한국장(KRX) 전술 레이더</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #121212; color: #e0e0e0; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(30, 30, 30, 0.8); backdrop-filter: blur(10px); border: 1px solid #333; }
+    </style>
+</head>
+<body class="p-8">
+    <h1 class="text-3xl font-extrabold text-red-600 mb-2"><i class="fas fa-won-sign"></i> 1004MAS KRX RADAR</h1>
+    <p class="text-gray-400 mb-8">한국투자증권(KIS) 코스피/코스닥 수급 및 특징주 감시</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="glass p-6 rounded-xl">
+            <h2 class="text-xl font-bold text-white mb-4">현재 거래량 터진 종목</h2>
+            <div class="flex justify-between items-center bg-black/50 p-4 rounded-lg">
+                <span class="text-2xl font-bold text-white">삼성전자 (005930)</span>
+                <span class="text-2xl font-black text-red-500">+3.10%</span>
+            </div>
+            <p class="text-right text-sm text-gray-500 mt-2">체결강도 105% / 기관 대량 매수</p>
+        </div>
+        
+        <div class="glass p-6 rounded-xl border-l-4 border-red-600">
+            <h2 class="text-lg font-bold text-white mb-2"><i class="fas fa-brain"></i> 제갈량 판결 (Verdicts)</h2>
+            <p class="text-gray-300 text-sm leading-relaxed">
+                "HBM 납품 승인 임박 루머 및 반도체 반등 심리로 상승 중. 단기 팩트 체크 후 진입 여부 재고 요망."
+            </p>
+        </div>
+    </div>
+
+    <div class="mt-8 text-center"><a href="https://www.1004mas.com" class="text-red-500 hover:text-white underline">포탈(Portal) 복귀</a></div>
+</body>
+</html>
