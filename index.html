@@ -3,36 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>한국장(KRX) 전술 레이더</title>
+    <title>국장(KRX) 전술 레이더</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #121212; color: #e0e0e0; font-family: 'Inter', sans-serif; }
-        .glass { background: rgba(30, 30, 30, 0.8); backdrop-filter: blur(10px); border: 1px solid #333; }
+        body { background-color: #0b0f19; color: #cbd5e1; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); border: 1px solid #1e293b; }
+        .tv-widget-wrapper { height: 600px; width: 100%; border-radius: 0.5rem; overflow: hidden; }
     </style>
 </head>
 <body class="p-8">
-    <h1 class="text-3xl font-extrabold text-red-600 mb-2"><i class="fas fa-won-sign"></i> 1004MAS KRX RADAR</h1>
-    <p class="text-gray-400 mb-8">한국투자증권(KIS) 코스피/코스닥 수급 및 특징주 감시</p>
+    <h1 class="text-3xl font-extrabold text-[#d32f2f] mb-2"><i class="fas fa-flag"></i> 1004MAS KRX STOCK RADAR</h1>
+    <p class="text-gray-400 mb-8">여의도 기관 및 외국인 수급 펌핑 실시간 감시망</p>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="glass p-6 rounded-xl">
-            <h2 class="text-xl font-bold text-white mb-4">현재 거래량 터진 종목</h2>
-            <div class="flex justify-between items-center bg-black/50 p-4 rounded-lg">
-                <span class="text-2xl font-bold text-white">삼성전자 (005930)</span>
-                <span class="text-2xl font-black text-red-500">+3.10%</span>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- 실시간 트레이딩뷰 위젯 레이더 -->
+        <div class="lg:col-span-5 glass p-6 rounded-xl">
+            <h2 class="text-xl font-bold text-white mb-4"><i class="fas fa-fire text-red-500 animate-pulse mr-2"></i> 대한민국 주식 상승폭주 (Top Gainers)</h2>
+            <div class="tv-widget-wrapper bg-black/40 border border-gray-800">
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js" async>
+                    {
+                    "colorTheme": "dark",
+                    "dateRange": "1D",
+                    "exchange": "KRX",
+                    "showChart": true,
+                    "locale": "kr",
+                    "width": "100%",
+                    "height": "100%",
+                    "largeChartUrl": "",
+                    "isTransparent": true,
+                    "showSymbolLogo": true,
+                    "showFloatingTooltip": false
+                    }
+                    </script>
+                </div>
+                <!-- TradingView Widget END -->
             </div>
-            <p class="text-right text-sm text-gray-500 mt-2">체결강도 105% / 기관 대량 매수</p>
         </div>
         
-        <div class="glass p-6 rounded-xl border-l-4 border-red-600">
-            <h2 class="text-lg font-bold text-white mb-2"><i class="fas fa-brain"></i> 제갈량 판결 (Verdicts)</h2>
-            <p class="text-gray-300 text-sm leading-relaxed">
-                "HBM 납품 승인 임박 루머 및 반도체 반등 심리로 상승 중. 단기 팩트 체크 후 진입 여부 재고 요망."
-            </p>
+        <!-- 제갈량 판결 리스트 -->
+        <div class="lg:col-span-7 glass p-6 rounded-xl relative">
+            <h2 class="text-xl font-bold text-white mb-4 flex justify-between items-center">
+                <div><i class="fas fa-brain text-purple-400 mr-2"></i> 제갈량 전술 통제합동소 (KRX)</div>
+                <div class="flex items-center text-xs text-green-400"><div class="w-2 h-2 bg-green-400 rounded-full animate-ping mr-2"></div> AI 위성 수신 중</div>
+            </h2>
+            <div id="ai-verdict-list" class="space-y-4">
+                <div class="text-gray-400 text-sm">로컬 파이썬 봇의 시그널을 대기 중입니다...</div>
+            </div>
         </div>
     </div>
+    
+    <div class="mt-8 text-center text-sm">
+        <a href="https://www.1004mas.com" class="text-red-500 hover:text-white underline"><i class="fas fa-door-open mr-1"></i> 중앙 포탈로 복귀</a>
+    </div>
+    
+    <script>
+        let aiVerdictsCache = [];
 
-    <div class="mt-8 text-center"><a href="https://www.1004mas.com" class="text-red-500 hover:text-white underline">포탈(Portal) 복귀</a></div>
+        async function fetchAIVerdict() {
+            try {
+                // KRX Stock JSONBin ID
+                const res = await fetch('https://api.jsonbin.io/v3/b/69d071f9856a682189f9f7c7?meta=false');
+                const data = await res.json();
+                
+                if(Array.isArray(data)) {
+                    aiVerdictsCache = data;
+                    renderVerdicts();
+                }
+            } catch(e) {
+                console.error("Verdict Fetch Error:", e);
+            }
+        }
+
+        function renderVerdicts() {
+            if(aiVerdictsCache.length === 0) return;
+            
+            const styles = {
+                'red': 'border-blue-500/40 bg-blue-900/10', /* 한국은 하락이 파란색, 상승이 빨간색 */
+                'green': 'border-red-500/40 bg-red-900/10',
+                'yellow': 'border-yellow-500/40 bg-yellow-900/10'
+            };
+            
+            const badges = {
+                'red': '<span class="bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded shadow-lg shadow-blue-500/30"><i class="fas fa-ban mr-1"></i> 세력 이탈 / 관망</span>',
+                'green': '<span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded shadow-lg shadow-red-500/30"><i class="fas fa-arrow-up mr-1"></i> 기관 수급 / 진입</span>',
+                'yellow': '<span class="bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded shadow-lg shadow-yellow-500/30"><i class="fas fa-eye mr-1"></i> 단기 테마주의</span>'
+            };
+            
+            const html = aiVerdictsCache.map(v => {
+                const style = styles[v.signal] || styles['yellow'];
+                const badge = badges[v.signal] || badges['yellow'];
+                
+                return `
+                    <div class="p-4 rounded-xl border ${style} backdrop-blur-sm relative overflow-hidden transition-all hover:scale-[1.01]">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="font-extrabold text-white text-lg">${v.coin_name}</h3>
+                            ${badge}
+                        </div>
+                        <p class="text-sm text-gray-300 leading-relaxed whitespace-pre-line">${v.reason}</p>
+                        <div class="text-right text-xs mt-3 text-gray-500"><i class="far fa-clock"></i> ${v.timestamp} (AI 블룸버그 스캔)</div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('ai-verdict-list').innerHTML = html;
+        }
+        
+        // Start Engine
+        fetchAIVerdict();
+        setInterval(fetchAIVerdict, 60000);
+    </script>
 </body>
 </html>
