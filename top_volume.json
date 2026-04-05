@@ -1,0 +1,52 @@
+[
+  {
+    "name": "삼성전자",
+    "vol": 1540,
+    "chg": 1.2,
+    "peak": -0.61,
+    "vel": 0.0,
+    "theme": "반도체",
+    "is_fake": false,
+    "news": ""
+  },
+  {
+    "name": "에코프로",
+    "vol": 852,
+    "chg": 8.5,
+    "peak": -1.36,
+    "vel": 0.0,
+    "theme": "2차전지",
+    "is_fake": false,
+    "news": "테슬라와 대규모 양극재 공급계약 (DART 공시 예정 찌라시)"
+  },
+  {
+    "name": "알테오젠",
+    "vol": 620,
+    "chg": 22.4,
+    "peak": -2.6,
+    "vel": 0.0,
+    "theme": "제약바이오",
+    "is_fake": false,
+    "news": "글로벌 빅파마 기술수출 (조 단위 빅딜 유력)"
+  },
+  {
+    "name": "오픈엣지테크놀로지",
+    "vol": 450,
+    "chg": 15.2,
+    "peak": -1.56,
+    "vel": 0.0,
+    "theme": "반도체",
+    "is_fake": true,
+    "news": "삼성전자 파운드리 IP 납품 추가 수주 소식"
+  },
+  {
+    "name": "HLB",
+    "vol": 390,
+    "chg": 5.2,
+    "peak": -4.76,
+    "vel": 0.0,
+    "theme": "제약바이오",
+    "is_fake": false,
+    "news": "미국 FDA 리보세라닙 최종 승인 임박"
+  }
+]
