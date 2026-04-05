@@ -3,119 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>국장(KRX) 전술 레이더</title>
+    <title>1004MAS KRX 전술 레이더 (One-Glance Core)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #0b0f19; color: #cbd5e1; font-family: 'Inter', sans-serif; }
-        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); border: 1px solid #1e293b; }
-        .tv-widget-wrapper { height: 600px; width: 100%; border-radius: 0.5rem; overflow: hidden; }
-    </style>
-</head>
-<body class="p-8">
-    <h1 class="text-3xl font-extrabold text-[#d32f2f] mb-2"><i class="fas fa-flag"></i> 1004MAS KRX STOCK RADAR</h1>
-    <p class="text-gray-400 mb-8">여의도 기관 및 외국인 수급 펌핑 실시간 감시망</p>
-    
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <!-- 실시간 트레이딩뷰 위젯 레이더 -->
-        <div class="lg:col-span-5 glass p-6 rounded-xl">
-            <h2 class="text-xl font-bold text-white mb-4"><i class="fas fa-fire text-red-500 animate-pulse mr-2"></i> 대한민국 주식 상승폭주 (Top Gainers)</h2>
-            <div class="tv-widget-wrapper bg-black/40 border border-gray-800">
-                <!-- TradingView Widget BEGIN -->
-                <div class="tradingview-widget-container">
-                    <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js" async>
-                    {
-                    "colorTheme": "dark",
-                    "dateRange": "1D",
-                    "exchange": "KRX",
-                    "showChart": true,
-                    "locale": "kr",
-                    "width": "100%",
-                    "height": "100%",
-                    "largeChartUrl": "",
-                    "isTransparent": true,
-                    "showSymbolLogo": true,
-                    "showFloatingTooltip": false
-                    }
-                    </script>
-                </div>
-                <!-- TradingView Widget END -->
-            </div>
-        </div>
+        body { 
+            background: #09090b; /* Very dark zinc */
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(30, 10, 10, 0.4) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(10, 10, 30, 0.4) 0px, transparent 50%);
+            color: #cbd5e1; 
+            font-family: 'Inter', sans-serif; 
+            min-height: 100vh;
+        }
+        .glass-card { 
+            background: rgba(15, 15, 18, 0.7); 
+            backdrop-filter: blur(16px); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(239, 68, 68, 0.4);
+            box-shadow: 0 15px 35px rgba(239, 68, 68, 0.15);
+        }
         
-        <!-- 제갈량 판결 리스트 -->
-        <div class="lg:col-span-7 glass p-6 rounded-xl relative">
-            <h2 class="text-xl font-bold text-white mb-4 flex justify-between items-center">
-                <div><i class="fas fa-brain text-purple-400 mr-2"></i> 제갈량 전술 통제합동소 (KRX)</div>
-                <div class="flex items-center text-xs text-green-400"><div class="w-2 h-2 bg-green-400 rounded-full animate-ping mr-2"></div> AI 위성 수신 중</div>
-            </h2>
-            <div id="ai-verdict-list" class="space-y-4">
-                <div class="text-gray-400 text-sm">로컬 파이썬 봇의 시그널을 대기 중입니다...</div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="mt-8 text-center text-sm">
-        <a href="https://www.1004mas.com" class="text-red-500 hover:text-white underline"><i class="fas fa-door-open mr-1"></i> 중앙 포탈로 복귀</a>
-    </div>
-    
-    <script>
-        let aiVerdictsCache = [];
-
-        async function fetchAIVerdict() {
-            try {
-                // 부서진 외부 JSONBin 대신 깃허브 배포 폴더 내부의 자체 AI 시그널(.json)을 직접 로드합니다.
-                // 깃허브 캐시 방지를 위해 랜덤 꼬리표를 붙입니다.
-                const res = await fetch(`whale_signals.json?t=${new Date().getTime()}`);
-                const data = await res.json();
-                
-                if(Array.isArray(data)) {
-                    aiVerdictsCache = data;
-                    renderVerdicts();
-                }
-            } catch(e) {
-                console.error("Verdict Fetch Error:", e);
-            }
+        /* Stat Bar Animations */
+        .stat-bar-fill {
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        function renderVerdicts() {
-            if(aiVerdictsCache.length === 0) return;
+        /* Pulse effects */
+        .pulse-news { animation: pulseNews border 2s infinite; }
+        @keyframes pulseNews { 
+            0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); } 
+            70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); } 
+            100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); } 
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+    </style>
+</head>
+<body class="p-4 lg:p-6" id="main-body">
+    <!-- Header -->
+    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 pb-4 border-b border-gray-800 w-full relative z-10">
+        <div class="mb-4 lg:mb-0">
+            <div class="flex items-center gap-3 mb-1">
+                <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-amber-500 drop-shadow-sm flex items-center">
+                    <i class="fas fa-radar text-red-500 mr-3"></i> 1004MAS KRX ONE-GLANCE CORE
+                </h1>
+                <span id="market-status-badge" class="text-[12px] font-bold text-gray-900 bg-red-500 px-2 py-0.5 rounded ml-2 animate-pulse">정규장 감시중</span>
+            </div>
+            <p class="text-gray-400 font-semibold tracking-wide text-sm">
+                <span>차세대 통제소: 세력 흔적(수급 스탯)과 재료(정보)의 유니파이드 카드 레이더망</span>
+            </p>
+        </div>
+        
+        <div class="flex items-center gap-4">
+            <div class="flex items-center justify-center p-2 rounded-lg bg-gray-900/50 border border-gray-800" title="마감 타이머">
+                <div class="text-[11px] text-gray-500 font-bold mr-3 uppercase"><i class="fas fa-flag-checkered mr-1"></i>정규마감까지</div>
+                <div class="font-mono font-black text-red-500 tracking-wider text-xl" id="market-close-timer">--:--:--</div>
+            </div>
+            <div id="live-clock" class="text-2xl font-mono font-black text-white bg-black/80 px-4 py-2 rounded-lg border border-gray-700 tracking-widest shadow-inner">
+                --:--:--
+            </div>
+        </div>
+    </div>
+    
+    <!-- Unified Command Card Grid -->
+    <div id="unified-card-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 custom-scrollbar pb-10">
+        <div class="text-center py-10 col-span-full text-gray-500">
+            <i class="fas fa-circle-notch fa-spin text-3xl mb-3 text-red-800"></i><br>
+            위성 타겟 데이터 수신 중...
+        </div>
+    </div>
+    
+    <div class="fixed bottom-4 right-4 z-50">
+        <a href="https://www.1004mas.com" class="text-[12px] font-bold text-gray-300 hover:text-white bg-black/80 px-4 py-2 rounded-full border border-gray-700 transition-all shadow-lg backdrop-blur-md">
+            <i class="fas fa-door-open mr-1"></i> 포탈 메인으로 복귀
+        </a>
+    </div>
+
+    <!-- UI Core Logic -->
+    <script>
+        function updateClocks() {
+            const now = new Date();
+            const h = now.getHours();
+            const m = now.getMinutes();
+            const s = now.getSeconds();
             
-            const styles = {
-                'red': 'border-blue-500/40 bg-blue-900/10', /* 한국은 하락이 파란색, 상승이 빨간색 */
-                'green': 'border-red-500/40 bg-red-900/10',
-                'yellow': 'border-yellow-500/40 bg-yellow-900/10'
-            };
+            document.getElementById('live-clock').innerText = 
+                String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
             
-            const badges = {
-                'red': '<span class="bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded shadow-lg shadow-blue-500/30"><i class="fas fa-ban mr-1"></i> 세력 이탈 / 관망</span>',
-                'green': '<span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded shadow-lg shadow-red-500/30"><i class="fas fa-arrow-up mr-1"></i> 기관 수급 / 진입</span>',
-                'yellow': '<span class="bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded shadow-lg shadow-yellow-500/30"><i class="fas fa-eye mr-1"></i> 단기 테마주의</span>'
-            };
+            const closeTime = new Date(now);
+            closeTime.setHours(15, 30, 0, 0);
             
-            const html = aiVerdictsCache.map(v => {
-                const style = styles[v.signal] || styles['yellow'];
-                const badge = badges[v.signal] || badges['yellow'];
+            const statusBadge = document.getElementById('market-status-badge');
+            
+            if (h === 8 && m >= 50 && m <= 59) {
+                statusBadge.innerText = "동시호가 속임수 필터망";
+                statusBadge.className = "text-[12px] font-bold text-white bg-purple-600 px-2 py-0.5 rounded ml-2 animate-pulse";
+            } else if (h === 15 && m >= 0 && m <= 30) {
+                statusBadge.innerText = "종가베팅 뉴스/수급 감시";
+                statusBadge.className = "text-[12px] font-bold text-white bg-blue-600 px-2 py-0.5 rounded ml-2";
+            } else {
+                statusBadge.innerText = "정규장 거래대금 폭발 감시";
+                statusBadge.className = "text-[12px] font-bold text-gray-900 bg-red-500 px-2 py-0.5 rounded ml-2";
+            }
+
+            if (now > closeTime) {
+                document.getElementById('market-close-timer').innerText = "CLOSED";
+                document.getElementById('market-close-timer').classList.replace('text-red-500', 'text-gray-600');
+            } else {
+                const diffMs = closeTime - now;
+                const hh = String(Math.floor(diffMs / (1000 * 60 * 60))).padStart(2, '0');
+                const mm = String(Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                const ss = String(Math.floor((diffMs % (1000 * 60)) / 1000)).padStart(2, '0');
+                document.getElementById('market-close-timer').innerText = `${hh}:${mm}:${ss}`;
+            }
+        }
+        setInterval(updateClocks, 1000);
+        updateClocks();
+
+        let topVolumeCache = [];
+        let aiVerdictsCache = [];
+
+        async function fetchData() {
+            try {
+                let res1 = await fetch(`top_volume.json?t=${new Date().getTime()}`);
+                let data1 = await res1.json();
+                if(Array.isArray(data1)) topVolumeCache = data1;
                 
-                return `
-                    <div class="p-4 rounded-xl border ${style} backdrop-blur-sm relative overflow-hidden transition-all hover:scale-[1.01]">
-                        <div class="flex justify-between items-start mb-3">
-                            <h3 class="font-extrabold text-white text-lg">${v.coin_name}</h3>
-                            ${badge}
+                let res2 = await fetch(`whale_signals.json?t=${new Date().getTime()}`);
+                let data2 = await res2.json();
+                if(Array.isArray(data2)) aiVerdictsCache = data2;
+                
+                renderUnifiedCards();
+            } catch(e) {}
+        }
+
+        function renderUnifiedCards() {
+            if(topVolumeCache.length === 0) return;
+            
+            // Join Data
+            const merged = topVolumeCache.map(vol => {
+                const verdict = aiVerdictsCache.find(v => v.coin_name === vol.name);
+                return { ...vol, verdict: verdict };
+            });
+
+            const html = merged.map((s, idx) => {
+                // Determine Colors
+                const chgColor = s.chg > 0 ? 'text-red-500' : 'text-blue-500';
+                const sign = s.chg > 0 ? '+' : '';
+                
+                // --- Hexagon/Stat Bar Logic (Normalized to 100%) ---
+                // Vol: Let's assume 100,000 은(1조) is 100%. 10000(1천억)=50%
+                let volPct = Math.min(100, (s.vol / 20000) * 100); 
+                // Vel: Let's assume 4% is 100%
+                let velPct = Math.min(100, Math.max(0, (s.vel / 4) * 100));
+                let velBarColor = s.vel > 1.5 ? 'bg-red-500' : 'bg-gray-500';
+                if(s.vel < 0) { velPct = Math.min(100, Math.abs(s.vel/4) * 100); velBarColor = 'bg-blue-500'; }
+                
+                // Peak Safe: 0% drop is 100% safe. -5% drop is 0% safe.
+                let peakSafePct = Math.max(0, 100 - (Math.abs(s.peak) / 5 * 100));
+                let peakBarColor = s.peak <= -3 ? 'bg-blue-500' : 'bg-indigo-400';
+                
+                // --- 'WHY' Information Block ---
+                let newsBlock = '';
+                if(s.verdict && s.verdict.news_detail) {
+                    newsBlock = `
+                        <div class="mt-3 p-2 bg-amber-500/10 border border-amber-500/30 rounded-md pulse-news">
+                            <div class="text-[10px] font-black text-amber-500 mb-0.5"><i class="fas fa-bolt mr-1"></i>[정보/재료] 포착</div>
+                            <div class="text-[12px] text-amber-100/90 leading-tight font-medium break-keep">${s.verdict.news_detail}</div>
                         </div>
-                        <p class="text-sm text-gray-300 leading-relaxed whitespace-pre-line">${v.reason}</p>
-                        <div class="text-right text-xs mt-3 text-gray-500"><i class="far fa-clock"></i> ${v.timestamp} (AI 블룸버그 스캔)</div>
+                    `;
+                } else if(s.news) {
+                    newsBlock = `
+                        <div class="mt-3 p-2 bg-amber-500/10 border border-amber-500/30 rounded-md">
+                            <div class="text-[10px] font-black text-amber-500 mb-0.5"><i class="fas fa-newspaper mr-1"></i>찌라시 감지</div>
+                            <div class="text-[12px] text-amber-100/80 leading-tight font-medium break-keep">${s.news}</div>
+                        </div>
+                    `;
+                } else if(s.is_fake) {
+                    newsBlock = `
+                        <div class="mt-3 p-2 bg-purple-900/30 border border-purple-500/50 rounded-md">
+                            <div class="text-[10px] font-black text-purple-400 mb-0.5"><i class="fas fa-skull mr-1"></i>세력 허수주문 낚시 경고</div>
+                            <div class="text-[12px] text-purple-200/80 leading-tight font-medium break-keep">8시 59분 캔슬링 유력 종목. 진입 절대 금지!</div>
+                        </div>
+                    `;
+                }
+
+                // AI Signal Badge overriding Theme
+                let topBadge = `<span class="bg-gray-800/80 text-[10px] text-gray-400 px-2 py-0.5 rounded border border-gray-700">${s.theme}</span>`;
+                if(s.verdict && s.verdict.signal === 'green') {
+                    topBadge = `<span class="bg-red-900/50 text-[10px] text-red-400 font-bold px-2 py-0.5 rounded border border-red-500/50 shadow-[0_0_10px_rgba(239,68,68,0.3)]"><i class="fas fa-fire mr-1"></i>강력 매집중</span>`;
+                }
+
+                return `
+                    <div class="glass-card rounded-xl p-4 flex flex-col justify-between">
+                        <!-- Top Header: Name & Price -->
+                        <div class="flex justify-between items-start mb-3 border-b border-gray-800/50 pb-3">
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-gray-600 font-mono text-[11px]">0${idx+1}</span>
+                                    ${topBadge}
+                                </div>
+                                <h2 class="text-lg font-black text-white tracking-tight">${s.name}</h2>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-black ${chgColor} tracking-tighter drop-shadow-md">${sign}${s.chg.toFixed(1)}%</div>
+                                <div class="text-[11px] text-gray-500 font-bold">${s.vol.toLocaleString()} 억원</div>
+                            </div>
+                        </div>
+
+                        <!-- Inner Hexagon/Stat Bar Array -->
+                        <div class="space-y-2 mt-1">
+                            <!-- Stat: Volume -->
+                            <div class="flex items-center justify-between text-[11px]">
+                                <span class="text-gray-400 font-semibold w-16">거래금</span>
+                                <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
+                                    <div class="h-full bg-emerald-500 stat-bar-fill" style="width: ${volPct}%"></div>
+                                </div>
+                                <span class="text-emerald-400 font-mono w-8 text-right">${volPct.toFixed(0)}</span>
+                            </div>
+                            <!-- Stat: Velocity -->
+                            <div class="flex items-center justify-between text-[11px]">
+                                <span class="text-gray-400 font-semibold w-16">가속도(Vel)</span>
+                                <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
+                                    <div class="h-full ${velBarColor} stat-bar-fill" style="width: ${velPct}%"></div>
+                                </div>
+                                <span class="${s.vel>0?'text-red-400':'text-blue-400'} font-mono w-8 text-right">${s.vel>0?'+':''}${s.vel.toFixed(1)}</span>
+                            </div>
+                            <!-- Stat: Peak Safety -->
+                            <div class="flex items-center justify-between text-[11px]">
+                                <span class="text-gray-400 font-semibold w-16">고점유지력</span>
+                                <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
+                                    <div class="h-full ${peakBarColor} stat-bar-fill" style="width: ${peakSafePct}%"></div>
+                                </div>
+                                <span class="text-indigo-400 font-mono w-8 text-right">${s.peak}%</span>
+                            </div>
+                        </div>
+
+                        <!-- The "WHY" Block -->
+                        ${newsBlock}
                     </div>
                 `;
             }).join('');
-            
-            document.getElementById('ai-verdict-list').innerHTML = html;
+            document.getElementById('unified-card-grid').innerHTML = html;
         }
-        
-        // Start Engine
-        fetchAIVerdict();
-        setInterval(fetchAIVerdict, 60000);
+
+        fetchData();
+        setInterval(fetchData, 3000);
     </script>
 </body>
 </html>
