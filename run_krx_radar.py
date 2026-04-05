@@ -163,6 +163,12 @@ def run_radar():
             if whale_signals_data:
                 with open('whale_signals.json', 'w', encoding='utf-8') as f:
                     json.dump(whale_signals_data[:7], f, ensure_ascii=False, indent=2)
+                    
+            # CORS 우회용 JS 파일 출력 (로컬 환경 직접 실행 지원)
+            js_content = f"window.krxTopVolume = {json.dumps(top_volume_data, ensure_ascii=False)};\n"
+            js_content += f"window.krxWhaleSignals = {json.dumps(whale_signals_data[:7] if whale_signals_data else [], ensure_ascii=False)};\n"
+            with open('krx_data.js', 'w', encoding='utf-8') as f:
+                f.write(js_content)
         except Exception as e: pass
             
         time.sleep(5)

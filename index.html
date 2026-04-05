@@ -206,19 +206,22 @@
         setInterval(updateClocks, 1000);
         updateClocks();
 
-        // 2. Data Fetch
-        async function fetchData() {
-            try {
-                let res1 = await fetch(`top_volume.json?t=${new Date().getTime()}`);
-                let data1 = await res1.json();
-                if(Array.isArray(data1)) topVolumeCache = data1;
-                
-                let res2 = await fetch(`whale_signals.json?t=${new Date().getTime()}`);
-                let data2 = await res2.json();
-                if(Array.isArray(data2)) aiVerdictsCache = data2;
-                
+        // 2. Data Fetch (CORS Bypass using Script Injection)
+        function fetchData() {
+            const script = document.createElement('script');
+            script.src = `krx_data.js?t=${new Date().getTime()}`;
+            script.onload = () => {
+                if (window.krxTopVolume) topVolumeCache = window.krxTopVolume;
+                if (window.krxWhaleSignals) aiVerdictsCache = window.krxWhaleSignals;
                 renderAll();
-            } catch(e) {}
+                
+                // Cleanup to prevent DOM bloat
+                document.head.removeChild(script);
+            };
+            script.onerror = () => {
+                // Ignore silent errors if file doesn't exist initially
+            };
+            document.head.appendChild(script);
         }
 
         function selectTheme(themeName) {
@@ -282,7 +285,7 @@
                 if(weightRatio > 40) widthClass = "w-full";
 
                 return `
-                    <div onclick="selectTheme('${theme}')" class="sector-box ${glowClass} ${isActive} ${widthClass} p-3 flex-grow" style="min-height: ${Math.max(6A0, weightRatio * 2)}px">
+                    <div onclick="selectTheme('${theme}')" class="sector-box ${glowClass} ${isActive} ${widthClass} p-3 flex-grow" style="min-height: ${Math.max(60, weightRatio * 2)}px">
                         <div class="text-[13px] text-white/90 drop-shadow-md z-10">${theme}</div>
                         <div class="text-[10px] text-white/50 font-normal mt-1 z-10">${sec.totalVol.toLocaleString()} 억</div>
                         ${avgVel > 1.5 ? `<i class="fas fa-fire text-red-500/30 absolute text-4xl -z-0 right-2 bottom-0"></i>` : ''}
