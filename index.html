@@ -3,135 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1004MAS KRX 전술 레이더 (One-Glance Core)</title>
+    <title>1004MAS KRX 전술 레이더 (Ultimate 3-Panel)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { 
-            background: #09090b; /* Very dark zinc */
+            background: #050507; 
             background-image: 
-                radial-gradient(at 0% 0%, rgba(30, 10, 10, 0.4) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(10, 10, 30, 0.4) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(30, 5, 5, 0.5) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(5, 5, 20, 0.5) 0px, transparent 50%);
             color: #cbd5e1; 
             font-family: 'Inter', sans-serif; 
-            min-height: 100vh;
-        }
-        .glass-card { 
-            background: rgba(15, 15, 18, 0.7); 
-            backdrop-filter: blur(16px); 
-            border: 1px solid rgba(255, 255, 255, 0.05); 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            transition: transform 0.2s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .glass-card:hover {
-            transform: translateY(-2px);
-            border-color: rgba(239, 68, 68, 0.4);
-            box-shadow: 0 15px 35px rgba(239, 68, 68, 0.15);
+            height: 100vh;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
         }
         
-        /* Stat Bar Animations */
-        .stat-bar-fill {
-            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        .panel {
+            background: rgba(12, 12, 15, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
-        /* Pulse effects */
+        .panel-header {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.2);
+            font-weight: 800;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+
+        /* Unified Card Styles */
+        .glass-card { 
+            background: rgba(20, 20, 24, 0.8); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            border-radius: 0.75rem;
+            padding: 1rem;
+            transition: all 0.2s;
+        }
+        .glass-card:hover {  border-color: rgba(239, 68, 68, 0.3); }
+        .stat-bar-fill { transition: width 0.5s ease; }
         .pulse-news { animation: pulseNews border 2s infinite; }
         @keyframes pulseNews { 
-            0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); } 
-            70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); } 
+            0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.2); } 
+            70% { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); } 
             100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); } 
         }
 
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+        /* Sector Heatmap Blocks */
+        .sector-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 0.5rem;
+            font-weight: 900;
+            color: rgba(255,255,255,0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+        .sector-box:hover {
+            transform: scale(0.98);
+            filter: brightness(1.2);
+            color: #fff;
+        }
+        .sector-box.active {
+            border: 2px solid white !important;
+            box-shadow: 0 0 15px rgba(255,255,255,0.3);
+            z-index: 10;
+        }
+        
+        .glow-red { 
+            border-color: rgba(239, 68, 68, 0.8); 
+            box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.2), 0 0 10px rgba(239, 68, 68, 0.3); 
+            background: linear-gradient(135deg, rgba(30,5,5,0.8), rgba(20,0,0,0.9));
+        }
+        .glow-blue { 
+            border-color: rgba(59, 130, 246, 0.5); 
+            background: linear-gradient(135deg, rgba(5,10,25,0.8), rgba(0,5,20,0.9));
+        }
+        .glow-neutral { 
+            border-color: rgba(100, 116, 139, 0.5); 
+            background: linear-gradient(135deg, rgba(20,20,20,0.8), rgba(10,10,10,0.9));
+        }
+
     </style>
 </head>
-<body class="p-4 lg:p-6" id="main-body">
-    <!-- Header -->
-    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 pb-4 border-b border-gray-800 w-full relative z-10">
-        <div class="mb-4 lg:mb-0">
-            <div class="flex items-center gap-3 mb-1">
-                <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-amber-500 drop-shadow-sm flex items-center">
-                    <i class="fas fa-radar text-red-500 mr-3"></i> 1004MAS KRX ONE-GLANCE CORE
-                </h1>
-                <span id="market-status-badge" class="text-[12px] font-bold text-gray-900 bg-red-500 px-2 py-0.5 rounded ml-2 animate-pulse">정규장 감시중</span>
-            </div>
-            <p class="text-gray-400 font-semibold tracking-wide text-sm">
-                <span>차세대 통제소: 세력 흔적(수급 스탯)과 재료(정보)의 유니파이드 카드 레이더망</span>
-            </p>
-        </div>
-        
+<body class="flex flex-col p-4 gap-4">
+
+    <!-- Header Navbar -->
+    <header class="flex justify-between items-center px-2 shrink-0">
         <div class="flex items-center gap-4">
-            <div class="flex items-center justify-center p-2 rounded-lg bg-gray-900/50 border border-gray-800" title="마감 타이머">
-                <div class="text-[11px] text-gray-500 font-bold mr-3 uppercase"><i class="fas fa-flag-checkered mr-1"></i>정규마감까지</div>
-                <div class="font-mono font-black text-red-500 tracking-wider text-xl" id="market-close-timer">--:--:--</div>
+            <h1 class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-amber-500 flex items-center">
+                <i class="fas fa-satellite-dish text-red-500 mr-2"></i> 1004MAS KRX SUPREME
+            </h1>
+            <span id="market-status-badge" class="text-[11px] font-bold bg-red-600 px-2 py-0.5 rounded text-white animate-pulse">정규장 거래대금 폭발</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="font-mono text-[11px] font-bold text-gray-500 flex items-center gap-2 bg-black/50 px-3 py-1 rounded border border-gray-800">
+                <i class="fas fa-flag-checkered"></i> TARGET CLOSE
+                <span id="market-close-timer" class="text-red-500 text-sm ml-1">--:--:--</span>
             </div>
-            <div id="live-clock" class="text-2xl font-mono font-black text-white bg-black/80 px-4 py-2 rounded-lg border border-gray-700 tracking-widest shadow-inner">
+            <div id="live-clock" class="text-xl font-mono font-black text-white bg-black/80 px-4 py-1.5 rounded border border-gray-700 tracking-widest">
                 --:--:--
             </div>
         </div>
-    </div>
-    
-    <!-- Unified Command Card Grid -->
-    <div id="unified-card-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 custom-scrollbar pb-10">
-        <div class="text-center py-10 col-span-full text-gray-500">
-            <i class="fas fa-circle-notch fa-spin text-3xl mb-3 text-red-800"></i><br>
-            위성 타겟 데이터 수신 중...
-        </div>
-    </div>
-    
-    <div class="fixed bottom-4 right-4 z-50">
-        <a href="https://www.1004mas.com" class="text-[12px] font-bold text-gray-300 hover:text-white bg-black/80 px-4 py-2 rounded-full border border-gray-700 transition-all shadow-lg backdrop-blur-md">
-            <i class="fas fa-door-open mr-1"></i> 포탈 메인으로 복귀
-        </a>
-    </div>
+    </header>
 
-    <!-- UI Core Logic -->
+    <!-- 3-Panel Main Area -->
+    <main class="flex-1 flex gap-4 min-h-0">
+        
+        <!-- P1: Sector Heatmap -->
+        <section class="panel w-1/4">
+            <div class="panel-header text-gray-300">
+                <span><i class="fas fa-th-large text-emerald-400 mr-2"></i>Sector Heatmap</span>
+                <span class="text-[10px] bg-emerald-900/40 text-emerald-400 px-1 rounded border border-emerald-800">ALL</span>
+            </div>
+            <div class="flex-1 p-3 overflow-y-auto custom-scrollbar flex flex-wrap content-start gap-2" id="heatmap-container">
+                <div class="text-xs text-gray-600 w-full text-center mt-10">스캐닝 중...</div>
+            </div>
+            <!-- All Filter Reset -->
+            <div class="p-2 border-t border-gray-800/50 bg-black/20">
+                <button onclick="selectTheme('ALL')" class="w-full py-2 text-xs font-bold text-gray-400 hover:text-white bg-gray-800/50 rounded border border-gray-700 hover:border-gray-500 transition-colors">
+                    <i class="fas fa-sync-alt mr-1"></i> 전체 섹터 초기화
+                </button>
+            </div>
+        </section>
+
+        <!-- P2: Stock Commands (Detailed Cards) -->
+        <section class="panel w-1/2">
+            <div class="panel-header text-white">
+                <span id="command-title"><i class="fas fa-crosshairs text-red-500 mr-2"></i>Stock Commands <span class="text-gray-500 text-sm ml-2 font-normal">/ 타겟 전술 카드</span></span>
+            </div>
+            <div class="flex-1 p-4 overflow-y-auto custom-scrollbar flex flex-col gap-4" id="cards-container">
+                <!-- Cards injected here -->
+            </div>
+        </section>
+
+        <!-- P3: Intelligence Feed -->
+        <section class="panel w-1/4">
+            <div class="panel-header text-amber-500">
+                <span><i class="fas fa-bolt text-amber-500 mr-2"></i>Intelligence Feed</span>
+                <div class="w-1.5 h-1.5 bg-amber-500 rounded-full animate-ping"></div>
+            </div>
+            <div class="flex-1 p-3 overflow-y-auto custom-scrollbar flex flex-col gap-3" id="feed-container">
+                <!-- Feeds injected here -->
+            </div>
+        </section>
+
+    </main>
+
     <script>
+        // Data State
+        let topVolumeCache = [];
+        let aiVerdictsCache = [];
+        let selectedTheme = 'ALL';
+
+        // 1. Clock & Mode
         function updateClocks() {
             const now = new Date();
-            const h = now.getHours();
-            const m = now.getMinutes();
-            const s = now.getSeconds();
-            
+            const h = now.getHours(); const m = now.getMinutes(); const s = now.getSeconds();
             document.getElementById('live-clock').innerText = 
                 String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
             
-            const closeTime = new Date(now);
-            closeTime.setHours(15, 30, 0, 0);
-            
-            const statusBadge = document.getElementById('market-status-badge');
-            
-            if (h === 8 && m >= 50 && m <= 59) {
-                statusBadge.innerText = "동시호가 속임수 필터망";
-                statusBadge.className = "text-[12px] font-bold text-white bg-purple-600 px-2 py-0.5 rounded ml-2 animate-pulse";
-            } else if (h === 15 && m >= 0 && m <= 30) {
-                statusBadge.innerText = "종가베팅 뉴스/수급 감시";
-                statusBadge.className = "text-[12px] font-bold text-white bg-blue-600 px-2 py-0.5 rounded ml-2";
-            } else {
-                statusBadge.innerText = "정규장 거래대금 폭발 감시";
-                statusBadge.className = "text-[12px] font-bold text-gray-900 bg-red-500 px-2 py-0.5 rounded ml-2";
-            }
+            const closeTime = new Date(now); closeTime.setHours(15, 30, 0, 0);
+            const diffMs = closeTime - now;
 
-            if (now > closeTime) {
+            if (diffMs <= 0) {
                 document.getElementById('market-close-timer').innerText = "CLOSED";
                 document.getElementById('market-close-timer').classList.replace('text-red-500', 'text-gray-600');
             } else {
-                const diffMs = closeTime - now;
                 const hh = String(Math.floor(diffMs / (1000 * 60 * 60))).padStart(2, '0');
                 const mm = String(Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
                 const ss = String(Math.floor((diffMs % (1000 * 60)) / 1000)).padStart(2, '0');
                 document.getElementById('market-close-timer').innerText = `${hh}:${mm}:${ss}`;
             }
+
+            const badge = document.getElementById('market-status-badge');
+            if (h === 8 && m >= 50 && m <= 59) {
+                badge.innerText = "PRE-MARKET 필터망";
+                badge.className = "text-[11px] font-bold bg-purple-600 px-2 py-0.5 rounded text-white animate-pulse";
+            } else if (h === 15 && m >= 0 && m <= 30) {
+                badge.innerText = "OVERNIGHT 종배 수급 감시";
+                badge.className = "text-[11px] font-bold bg-blue-600 px-2 py-0.5 rounded text-white";
+            }
         }
         setInterval(updateClocks, 1000);
         updateClocks();
 
-        let topVolumeCache = [];
-        let aiVerdictsCache = [];
-
+        // 2. Data Fetch
         async function fetchData() {
             try {
                 let res1 = await fetch(`top_volume.json?t=${new Date().getTime()}`);
@@ -142,118 +217,189 @@
                 let data2 = await res2.json();
                 if(Array.isArray(data2)) aiVerdictsCache = data2;
                 
-                renderUnifiedCards();
+                renderAll();
             } catch(e) {}
         }
 
-        function renderUnifiedCards() {
+        function selectTheme(themeName) {
+            selectedTheme = themeName;
+            
+            // UI Update for Title
+            const titleSpan = document.getElementById('command-title');
+            if(themeName === 'ALL') {
+                titleSpan.innerHTML = `<i class="fas fa-crosshairs text-red-500 mr-2"></i>Stock Commands <span class="text-gray-500 text-sm ml-2 font-normal">/ 전체 타겟</span>`;
+            } else {
+                titleSpan.innerHTML = `<i class="fas fa-filter text-amber-500 mr-2"></i>[${themeName}] 섹터 집중 포격중`;
+            }
+
+            renderAll();
+        }
+
+        // 3. Render Engine
+        function renderAll() {
             if(topVolumeCache.length === 0) return;
             
-            // Join Data
             const merged = topVolumeCache.map(vol => {
                 const verdict = aiVerdictsCache.find(v => v.coin_name === vol.name);
                 return { ...vol, verdict: verdict };
             });
 
-            const html = merged.map((s, idx) => {
-                // Determine Colors
+            renderHeatmap(merged);
+            renderCards(merged);
+            renderFeed();
+        }
+
+        // [Left] Heatmap 
+        function renderHeatmap(mergedData) {
+            // Group by Theme
+            const sectors = {};
+            mergedData.forEach(s => {
+                if(!sectors[s.theme]) sectors[s.theme] = { totalVol: 0, avgVel: 0, count: 0, stocks: [] };
+                sectors[s.theme].totalVol += s.vol;
+                sectors[s.theme].avgVel += s.vel;
+                sectors[s.theme].count += 1;
+                sectors[s.theme].stocks.push(s.name);
+            });
+
+            // Calculate ratios for Grid
+            const totalMarketVol = Object.values(sectors).reduce((acc, curr) => acc + curr.totalVol, 0);
+
+            const html = Object.keys(sectors).map(theme => {
+                const sec = sectors[theme];
+                const avgVel = sec.avgVel / sec.count;
+                const weightRatio = Math.max(10, (sec.totalVol / totalMarketVol) * 100); 
+                
+                // Color Classification
+                let glowClass = "glow-neutral";
+                if(avgVel > 1.0) glowClass = "glow-red";
+                else if(avgVel < -0.5) glowClass = "glow-blue";
+
+                const isActive = (selectedTheme === theme) ? "active" : "";
+
+                // Width calculation based on weight (simplified treemap effect using Flex/Width)
+                let widthClass = "w-full";
+                if(weightRatio < 20) widthClass = "w-[48%]";
+                if(weightRatio > 40) widthClass = "w-full";
+
+                return `
+                    <div onclick="selectTheme('${theme}')" class="sector-box ${glowClass} ${isActive} ${widthClass} p-3 flex-grow" style="min-height: ${Math.max(6A0, weightRatio * 2)}px">
+                        <div class="text-[13px] text-white/90 drop-shadow-md z-10">${theme}</div>
+                        <div class="text-[10px] text-white/50 font-normal mt-1 z-10">${sec.totalVol.toLocaleString()} 억</div>
+                        ${avgVel > 1.5 ? `<i class="fas fa-fire text-red-500/30 absolute text-4xl -z-0 right-2 bottom-0"></i>` : ''}
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('heatmap-container').innerHTML = html;
+        }
+
+        // [Center] Cards
+        function renderCards(mergedData) {
+            const filtered = selectedTheme === 'ALL' ? mergedData : mergedData.filter(s => s.theme === selectedTheme);
+            
+            if(filtered.length === 0) {
+                document.getElementById('cards-container').innerHTML = `<div class="text-gray-500 text-center py-10 text-sm">해당 섹터에 탐지된 거래대금 돌파 타겟이 없습니다.</div>`;
+                return;
+            }
+
+            const html = filtered.map((s, idx) => {
                 const chgColor = s.chg > 0 ? 'text-red-500' : 'text-blue-500';
                 const sign = s.chg > 0 ? '+' : '';
                 
-                // --- Hexagon/Stat Bar Logic (Normalized to 100%) ---
-                // Vol: Let's assume 100,000 은(1조) is 100%. 10000(1천억)=50%
                 let volPct = Math.min(100, (s.vol / 20000) * 100); 
-                // Vel: Let's assume 4% is 100%
                 let velPct = Math.min(100, Math.max(0, (s.vel / 4) * 100));
                 let velBarColor = s.vel > 1.5 ? 'bg-red-500' : 'bg-gray-500';
                 if(s.vel < 0) { velPct = Math.min(100, Math.abs(s.vel/4) * 100); velBarColor = 'bg-blue-500'; }
                 
-                // Peak Safe: 0% drop is 100% safe. -5% drop is 0% safe.
                 let peakSafePct = Math.max(0, 100 - (Math.abs(s.peak) / 5 * 100));
                 let peakBarColor = s.peak <= -3 ? 'bg-blue-500' : 'bg-indigo-400';
-                
-                // --- 'WHY' Information Block ---
-                let newsBlock = '';
-                if(s.verdict && s.verdict.news_detail) {
-                    newsBlock = `
-                        <div class="mt-3 p-2 bg-amber-500/10 border border-amber-500/30 rounded-md pulse-news">
-                            <div class="text-[10px] font-black text-amber-500 mb-0.5"><i class="fas fa-bolt mr-1"></i>[정보/재료] 포착</div>
-                            <div class="text-[12px] text-amber-100/90 leading-tight font-medium break-keep">${s.verdict.news_detail}</div>
-                        </div>
-                    `;
-                } else if(s.news) {
-                    newsBlock = `
-                        <div class="mt-3 p-2 bg-amber-500/10 border border-amber-500/30 rounded-md">
-                            <div class="text-[10px] font-black text-amber-500 mb-0.5"><i class="fas fa-newspaper mr-1"></i>찌라시 감지</div>
-                            <div class="text-[12px] text-amber-100/80 leading-tight font-medium break-keep">${s.news}</div>
-                        </div>
-                    `;
-                } else if(s.is_fake) {
-                    newsBlock = `
-                        <div class="mt-3 p-2 bg-purple-900/30 border border-purple-500/50 rounded-md">
-                            <div class="text-[10px] font-black text-purple-400 mb-0.5"><i class="fas fa-skull mr-1"></i>세력 허수주문 낚시 경고</div>
-                            <div class="text-[12px] text-purple-200/80 leading-tight font-medium break-keep">8시 59분 캔슬링 유력 종목. 진입 절대 금지!</div>
-                        </div>
-                    `;
-                }
-
-                // AI Signal Badge overriding Theme
-                let topBadge = `<span class="bg-gray-800/80 text-[10px] text-gray-400 px-2 py-0.5 rounded border border-gray-700">${s.theme}</span>`;
-                if(s.verdict && s.verdict.signal === 'green') {
-                    topBadge = `<span class="bg-red-900/50 text-[10px] text-red-400 font-bold px-2 py-0.5 rounded border border-red-500/50 shadow-[0_0_10px_rgba(239,68,68,0.3)]"><i class="fas fa-fire mr-1"></i>강력 매집중</span>`;
-                }
 
                 return `
-                    <div class="glass-card rounded-xl p-4 flex flex-col justify-between">
-                        <!-- Top Header: Name & Price -->
-                        <div class="flex justify-between items-start mb-3 border-b border-gray-800/50 pb-3">
-                            <div>
+                    <div class="glass-card flex flex-col justify-between group">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex flex-col">
                                 <div class="flex items-center gap-2 mb-1">
-                                    <span class="text-gray-600 font-mono text-[11px]">0${idx+1}</span>
-                                    ${topBadge}
+                                    <span class="bg-gray-800/80 text-[9px] text-gray-400 px-1.5 py-0.5 rounded border border-gray-700">${s.theme}</span>
+                                    ${(s.verdict && s.verdict.signal === 'green') ? `<span class="bg-red-900/50 text-[9px] text-red-400 font-bold px-1.5 py-0.5 rounded border border-red-500/50 animate-pulse"><i class="fas fa-crosshairs"></i> 타겟락온</span>` : ''}
                                 </div>
-                                <h2 class="text-lg font-black text-white tracking-tight">${s.name}</h2>
+                                <h2 class="text-xl font-black text-white tracking-tight">${s.name}</h2>
                             </div>
                             <div class="text-right">
                                 <div class="text-2xl font-black ${chgColor} tracking-tighter drop-shadow-md">${sign}${s.chg.toFixed(1)}%</div>
-                                <div class="text-[11px] text-gray-500 font-bold">${s.vol.toLocaleString()} 억원</div>
+                                <div class="text-[11px] text-gray-500 font-bold">${s.vol.toLocaleString()} 억</div>
                             </div>
                         </div>
 
-                        <!-- Inner Hexagon/Stat Bar Array -->
-                        <div class="space-y-2 mt-1">
-                            <!-- Stat: Volume -->
-                            <div class="flex items-center justify-between text-[11px]">
-                                <span class="text-gray-400 font-semibold w-16">거래금</span>
-                                <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
-                                    <div class="h-full bg-emerald-500 stat-bar-fill" style="width: ${volPct}%"></div>
+                        <div class="grid grid-cols-2 gap-4 mt-2 bg-black/30 p-2 inset-shadow rounded-lg border border-gray-800/50">
+                            <!-- Left: Gauges -->
+                            <div class="space-y-1.5 pr-2 border-r border-gray-800/50">
+                                <div class="flex items-center justify-between text-[10px]">
+                                    <span class="text-gray-500 font-semibold w-8">Vel</span>
+                                    <div class="flex-1 mx-1.5 h-1 bg-gray-900 rounded-full overflow-hidden">
+                                        <div class="h-full ${velBarColor} stat-bar-fill" style="width: ${velPct}%"></div>
+                                    </div>
+                                    <span class="${s.vel>0?'text-red-400':'text-blue-400'} font-mono w-6 text-right">${s.vel>0?'+':''}${s.vel.toFixed(1)}</span>
                                 </div>
-                                <span class="text-emerald-400 font-mono w-8 text-right">${volPct.toFixed(0)}</span>
+                                <div class="flex items-center justify-between text-[10px]">
+                                    <span class="text-gray-500 font-semibold w-8">Peak</span>
+                                    <div class="flex-1 mx-1.5 h-1 bg-gray-900 rounded-full overflow-hidden">
+                                        <div class="h-full ${peakBarColor} stat-bar-fill" style="width: ${peakSafePct}%"></div>
+                                    </div>
+                                    <span class="text-indigo-400 font-mono w-6 text-right">${s.peak}</span>
+                                </div>
                             </div>
-                            <!-- Stat: Velocity -->
-                            <div class="flex items-center justify-between text-[11px]">
-                                <span class="text-gray-400 font-semibold w-16">가속도(Vel)</span>
-                                <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
-                                    <div class="h-full ${velBarColor} stat-bar-fill" style="width: ${velPct}%"></div>
+                            
+                            <!-- Right: Rapid Command -->
+                            <div class="space-y-1">
+                                <div class="text-[9px] text-gray-600 mb-1">AUTO ORDERING</div>
+                                <div class="flex gap-1.5 h-6">
+                                    <button class="flex-1 rounded bg-blue-600/20 text-blue-500 font-bold text-[10px] border border-blue-600/30 hover:bg-blue-600 hover:text-white transition-colors">BUY</button>
+                                    <button class="flex-1 rounded bg-red-600/20 text-red-500 font-bold text-[10px] border border-red-600/30 hover:bg-red-600 hover:text-white transition-colors">SELL</button>
                                 </div>
-                                <span class="${s.vel>0?'text-red-400':'text-blue-400'} font-mono w-8 text-right">${s.vel>0?'+':''}${s.vel.toFixed(1)}</span>
-                            </div>
-                            <!-- Stat: Peak Safety -->
-                            <div class="flex items-center justify-between text-[11px]">
-                                <span class="text-gray-400 font-semibold w-16">고점유지력</span>
-                                <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
-                                    <div class="h-full ${peakBarColor} stat-bar-fill" style="width: ${peakSafePct}%"></div>
-                                </div>
-                                <span class="text-indigo-400 font-mono w-8 text-right">${s.peak}%</span>
                             </div>
                         </div>
-
-                        <!-- The "WHY" Block -->
-                        ${newsBlock}
                     </div>
                 `;
             }).join('');
-            document.getElementById('unified-card-grid').innerHTML = html;
+            document.getElementById('cards-container').innerHTML = html;
+        }
+
+        // [Right] Intelligence Feed
+        function renderFeed() {
+            if(aiVerdictsCache.length === 0) {
+                 document.getElementById('feed-container').innerHTML = `<div class="text-gray-500 text-center py-10 text-xs">수신된 정보 없습니다.</div>`;
+                 return;
+            }
+
+            const html = aiVerdictsCache.map(v => {
+                let badgeClass = "bg-gray-800/80 border-gray-700 text-gray-400";
+                let icon = "fa-info-circle";
+                
+                if(v.signal === 'green') {
+                    badgeClass = "bg-red-950/40 border-red-800 text-red-400";
+                    icon = "fa-crosshairs";
+                } else if(v.signal === 'purple') {
+                    badgeClass = "bg-purple-950/40 border-purple-800 text-purple-400";
+                    icon = "fa-skull";
+                }
+
+                // Append any generic DART strings if available
+                let content = v.news_detail ? `**[DART/NEWS]** ${v.news_detail}` : v.reason;
+                // format simple string line breaks
+                content = content.replace(/\n/g, '<br/>');
+
+                return `
+                    <div class="flex flex-col text-[11px] p-2.5 rounded-lg border ${badgeClass} mb-1">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-mono text-[9px] opacity-70">[${v.timestamp}]</span>
+                            <span class="font-black text-[10px]"><i class="fas ${icon} mr-1"></i>${v.coin_name}</span>
+                        </div>
+                        <div class="text-gray-200/90 leading-snug drop-shadow-sm mt-0.5">${content}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('feed-container').innerHTML = html;
         }
 
         fetchData();
