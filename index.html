@@ -206,6 +206,8 @@
         setInterval(updateClocks, 1000);
         updateClocks();
 
+        let lastDataHash = "";
+
         // 2. Data Fetch (CORS Bypass using Script Injection)
         function fetchData() {
             const script = document.createElement('script');
@@ -213,19 +215,26 @@
             script.onload = () => {
                 if (window.krxTopVolume) topVolumeCache = window.krxTopVolume;
                 if (window.krxWhaleSignals) aiVerdictsCache = window.krxWhaleSignals;
-                renderAll();
+                
+                // 최적화: 데이터가 동일하면 불필요한 화면깜빡임(DOM 재렌더링) 방지
+                const currentHash = JSON.stringify(topVolumeCache) + JSON.stringify(aiVerdictsCache) + selectedTheme;
+                if (lastDataHash !== currentHash) {
+                    renderAll();
+                    lastDataHash = currentHash;
+                }
                 
                 // Cleanup to prevent DOM bloat
                 document.head.removeChild(script);
             };
             script.onerror = () => {
-                // Ignore silent errors if file doesn't exist initially
+                document.head.removeChild(script);
             };
             document.head.appendChild(script);
         }
 
         function selectTheme(themeName) {
             selectedTheme = themeName;
+            lastDataHash = ""; // 강제 재렌더링 트리거
             
             // UI Update for Title
             const titleSpan = document.getElementById('command-title');

@@ -65,6 +65,10 @@ def run_radar():
 
         stocks = get_volume_rank(token) if token else []
         
+        # 새벽 상위랭크 거래대금이 0일 경우(장 초기화 직후), 강제로 모의 데이터 시연 모드로 넘김
+        if stocks and float(stocks[0].get('acml_tr_pbmn', 0)) < 100000000:
+            stocks = []
+            
         # 오프라인 목업 데이터
         if not stocks:
             stocks = [
