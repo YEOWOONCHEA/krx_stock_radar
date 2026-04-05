@@ -171,7 +171,7 @@ def run_radar():
                 f.write(js_content)
         except Exception as e: pass
             
-        time.sleep(5)
+        time.sleep(2)
 
 if __name__ == "__main__":
     run_radar()
