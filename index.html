@@ -124,6 +124,19 @@
             <span id="market-status-badge" class="text-[10px] md:text-[11px] font-bold bg-red-600 px-2 py-0.5 rounded text-white animate-pulse shrink-0">정규장 거래대금 폭발</span>
         </div>
         <div class="flex items-center gap-2 md:gap-4 w-full md:w-auto justify-between md:justify-end">
+            <!-- KOSPI / KOSDAQ Display -->
+            <div id="market-indices" class="hidden md:flex items-center gap-3">
+                <div class="text-[11px] font-mono font-bold px-2 py-0.5 rounded border border-gray-800 bg-black/60">
+                    <span class="text-gray-400">코스피</span> 
+                    <span id="idx-kospi-price" class="text-white ml-1">-.--</span> 
+                    <span id="idx-kospi-chg" class="ml-1 text-[9px]">-.--%</span>
+                </div>
+                <div class="text-[11px] font-mono font-bold px-2 py-0.5 rounded border border-gray-800 bg-black/60">
+                    <span class="text-gray-400">코스닥</span> 
+                    <span id="idx-kosdaq-price" class="text-white ml-1">-.--</span> 
+                    <span id="idx-kosdaq-chg" class="ml-1 text-[9px]">-.--%</span>
+                </div>
+            </div>
             <div class="font-mono text-[10px] md:text-[11px] font-bold text-gray-500 flex items-center gap-2 bg-black/50 px-3 py-1 rounded border border-gray-800">
                 <i class="fas fa-flag-checkered"></i> TARGET CLOSE
                 <span id="market-close-timer" class="text-red-500 text-sm ml-1">--:--:--</span>
@@ -228,6 +241,27 @@
                 if (window.krxTopVolume) topVolumeCache = window.krxTopVolume;
                 if (window.krxWhaleSignals) aiVerdictsCache = window.krxWhaleSignals;
                 
+                // Update KOSPI / KOSDAQ Tickers
+                if (window.krxIndices) {
+                    const kospi = document.getElementById('idx-kospi-price');
+                    const kospiChg = document.getElementById('idx-kospi-chg');
+                    const kosdaq = document.getElementById('idx-kosdaq-price');
+                    const kosdaqChg = document.getElementById('idx-kosdaq-chg');
+                    
+                    if(kospi && window.krxIndices['KOSPI']) {
+                        let c = parseFloat(window.krxIndices['KOSPI'].chg);
+                        kospi.innerText = window.krxIndices['KOSPI'].price;
+                        kospiChg.innerText = (c > 0 ? '+' : '') + c + '%';
+                        kospiChg.className = c > 0 ? "ml-1 text-[9px] text-red-500" : (c < 0 ? "ml-1 text-[9px] text-blue-500" : "ml-1 text-[9px] text-gray-500");
+                    }
+                    if(kosdaq && window.krxIndices['KOSDAQ']) {
+                        let c = parseFloat(window.krxIndices['KOSDAQ'].chg);
+                        kosdaq.innerText = window.krxIndices['KOSDAQ'].price;
+                        kosdaqChg.innerText = (c > 0 ? '+' : '') + c + '%';
+                        kosdaqChg.className = c > 0 ? "ml-1 text-[9px] text-red-500" : (c < 0 ? "ml-1 text-[9px] text-blue-500" : "ml-1 text-[9px] text-gray-500");
+                    }
+                }
+
                 // 최적화: 데이터가 동일하면 불필요한 화면깜빡임(DOM 재렌더링) 방지
                 const currentHash = JSON.stringify(topVolumeCache) + JSON.stringify(aiVerdictsCache) + selectedTheme;
                 if (lastDataHash !== currentHash) {
@@ -338,14 +372,21 @@
                 let peakSafePct = Math.max(0, 100 - (Math.abs(s.peak) / 5 * 100));
                 let peakBarColor = s.peak <= -3 ? 'bg-blue-500' : 'bg-indigo-400';
 
+                // Logic for badge
+                let tagColor = 'bg-gray-800/80 text-gray-400 border-gray-700';
+                let tagText = s.theme;
+                if (s.vel >= 1.0 || (s.vol/1000) > 3) {
+                    tagColor = 'bg-red-900/60 text-red-500 border-red-700/50';
+                    tagText = '🔥 강력 매집중';
+                }
+
                 return `
-                    <div class="glass-card flex flex-col h-full">
+                    <div class="glass-card flex flex-col h-full hover:border-gray-500 transition-colors">
                         <div class="flex justify-between items-start mb-4">
                             <div class="flex flex-col">
                                 <div class="flex items-center gap-1.5 mb-1.5">
                                     <span class="text-[10px] text-gray-500 font-mono italic opacity-60">0${idx+1}</span>
-                                    <span class="bg-gray-800/80 text-[9px] text-gray-400 px-1.5 py-0.5 rounded border border-gray-700">${s.theme}</span>
-                                    ${(s.verdict && s.verdict.signal === 'green') ? `<span class="bg-red-900/50 text-[9px] text-red-400 font-bold px-1.5 py-0.5 rounded border border-red-500/50 animate-pulse"><i class="fas fa-crosshairs"></i> 강력 매집중</span>` : ''}
+                                    <span class="text-[9px] ${tagColor} px-1.5 py-0.5 rounded border font-bold">${tagText}</span>
                                 </div>
                                 <h2 class="text-xl md:text-2xl font-black text-white tracking-tight">${s.name}</h2>
                             </div>
@@ -359,7 +400,7 @@
                             <!-- 거래금 Bar -->
                             <div class="flex items-center justify-between text-[11px]">
                                 <span class="text-gray-400 font-medium w-16">거래금</span>
-                                <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden">
+                                <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
                                     <div class="h-full bg-emerald-500 stat-bar-fill" style="width: ${volPct}%"></div>
                                 </div>
                                 <span class="text-emerald-400 font-mono w-8 text-right">${Math.round(s.vol/1000)}k</span>
@@ -367,15 +408,15 @@
                             <!-- 가속도 Bar -->
                             <div class="flex items-center justify-between text-[11px]">
                                 <span class="text-gray-400 font-medium w-16">가속도(Vel)</span>
-                                <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden">
+                                <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
                                     <div class="h-full ${velBarColor} stat-bar-fill" style="width: ${velPct}%"></div>
                                 </div>
-                                <span class="${s.vel>0?'text-red-400':'text-blue-400'} font-mono w-8 text-right">${s.vel>0?'+':''}${s.vel.toFixed(1)}</span>
+                                <span class="${s.vel>0?'text-cyan-400':'text-gray-500'} font-mono w-8 text-right">${s.vel>0?'+':''}${s.vel.toFixed(1)}</span>
                             </div>
                             <!-- 고점유지력 Bar -->
                             <div class="flex items-center justify-between text-[11px]">
                                 <span class="text-gray-400 font-medium w-16">고점유지력</span>
-                                <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden">
+                                <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
                                     <div class="h-full ${peakBarColor} stat-bar-fill" style="width: ${peakSafePct}%"></div>
                                 </div>
                                 <span class="text-indigo-400 font-mono w-10 text-right">${Number(s.peak).toFixed(2)}%</span>
@@ -383,18 +424,11 @@
                         </div>
 
                         ${s.news ? `
-                        <div class="mt-2 p-2.5 rounded border border-amber-500/30 bg-amber-900/10 mb-3 pulse-news">
-                            <div class="text-[10px] font-bold text-amber-500 mb-1"><i class="fas fa-bolt mr-1"></i>[정보/재료] 포착</div>
-                            <div class="text-[11px] text-gray-300 leading-snug">${s.news}</div>
+                        <div class="mt-2 p-3 rounded-lg border border-yellow-600/40 bg-yellow-900/20 mb-1 pulse-news shadow-inner">
+                            <div class="text-[11px] font-bold text-yellow-500 mb-1"><i class="fas fa-bolt mr-1 text-yellow-400"></i>[정보/재료] 포착</div>
+                            <div class="text-[11px] text-gray-300 leading-relaxed font-medium">${s.news}</div>
                         </div>
                         ` : ''}
-
-                        <div class="mt-auto pt-3 border-t border-gray-800/50">
-                            <div class="flex gap-2 h-8">
-                                <button onclick="executeOrder('${s.name}', 'BUY')" class="flex-1 rounded bg-blue-600/10 text-blue-500 font-bold text-[11px] border border-blue-600/30 hover:bg-blue-600 hover:text-white transition-colors">BUY</button>
-                                <button onclick="executeOrder('${s.name}', 'SELL')" class="flex-1 rounded bg-red-600/10 text-red-500 font-bold text-[11px] border border-red-600/30 hover:bg-red-600 hover:text-white transition-colors">SELL</button>
-                            </div>
-                        </div>
                     </div>
                 `;
             }).join('');
