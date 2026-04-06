@@ -32,7 +32,8 @@ price_history = {}
 high_price_cache = {}
 global_cache = {
     "top_volume": [],
-    "whale_signals": []
+    "whale_signals": [],
+    "indices": {"KOSPI": {"price": "0.00", "chg": "0.00"}, "KOSDAQ": {"price": "0.00", "chg": "0.00"}}
 }
 
 class OrderRequest(BaseModel):
@@ -66,6 +67,21 @@ def get_volume_rank(token):
         return res.json().get('output', [])
     except Exception as e:
         return []
+
+def get_market_indices():
+    try:
+        url = "https://polling.finance.naver.com/api/realtime/domestic/index/KOSPI,KOSDAQ"
+        res = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'}).json()
+        indices = {}
+        for item in res.get('datas', []):
+            code = item.get('itemCode')
+            indices[code] = {
+                "price": item.get('closePrice'),
+                "chg": item.get('fluctuationsRatio')
+            }
+        return indices
+    except Exception:
+        return {"KOSPI": {"price": "0.00", "chg": "0.00"}, "KOSDAQ": {"price": "0.00", "chg": "0.00"}}
 
 async def update_radar_loop():
     token = get_access_token() if APP_KEY else None
@@ -129,9 +145,12 @@ async def update_radar_loop():
             if curr_high > 0: peak = ((price - curr_high) / curr_high) * 100
                 
             theme = "주도주"
-            if "에코" in name: theme = "2차전지"
-            elif "전자" in name or "테크" in name: theme = "반도체"
-            elif "바이오" in name or "알테오젠" in name or "HLB" in name: theme = "제약바이오"
+            if "KODEX" in name or "TIGER" in name or "KBSTAR" in name: theme = "ETF/인덱스"
+            elif "에코" in name or "금양" in name or "포스코" in name or "POSCO" in name: theme = "2차전지"
+            elif "전자" in name or "테크" in name or "하이닉스" in name or "한미" in name: theme = "반도체"
+            elif "바이오" in name or "알테오젠" in name or "HLB" in name or "삼천당" in name: theme = "제약바이오"
+            elif "전선" in name or "광통신" in name or "구리" in name or "일진" in name: theme = "전력/전선/구리"
+            elif "현대차" in name or "기아" in name or "자동차" in name: theme = "자동차"
 
             fake_flag = False
             news_str = ""
@@ -167,15 +186,23 @@ async def update_radar_loop():
                     "coin_name": name, "signal": "green", "reason": reason_txt,
                     "timestamp": d_now.strftime("%H:%M:%S"), "news_detail": news_detail
                 })
+            elif vol_amt >= 2000 and len(whale_signals_data) < 7:
+                # Add default signal for extremely high volume if feed is empty
+                whale_signals_data.append({
+                    "coin_name": name, "signal": "green", "reason": f"[{theme}] 거래대금 {int(vol_amt):,}억 돌파! \n초대형 메이저 자금 지속 유입중 (시세 분출 임박)",
+                    "timestamp": d_now.strftime("%H:%M:%S"), "news_detail": ""
+                })
 
         top_volume_data.sort(key=lambda x: x['vol'], reverse=True)
         global_cache['top_volume'] = top_volume_data[:10]
-        global_cache['whale_signals'] = whale_signals_data[:7]
+        global_cache['whale_signals'] = whale_signals_data[:10]
+        global_cache['indices'] = get_market_indices()
         
         # 파일 저장 로직은 레거시용으로 일단 남겨둔다.
         try:
             js_content = f"window.krxTopVolume = {json.dumps(global_cache['top_volume'], ensure_ascii=False)};\n"
             js_content += f"window.krxWhaleSignals = {json.dumps(global_cache['whale_signals'], ensure_ascii=False)};\n"
+            js_content += f"window.krxIndices = {json.dumps(global_cache['indices'], ensure_ascii=False)};\n"
             with open('krx_data.js', 'w', encoding='utf-8') as f:
                 f.write(js_content)
         except Exception: pass
@@ -194,6 +221,7 @@ def serve_index():
 def serve_js_data():
     js_content = f"window.krxTopVolume = {json.dumps(global_cache['top_volume'], ensure_ascii=False)};\n"
     js_content += f"window.krxWhaleSignals = {json.dumps(global_cache['whale_signals'], ensure_ascii=False)};\n"
+    js_content += f"window.krxIndices = {json.dumps(global_cache['indices'], ensure_ascii=False)};\n"
     return Response(content=js_content, media_type="application/javascript")
 
 @app.post("/api/order")
