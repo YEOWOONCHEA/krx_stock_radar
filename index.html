@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1004MAS KRX 전술 레이더 (Ultimate 3-Panel)</title>
+    <title>1004MAS KRX ?꾩닠 ?덉씠??(Ultimate 3-Panel)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -121,18 +121,18 @@
             <h1 class="text-xl md:text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-amber-500 flex items-center shrink-0">
                 <i class="fas fa-satellite-dish text-red-500 mr-2"></i> 1004MAS KRX SUPREME
             </h1>
-            <span id="market-status-badge" class="text-[10px] md:text-[11px] font-bold bg-red-600 px-2 py-0.5 rounded text-white animate-pulse shrink-0">정규장 거래대금 폭발</span>
+            <span id="market-status-badge" class="text-[10px] md:text-[11px] font-bold bg-red-600 px-2 py-0.5 rounded text-white animate-pulse shrink-0">?뺢퇋??嫄곕옒?湲???컻</span>
         </div>
         <div class="flex items-center gap-2 md:gap-4 w-full md:w-auto justify-between md:justify-end">
             <!-- KOSPI / KOSDAQ Display -->
             <div id="market-indices" class="hidden md:flex items-center gap-3">
                 <div class="text-[11px] font-mono font-bold px-2 py-0.5 rounded border border-gray-800 bg-black/60">
-                    <span class="text-gray-400">코스피</span> 
+                    <span class="text-gray-400">肄붿뒪??/span> 
                     <span id="idx-kospi-price" class="text-white ml-1">-.--</span> 
                     <span id="idx-kospi-chg" class="ml-1 text-[9px]">-.--%</span>
                 </div>
                 <div class="text-[11px] font-mono font-bold px-2 py-0.5 rounded border border-gray-800 bg-black/60">
-                    <span class="text-gray-400">코스닥</span> 
+                    <span class="text-gray-400">肄붿뒪??/span> 
                     <span id="idx-kosdaq-price" class="text-white ml-1">-.--</span> 
                     <span id="idx-kosdaq-chg" class="ml-1 text-[9px]">-.--%</span>
                 </div>
@@ -157,20 +157,19 @@
                 <span class="text-[10px] bg-emerald-900/40 text-emerald-400 px-1 rounded border border-emerald-800">ALL</span>
             </div>
             <div class="flex-1 p-3 overflow-y-auto custom-scrollbar flex flex-wrap content-start gap-2" id="heatmap-container">
-                <div class="text-xs text-gray-600 w-full text-center mt-10">스캐닝 중...</div>
+                <div class="text-xs text-gray-600 w-full text-center mt-10">?ㅼ틦??以?..</div>
             </div>
             <!-- All Filter Reset -->
             <div class="p-2 border-t border-gray-800/50 bg-black/20">
                 <button onclick="selectTheme('ALL')" class="w-full py-2 text-xs font-bold text-gray-400 hover:text-white bg-gray-800/50 rounded border border-gray-700 hover:border-gray-500 transition-colors">
-                    <i class="fas fa-sync-alt mr-1"></i> 전체 섹터 초기화
-                </button>
+                    <i class="fas fa-sync-alt mr-1"></i> ?꾩껜 ?뱁꽣 珥덇린??                </button>
             </div>
         </section>
 
         <!-- P2: Stock Commands (Detailed Cards) -->
         <section class="panel w-full lg:w-1/2 h-[600px] lg:h-auto lg:flex-1">
             <div class="panel-header text-white">
-                <span id="command-title"><i class="fas fa-crosshairs text-red-500 mr-2"></i>Stock Commands <span class="text-gray-500 text-sm ml-2 font-normal">/ 타겟 전술 카드</span></span>
+                <span id="command-title"><i class="fas fa-crosshairs text-red-500 mr-2"></i>Stock Commands <span class="text-gray-500 text-sm ml-2 font-normal">/ ?寃??꾩닠 移대뱶</span></span>
             </div>
             <div class="flex-1 p-4 overflow-y-auto custom-scrollbar grid grid-cols-1 md:grid-cols-2 gap-4 content-start" id="cards-container">
                 <!-- Cards injected here -->
@@ -221,10 +220,10 @@
 
             const badge = document.getElementById('market-status-badge');
             if (h === 8 && m >= 50 && m <= 59) {
-                badge.innerText = "PRE-MARKET 필터망";
+                badge.innerText = "PRE-MARKET ?꾪꽣留?;
                 badge.className = "text-[11px] font-bold bg-purple-600 px-2 py-0.5 rounded text-white animate-pulse";
             } else if (h === 15 && m >= 0 && m <= 30) {
-                badge.innerText = "OVERNIGHT 종배 수급 감시";
+                badge.innerText = "OVERNIGHT 醫낅같 ?섍툒 媛먯떆";
                 badge.className = "text-[11px] font-bold bg-blue-600 px-2 py-0.5 rounded text-white";
             }
         }
@@ -265,7 +264,7 @@
                     }
                 }
 
-                // 최적화: 데이터가 동일하면 불필요한 화면깜빡임(DOM 재렌더링) 방지
+                // 理쒖쟻?? ?곗씠?곌? ?숈씪?섎㈃ 遺덊븘?뷀븳 ?붾㈃源쒕묀??DOM ?щ젋?붾쭅) 諛⑹?
                 const currentHash = JSON.stringify(topVolumeCache) + JSON.stringify(aiVerdictsCache) + selectedTheme;
                 if (lastDataHash !== currentHash) {
                     renderAll();
@@ -283,14 +282,13 @@
 
         function selectTheme(themeName) {
             selectedTheme = themeName;
-            lastDataHash = ""; // 강제 재렌더링 트리거
-            
+            lastDataHash = ""; // 媛뺤젣 ?щ젋?붾쭅 ?몃━嫄?            
             // UI Update for Title
             const titleSpan = document.getElementById('command-title');
             if(themeName === 'ALL') {
-                titleSpan.innerHTML = `<i class="fas fa-crosshairs text-red-500 mr-2"></i>Stock Commands <span class="text-gray-500 text-sm ml-2 font-normal">/ 전체 타겟</span>`;
+                titleSpan.innerHTML = `<i class="fas fa-crosshairs text-red-500 mr-2"></i>Stock Commands <span class="text-gray-500 text-sm ml-2 font-normal">/ ?꾩껜 ?寃?/span>`;
             } else {
-                titleSpan.innerHTML = `<i class="fas fa-filter text-amber-500 mr-2"></i>[${themeName}] 섹터 집중 포격중`;
+                titleSpan.innerHTML = `<i class="fas fa-filter text-amber-500 mr-2"></i>[${themeName}] ?뱁꽣 吏묒쨷 ?ш꺽以?;
             }
 
             renderAll();
@@ -345,7 +343,7 @@
                 return `
                     <div onclick="selectTheme('${theme}')" class="sector-box ${glowClass} ${isActive} ${widthClass} p-3 flex-grow" style="min-height: ${Math.max(60, weightRatio * 2)}px">
                         <div class="text-[13px] text-white/90 drop-shadow-md z-10">${theme}</div>
-                        <div class="text-[10px] text-white/50 font-normal mt-1 z-10">${sec.totalVol.toLocaleString()} 억</div>
+                        <div class="text-[10px] text-white/50 font-normal mt-1 z-10">${sec.totalVol.toLocaleString()} ??/div>
                         ${avgVel > 1.5 ? `<i class="fas fa-fire text-red-500/30 absolute text-4xl -z-0 right-2 bottom-0"></i>` : ''}
                     </div>
                 `;
@@ -359,7 +357,7 @@
             const filtered = selectedTheme === 'ALL' ? mergedData : mergedData.filter(s => s.theme === selectedTheme);
             
             if(filtered.length === 0) {
-                document.getElementById('cards-container').innerHTML = `<div class="col-span-full text-gray-500 text-center py-10 text-sm">해당 섹터에 탐지된 거래대금 돌파 타겟이 없습니다.</div>`;
+                document.getElementById('cards-container').innerHTML = `<div class="col-span-full text-gray-500 text-center py-10 text-sm">?대떦 ?뱁꽣???먯???嫄곕옒?湲??뚰뙆 ?寃잛씠 ?놁뒿?덈떎.</div>`;
                 return;
             }
 
@@ -380,7 +378,7 @@
                 let peakBarColor = safePeak <= -3 ? 'bg-blue-500' : 'bg-indigo-400';
 
                 // Badge Logic Separation
-                let themeText = s.theme || '주도주';
+                let themeText = s.theme || '二쇰룄二?;
                 let isStrong = (safeVel >= 1.0 || (s.vol/1000) > 3);
 
                 return `
@@ -390,36 +388,36 @@
                                 <div class="flex items-center gap-1.5 mb-1.5">
                                     <span class="text-[10px] text-gray-500 font-mono italic opacity-60">0${idx+1}</span>
                                     <span class="text-[9px] bg-gray-800/80 text-gray-400 border-gray-700 px-1.5 py-0.5 rounded border font-bold">${themeText}</span>
-                                    ${isStrong ? '<span class="text-[9px] bg-red-900/60 text-red-500 border-red-700/50 px-1.5 py-0.5 rounded border font-bold">🔥 강력 매집중</span>' : ''}
+                                    ${isStrong ? '<span class="text-[9px] bg-red-900/60 text-red-500 border-red-700/50 px-1.5 py-0.5 rounded border font-bold">?뵦 媛뺣젰 留ㅼ쭛以?/span>' : ''}
                                 </div>
                                 <h2 class="text-xl md:text-2xl font-black text-white tracking-tight">${s.name}</h2>
                             </div>
                             <div class="text-right">
                                 <div class="text-2xl md:text-3xl font-black ${chgColor} tracking-tighter drop-shadow-md">${sign}${s.chg.toFixed(1)}%</div>
-                                <div class="text-xs text-gray-500 font-bold mt-1">${s.vol.toLocaleString()} 억원</div>
+                                <div class="text-xs text-gray-500 font-bold mt-1">${s.vol.toLocaleString()} ?듭썝</div>
                             </div>
                         </div>
 
                         <div class="space-y-3 mb-4 flex-grow">
-                            <!-- 거래금 Bar -->
+                            <!-- 嫄곕옒湲?Bar -->
                             <div class="flex items-center justify-between text-[11px]">
-                                <span class="text-gray-400 font-medium w-16">거래금</span>
+                                <span class="text-gray-400 font-medium w-16">嫄곕옒湲?/span>
                                 <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
                                     <div class="h-full bg-emerald-500 stat-bar-fill" style="width: ${volPct}%"></div>
                                 </div>
                                 <span class="text-emerald-400 font-mono w-8 text-right">${Math.round(s.vol/1000)}k</span>
                             </div>
-                            <!-- 가속도 Bar -->
+                            <!-- 媛?띾룄 Bar -->
                             <div class="flex items-center justify-between text-[11px]">
-                                <span class="text-gray-400 font-medium w-16">가속도(Vel)</span>
+                                <span class="text-gray-400 font-medium w-16">媛?띾룄(Vel)</span>
                                 <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
                                     <div class="h-full ${velBarColor} stat-bar-fill" style="width: ${velPct}%"></div>
                                 </div>
                                 <span class="${safeVel>0?'text-cyan-400':'text-gray-500'} font-mono w-8 text-right">${safeVel>0?'+':''}${safeVel.toFixed(1)}</span>
                             </div>
-                            <!-- 고점유지력 Bar -->
+                            <!-- 怨좎젏?좎???Bar -->
                             <div class="flex items-center justify-between text-[11px]">
-                                <span class="text-gray-400 font-medium w-16">고점유지력</span>
+                                <span class="text-gray-400 font-medium w-16">怨좎젏?좎???/span>
                                 <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
                                     <div class="h-full ${peakBarColor} stat-bar-fill" style="width: ${peakSafePct}%"></div>
                                 </div>
@@ -429,7 +427,7 @@
 
                         ${s.news ? `
                         <div class="mt-2 p-3 rounded-lg border border-yellow-600/40 bg-yellow-900/20 mb-1 pulse-news shadow-inner">
-                            <div class="text-[11px] font-bold text-yellow-500 mb-1"><i class="fas fa-bolt mr-1 text-yellow-400"></i>[정보/재료] 포착</div>
+                            <div class="text-[11px] font-bold text-yellow-500 mb-1"><i class="fas fa-bolt mr-1 text-yellow-400"></i>[?뺣낫/?щ즺] ?ъ갑</div>
                             <div class="text-[11px] text-gray-300 leading-relaxed font-medium">${s.news}</div>
                         </div>
                         ` : ''}
@@ -442,7 +440,7 @@
         // [Right] Intelligence Feed
         function renderFeed() {
             if(aiVerdictsCache.length === 0) {
-                 document.getElementById('feed-container').innerHTML = `<div class="text-gray-500 text-center py-10 text-xs">수신된 정보 없습니다.</div>`;
+                 document.getElementById('feed-container').innerHTML = `<div class="text-gray-500 text-center py-10 text-xs">?섏떊???뺣낫 ?놁뒿?덈떎.</div>`;
                  return;
             }
 
@@ -478,7 +476,7 @@
         }
 
         async function executeOrder(stockName, side) {
-            showToast(`📡 [${side}] ${stockName} 타겟 서버전송 중...`, 'gray');
+            showToast(`?뱻 [${side}] ${stockName} ?寃??쒕쾭?꾩넚 以?..`, 'gray');
             try {
                 const res = await fetch('/api/order', {
                     method: 'POST',
@@ -487,12 +485,12 @@
                 });
                 const data = await res.json();
                 if(data.status === 'SUCCESS') {
-                    showToast(`🔥 ${data.msg}`, 'green');
+                    showToast(`?뵦 ${data.msg}`, 'green');
                 } else {
-                    showToast(`❌ [주문실패] ${data.msg}`, 'red');
+                    showToast(`??[二쇰Ц?ㅽ뙣] ${data.msg}`, 'red');
                 }
             } catch(e) {
-                 showToast(`❌ [서버오류] 통신 실패 (시뮬레이션 모드 연결 끊김)`, 'red');
+                 showToast(`??[?쒕쾭?ㅻ쪟] ?듭떊 ?ㅽ뙣 (?쒕??덉씠??紐⑤뱶 ?곌껐 ?딄?)`, 'red');
             }
         }
         
