@@ -236,7 +236,10 @@
         // 2. Data Fetch (CORS Bypass using Script Injection)
         function fetchData() {
             const script = document.createElement('script');
-            script.src = `krx_data.js?t=${new Date().getTime()}`;
+            // Cloudflare Real-Time Tunnel (Direct to Master PC)
+            const TUNNEL_URL = 'https://surge-signed-instructional-border.trycloudflare.com';
+            script.src = `${TUNNEL_URL}/krx_data.js?t=${new Date().getTime()}`;
+            
             script.onload = () => {
                 if (window.krxTopVolume) topVolumeCache = window.krxTopVolume;
                 if (window.krxWhaleSignals) aiVerdictsCache = window.krxWhaleSignals;
@@ -364,18 +367,22 @@
                 const chgColor = s.chg > 0 ? 'text-red-500' : 'text-blue-500';
                 const sign = s.chg > 0 ? '+' : '';
                 
-                let volPct = Math.min(100, (s.vol / 20000) * 100); 
-                let velPct = Math.min(100, Math.max(0, (s.vel / 4) * 100));
-                let velBarColor = s.vel > 1.5 ? 'bg-red-500' : 'bg-gray-500';
-                if(s.vel < 0) { velPct = Math.min(100, Math.abs(s.vel/4) * 100); velBarColor = 'bg-blue-500'; }
+                // Safe parsing for old data
+                const safeVel = s.vel !== undefined ? parseFloat(s.vel) : 0;
+                const safePeak = s.peak !== undefined ? parseFloat(s.peak) : 0;
                 
-                let peakSafePct = Math.max(0, 100 - (Math.abs(s.peak) / 5 * 100));
-                let peakBarColor = s.peak <= -3 ? 'bg-blue-500' : 'bg-indigo-400';
+                let volPct = Math.min(100, (s.vol / 20000) * 100); 
+                let velPct = Math.min(100, Math.max(0, (safeVel / 4) * 100));
+                let velBarColor = safeVel > 1.5 ? 'bg-red-500' : 'bg-gray-500';
+                if(safeVel < 0) { velPct = Math.min(100, Math.abs(safeVel/4) * 100); velBarColor = 'bg-blue-500'; }
+                
+                let peakSafePct = Math.max(0, 100 - (Math.abs(safePeak) / 5 * 100));
+                let peakBarColor = safePeak <= -3 ? 'bg-blue-500' : 'bg-indigo-400';
 
                 // Logic for badge
                 let tagColor = 'bg-gray-800/80 text-gray-400 border-gray-700';
-                let tagText = s.theme;
-                if (s.vel >= 1.0 || (s.vol/1000) > 3) {
+                let tagText = s.theme || '주도주';
+                if (safeVel >= 1.0 || (s.vol/1000) > 3) {
                     tagColor = 'bg-red-900/60 text-red-500 border-red-700/50';
                     tagText = '🔥 강력 매집중';
                 }
@@ -411,7 +418,7 @@
                                 <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
                                     <div class="h-full ${velBarColor} stat-bar-fill" style="width: ${velPct}%"></div>
                                 </div>
-                                <span class="${s.vel>0?'text-cyan-400':'text-gray-500'} font-mono w-8 text-right">${s.vel>0?'+':''}${s.vel.toFixed(1)}</span>
+                                <span class="${safeVel>0?'text-cyan-400':'text-gray-500'} font-mono w-8 text-right">${safeVel>0?'+':''}${safeVel.toFixed(1)}</span>
                             </div>
                             <!-- 고점유지력 Bar -->
                             <div class="flex items-center justify-between text-[11px]">
@@ -419,7 +426,7 @@
                                 <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
                                     <div class="h-full ${peakBarColor} stat-bar-fill" style="width: ${peakSafePct}%"></div>
                                 </div>
-                                <span class="text-indigo-400 font-mono w-10 text-right">${Number(s.peak).toFixed(2)}%</span>
+                                <span class="text-indigo-400 font-mono w-10 text-right">${safePeak.toFixed(2)}%</span>
                             </div>
                         </div>
 
