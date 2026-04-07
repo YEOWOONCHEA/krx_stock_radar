@@ -321,7 +321,7 @@
             if (window.location.protocol === 'file:') {
                 dataUrl = 'http://localhost:8088/krx_data.js';
             } else {
-                dataUrl = '/krx_data.js';
+                dataUrl = 'https://mines-regulations-setting-marks.trycloudflare.com/krx_data.js';
             }
             script.src = `${dataUrl}?t=${new Date().getTime()}`;
             
