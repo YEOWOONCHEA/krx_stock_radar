@@ -393,7 +393,7 @@
                 }
 
                 // 최적화: 데이터가 동일하면 불필요한 화면깜빡임(DOM 재렌더링) 방지
-                const currentHash = JSON.stringify(topVolumeCache) + JSON.stringify(aiVerdictsCache) + selectedTheme;
+                const currentHash = JSON.stringify(topVolumeCache) + JSON.stringify(aiVerdictsCache) + JSON.stringify(kostolanyList) + selectedTheme;
                 if (lastDataHash !== currentHash) {
                     renderAll();
                     lastDataHash = currentHash;
@@ -482,6 +482,11 @@
 
         // [Left Bottom] Kostolany Sniper
         function renderKostolany() {
+            if (kostolanyList.length === 0) {
+                document.getElementById('kostolany-container').innerHTML = '<div class="text-[13px] text-purple-700 font-bold w-full text-center mt-10">스나이퍼 목표물 탐지 대기중...</div>';
+                return;
+            }
+
             const html = kostolanyList.map((item, idx) => {
                 const realTimeData = topVolumeCache.find(v => v.name === item.name);
                 const isActive = !!realTimeData;
