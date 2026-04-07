@@ -153,20 +153,28 @@
     <!-- 3-Panel Main Area -->
     <main class="flex-1 flex flex-col lg:flex-row gap-4 min-h-0">
         
-        <!-- P1: Sector Heatmap -->
-        <section class="panel w-full lg:w-1/4 h-[400px] lg:h-auto">
-            <div class="panel-header text-gray-300">
+        <!-- P1: Sector Heatmap & Sniper -->
+        <section class="panel w-full lg:w-1/4 h-[auto] flex flex-col">
+            <div class="panel-header text-gray-300 shrink-0">
                 <span><i class="fas fa-th-large text-emerald-400 mr-2"></i>Sector Heatmap</span>
                 <span class="text-[10px] bg-emerald-900/40 text-emerald-400 px-1 rounded border border-emerald-800">ALL</span>
             </div>
-            <div class="flex-1 p-3 overflow-y-auto custom-scrollbar flex flex-wrap content-start gap-2" id="heatmap-container">
+            <div class="p-3 overflow-y-auto custom-scrollbar flex flex-wrap content-start gap-2 max-h-[50vh] shrink-0" id="heatmap-container">
                 <div class="text-xs text-gray-600 w-full text-center mt-10">스캐닝 중...</div>
             </div>
             <!-- All Filter Reset -->
-            <div class="p-2 border-t border-gray-800/50 bg-black/20">
+            <div class="p-2 border-t border-b border-gray-800/50 bg-black/20 shrink-0">
                 <button onclick="selectTheme('ALL')" class="w-full py-2 text-xs font-bold text-gray-400 hover:text-white bg-gray-800/50 rounded border border-gray-700 hover:border-gray-500 transition-colors">
                     <i class="fas fa-sync-alt mr-1"></i> 전체 섹터 초기화
                 </button>
+            </div>
+
+            <!-- Kostolany Sniper 8 Watchlist -->
+            <div class="panel-header text-purple-400 border-t-0 bg-gradient-to-r from-purple-900/20 to-black shrink-0">
+                <span class="text-sm font-black tracking-wider"><i class="fas fa-crosshairs text-purple-500 mr-2"></i>KOSTOLANY SNIPER 8</span>
+                <span class="text-[9px] bg-purple-900/60 text-purple-200 px-1.5 py-0.5 rounded border border-purple-700 animate-pulse">종배 타겟망</span>
+            </div>
+            <div class="flex-1 p-2 overflow-y-auto custom-scrollbar flex flex-col gap-1.5 bg-gradient-to-b from-purple-950/10 to-transparent min-h-[200px]" id="kostolany-container">
             </div>
         </section>
 
@@ -180,14 +188,22 @@
             </div>
         </section>
 
-        <!-- P3: Intelligence Feed -->
-        <section class="panel w-full lg:w-1/4 h-[300px] lg:h-auto">
-            <div class="panel-header text-amber-500">
+        <!-- P3: Intelligence Feed & 7% Defense -->
+        <section class="panel w-full lg:w-1/4 h-[300px] lg:h-auto flex flex-col">
+            <div class="panel-header text-amber-500 shrink-0">
                 <span><i class="fas fa-bolt text-amber-500 mr-2"></i>Intelligence Feed</span>
                 <div class="w-1.5 h-1.5 bg-amber-500 rounded-full animate-ping"></div>
             </div>
-            <div class="flex-1 p-3 overflow-y-auto custom-scrollbar flex flex-col gap-3" id="feed-container">
+            <div class="flex-1 p-3 overflow-y-auto custom-scrollbar flex flex-col gap-3 min-h-[50%]" id="feed-container">
                 <!-- Feeds injected here -->
+            </div>
+            
+            <!-- NEW: 7% Defense Watchlist -->
+            <div class="panel-header text-blue-400 border-t border-gray-800 bg-blue-900/10 shrink-0">
+                <span class="text-[13px] font-bold"><i class="fas fa-shield-alt text-blue-500 mr-2"></i>세력 7% 지지선 방어</span>
+                <span class="text-[9px] bg-blue-900/40 text-blue-300 px-1 rounded border border-blue-800">오후장 노림수</span>
+            </div>
+            <div class="p-2 overflow-y-auto custom-scrollbar flex flex-col gap-1.5 bg-gradient-to-b from-blue-950/20 to-transparent min-h-[160px] shrink-0" id="defense-container">
             </div>
         </section>
 
@@ -227,6 +243,15 @@
         let selectedTheme = 'ALL';
         let previousSignals = new Set();
         let isTelegramLoaded = false;
+        
+        // 코스톨라니 스나이퍼 종목 캐시 (매일 15:40 이후 주군이 HTS에서 추출한 8개 종목 하드코딩 또는 서버 렌더링용)
+        let kostolanyList = [
+            { name: "대한광통신", reason: "[조건검색] 전일 거래대금 폭발 / 투매 바닥 줍기", type: "기타법인 흔적" },
+            { name: "보원케미칼", reason: "[조건검색] 3개월 매물대 돌파 / 종가 +11%", type: "세력 쌍끌이" },
+            { name: "신성이엔지", reason: "[조건검색] 전일 장대양봉 / 하프라인 유지", type: "메이저 물량" },
+            { name: "남선알미늄", reason: "[조건검색] 윗꼬리 적은 망치형 / +4% 마감", type: "기관 연속매수" },
+            { name: "알테오젠", reason: "[조건검색] 전일 거래량 500% / 종가 +12%", type: "외인/기관" }
+        ];
 
         // --- 텔레그램 연동 ---
         function loadTelegramSettings() {
@@ -398,6 +423,73 @@
             renderHeatmap(merged);
             renderCards(merged);
             renderFeed();
+            renderKostolany();
+            renderDefenseLine();
+        }
+
+        // [Right Bottom] 7% Defense Line
+        function renderDefenseLine() {
+            // Filter stocks that are defending near the 7% line (lowered bottom boundary to 6.0% to catch shakeouts/fake breakdowns)
+            const defenders = topVolumeCache.filter(v => v.chg >= 6.0 && v.chg <= 12.0);
+            
+            if (defenders.length === 0) {
+                document.getElementById('defense-container').innerHTML = `<div class="text-[10px] text-gray-600 text-center mt-4">현재 7% 지지선 방어 종목 없음</div>`;
+                return;
+            }
+
+            const html = defenders.map(item => {
+                const dropFromPeak = item.peak; // e.g. -5.2
+                // We consider 'strong defense' if peak drop is manageable, but for now we just show all in the 7~12% range.
+                return `
+                    <div class="flex flex-col p-2 rounded-lg bg-black/40 border border-blue-900/60 shadow-[0_0_8px_rgba(59,130,246,0.1)] hover:bg-blue-900/20 transition-colors">
+                        <div class="flex justify-between items-center mb-1">
+                            <div class="flex items-center">
+                                <i class="fas fa-shield-alt text-blue-500 text-[10px] mr-1.5"></i>
+                                <span class="text-blue-300 font-bold text-[11px]">${item.name}</span>
+                            </div>
+                            <span class="text-red-400 font-black text-[11px]">+${item.chg.toFixed(1)}%</span>
+                        </div>
+                        <div class="flex justify-between items-center text-[9px] text-gray-500 border-t border-gray-800/50 pt-1 mt-0.5">
+                            <span>고점대비 붕괴율: <span class="${dropFromPeak < -10 ? 'text-red-900/80 font-bold' : 'text-gray-400'}">${dropFromPeak}%</span></span>
+                            <span>거래대금 ${item.vol}억</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('defense-container').innerHTML = html;
+        }
+
+        // [Left Bottom] Kostolany Sniper
+        function renderKostolany() {
+            const html = kostolanyList.map((item, idx) => {
+                const realTimeData = topVolumeCache.find(v => v.name === item.name);
+                const isExploding = !!realTimeData;
+
+                const borderColor = isExploding ? "border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)] bg-red-950/20" : "border-gray-800 bg-black/40";
+                const titleColor = isExploding ? "text-red-400 font-black animate-pulse" : "text-gray-300 font-bold";
+                const icon = isExploding ? `<i class="fas fa-fire text-red-500 mr-1 animate-ping"></i>` : `<span class="text-gray-600 font-mono text-[9px] mr-1">0${idx+1}</span>`;
+
+                let liveStatus = `<span class="text-[9px] text-gray-600 font-bold ml-2">잠복중..</span>`;
+                if(isExploding) {
+                     const sign = realTimeData.chg > 0 ? '+' : '';
+                     const chgColor = realTimeData.chg > 0 ? 'text-red-400' : 'text-blue-400';
+                     liveStatus = `<span class="${chgColor} font-black text-[10px] drop-shadow-md ml-2">${sign}${realTimeData.chg.toFixed(1)}% <span class="text-gray-400 text-[8px] font-normal tracking-tighter">(${realTimeData.vol}억)</span></span>`;
+                }
+
+                return `
+                    <div class="flex flex-col p-2 rounded-lg border ${borderColor} transition-all">
+                        <div class="flex justify-between items-center mb-1">
+                            <div class="flex flex-row items-center">
+                                <span class="text-[11px] ${titleColor}">${icon}${item.name}</span>
+                                ${liveStatus}
+                            </div>
+                            <span class="text-[8px] bg-purple-900/50 text-purple-300 px-1 rounded border border-purple-700/50 shrink-0 ml-1">${item.type}</span>
+                        </div>
+                        <div class="text-[9px] text-gray-500/80 leading-tight">${item.reason}</div>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('kostolany-container').innerHTML = html;
         }
 
         // [Left] Heatmap 
@@ -453,7 +545,8 @@
                 return;
             }
 
-            const html = filtered.map((s, idx) => {
+            // 중앙 메인 카드는 10개로 제한 (나머지 20개는 방어선 트래킹용)
+            const html = filtered.slice(0, 10).map((s, idx) => {
                 const chgColor = s.chg > 0 ? 'text-red-500' : 'text-blue-500';
                 const sign = s.chg > 0 ? '+' : '';
                 
