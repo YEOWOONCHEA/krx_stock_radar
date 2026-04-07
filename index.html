@@ -244,14 +244,8 @@
         let previousSignals = new Set();
         let isTelegramLoaded = false;
         
-        // 코스톨라니 스나이퍼 종목 캐시 (매일 15:40 이후 주군이 HTS에서 추출한 8개 종목 하드코딩 또는 서버 렌더링용)
-        let kostolanyList = [
-            { name: "대한광통신", reason: "[조건검색] 전일 거래대금 폭발 / 투매 바닥 줍기", type: "기타법인 흔적" },
-            { name: "보원케미칼", reason: "[조건검색] 3개월 매물대 돌파 / 종가 +11%", type: "세력 쌍끌이" },
-            { name: "신성이엔지", reason: "[조건검색] 전일 장대양봉 / 하프라인 유지", type: "메이저 물량" },
-            { name: "남선알미늄", reason: "[조건검색] 윗꼬리 적은 망치형 / +4% 마감", type: "기관 연속매수" },
-            { name: "알테오젠", reason: "[조건검색] 전일 거래량 500% / 종가 +12%", type: "외인/기관" }
-        ];
+        // 코스톨라니 스나이퍼 종목 캐시 (파이썬 백엔드가 조건에 맞는 종배 타겟을 자동 생성하여 주입)
+        let kostolanyList = [];
 
         // --- 텔레그램 연동 ---
         function loadTelegramSettings() {
@@ -363,6 +357,9 @@
                 if (window.krxWhaleSignals) {
                     aiVerdictsCache = window.krxWhaleSignals;
                     checkKRXAlerts(aiVerdictsCache);
+                }
+                if (window.krxKostolany) {
+                    kostolanyList = window.krxKostolany;
                 }
                 
                 // Update KOSPI / KOSDAQ Tickers
@@ -726,7 +723,7 @@
                 }
 
                 // Append any generic DART strings if available
-                let content = v.news_detail ? `<span class="text-amber-500 font-black"><i class="fas fa-bolt mr-1"></i>[DART/찌라시]</span> ${v.news_detail}` : v.reason;
+                let content = v.news_detail ? `<span class="text-amber-500 font-black"><i class="fas fa-bolt mr-1"></i>[실시간 수급포착]</span> ${v.news_detail}` : v.reason;
                 // format simple string line breaks
                 content = content.replace(/\n/g, '<br/>');
 
