@@ -325,12 +325,18 @@
             }
 
             const badge = document.getElementById('market-status-badge');
-            if (h === 8 && m >= 50 && m <= 59) {
-                badge.innerText = "PRE-MARKET 필터망";
-                badge.className = "text-[11px] font-bold bg-purple-600 px-2 py-0.5 rounded text-white animate-pulse";
-            } else if (h === 15 && m >= 0 && m <= 30) {
+            if (h === 8 && m >= 30 && m <= 59) {
+                badge.innerText = "PRE-MARKET 동시호가";
+                badge.className = "text-[13px] font-bold bg-purple-600 px-2 py-0.5 rounded text-white animate-pulse shrink-0";
+            } else if (h === 9 || (h >= 10 && h < 15) || (h === 15 && m < 20)) {
+                badge.innerText = "정규장 (실시간 감시중)";
+                badge.className = "text-[13px] font-bold bg-red-600/90 px-2 py-0.5 rounded text-white animate-pulse shrink-0";
+            } else if (h === 15 && m >= 20 && m <= 30) {
                 badge.innerText = "OVERNIGHT 종배 수급 감시";
-                badge.className = "text-[11px] font-bold bg-blue-600 px-2 py-0.5 rounded text-white";
+                badge.className = "text-[13px] font-bold bg-blue-600 px-2 py-0.5 rounded text-white shrink-0";
+            } else {
+                badge.innerText = "MARKET CLOSED (장 마감)";
+                badge.className = "text-[13px] font-bold bg-gray-600 px-2 py-0.5 rounded text-gray-300 shrink-0";
             }
         }
         setInterval(updateClocks, 1000);
