@@ -121,27 +121,27 @@
             <h1 class="text-xl md:text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-amber-500 flex items-center shrink-0">
                 <i class="fas fa-satellite-dish text-red-500 mr-2"></i> 1004MAS KRX SUPREME
             </h1>
-            <span id="market-status-badge" class="text-[10px] md:text-[11px] font-bold bg-red-600 px-2 py-0.5 rounded text-white animate-pulse shrink-0">정규장 거래대금 폭발</span>
+            <span id="market-status-badge" class="text-[13px] md:text-[14px] font-bold bg-red-600/90 px-2 py-0.5 rounded text-white animate-pulse shrink-0">정규장 거래대금 폭발</span>
         </div>
         <div class="flex items-center gap-2 md:gap-4 w-full md:w-auto justify-between md:justify-end">
             <!-- KOSPI / KOSDAQ Display -->
             <div id="market-indices" class="hidden md:flex items-center gap-3">
-                <div class="text-[11px] font-mono font-bold px-2 py-0.5 rounded border border-gray-800 bg-black/60">
-                    <span class="text-gray-400">코스피</span> 
+                <div class="text-[13px] font-mono font-bold px-2 py-0.5 rounded border border-gray-700 bg-black/60 shadow-inner">
+                    <span class="text-gray-300">코스피</span> 
                     <span id="idx-kospi-price" class="text-white ml-1">-.--</span> 
-                    <span id="idx-kospi-chg" class="ml-1 text-[9px]">-.--%</span>
+                    <span id="idx-kospi-chg" class="ml-1 text-[11px]">-.--%</span>
                 </div>
-                <div class="text-[11px] font-mono font-bold px-2 py-0.5 rounded border border-gray-800 bg-black/60">
-                    <span class="text-gray-400">코스닥</span> 
+                <div class="text-[13px] font-mono font-bold px-2 py-0.5 rounded border border-gray-700 bg-black/60 shadow-inner">
+                    <span class="text-gray-300">코스닥</span> 
                     <span id="idx-kosdaq-price" class="text-white ml-1">-.--</span> 
-                    <span id="idx-kosdaq-chg" class="ml-1 text-[9px]">-.--%</span>
+                    <span id="idx-kosdaq-chg" class="ml-1 text-[11px]">-.--%</span>
                 </div>
             </div>
-            <div class="font-mono text-[10px] md:text-[11px] font-bold text-gray-500 flex items-center gap-2 bg-black/50 px-3 py-1 rounded border border-gray-800">
-                <i class="fas fa-flag-checkered"></i> TARGET CLOSE
-                <span id="market-close-timer" class="text-red-500 text-sm ml-1">--:--:--</span>
+            <div class="font-mono text-[12px] md:text-[13px] font-bold text-gray-400 flex items-center gap-2 bg-black/50 px-3 py-1 rounded border border-gray-700">
+                <i class="fas fa-flag-checkered text-gray-500"></i> TARGET CLOSE
+                <span id="market-close-timer" class="text-red-500 text-[14px] ml-1">--:--:--</span>
             </div>
-            <button onclick="document.getElementById('settings-modal').classList.remove('hidden')" class="px-4 py-2 bg-gray-900 border border-gray-700 hover:border-gray-500 rounded-lg text-[12px] md:text-[14px] text-gray-300 transition-colors shadow-lg shadow-black/50 tooltip" title="텔레그램 환경설정">
+            <button onclick="document.getElementById('settings-modal').classList.remove('hidden')" class="px-4 py-2 bg-gray-800 border border-gray-600 hover:border-gray-400 rounded-lg text-[14px] text-white font-bold transition-colors shadow-lg shadow-black/50 tooltip" title="텔레그램 환경설정">
                 <i class="fas fa-cog"></i> 설정
             </button>
             <div id="live-clock" class="text-lg md:text-xl font-mono font-black text-white bg-black/80 px-4 py-1.5 rounded border border-gray-700 tracking-widest shrink-0">
@@ -171,7 +171,7 @@
 
             <!-- Kostolany Sniper 8 Watchlist -->
             <div class="panel-header text-purple-400 border-t-0 bg-gradient-to-r from-purple-900/20 to-black shrink-0">
-                <span class="text-sm font-black tracking-wider"><i class="fas fa-crosshairs text-purple-500 mr-2"></i>KOSTOLANY SNIPER 8</span>
+                <span class="text-[13px] font-black tracking-wider"><i class="fas fa-crosshairs text-purple-500 mr-2"></i>AM 09:00-10:10 , KOSTOLANY SNIPER 8</span>
                 <span class="text-[9px] bg-purple-900/60 text-purple-200 px-1.5 py-0.5 rounded border border-purple-700 animate-pulse">종배 타겟망</span>
             </div>
             <div class="flex-1 p-2 overflow-y-auto custom-scrollbar flex flex-col gap-1.5 bg-gradient-to-b from-purple-950/10 to-transparent min-h-[200px]" id="kostolany-container">
@@ -200,7 +200,7 @@
             
             <!-- NEW: 7% Defense Watchlist -->
             <div class="panel-header text-blue-400 border-t border-gray-800 bg-blue-900/10 shrink-0">
-                <span class="text-[13px] font-bold"><i class="fas fa-shield-alt text-blue-500 mr-2"></i>세력 7% 지지선 방어</span>
+                <span class="text-[13px] font-bold"><i class="fas fa-shield-alt text-blue-500 mr-2"></i>PM:13:30 , 세력 (6%-12%) 지지 방어선</span>
                 <span class="text-[9px] bg-blue-900/40 text-blue-300 px-1 rounded border border-blue-800">오후장 노림수</span>
             </div>
             <div class="p-2 overflow-y-auto custom-scrollbar flex flex-col gap-1.5 bg-gradient-to-b from-blue-950/20 to-transparent min-h-[160px] shrink-0" id="defense-container">
@@ -444,14 +444,14 @@
                     <div class="flex flex-col p-2 rounded-lg bg-black/40 border border-blue-900/60 shadow-[0_0_8px_rgba(59,130,246,0.1)] hover:bg-blue-900/20 transition-colors">
                         <div class="flex justify-between items-center mb-1">
                             <div class="flex items-center">
-                                <i class="fas fa-shield-alt text-blue-500 text-[10px] mr-1.5"></i>
-                                <span class="text-blue-300 font-bold text-[11px]">${item.name}</span>
+                                <i class="fas fa-shield-alt text-blue-500 text-[12px] mr-1.5 align-middle mt-0.5"></i>
+                                <span class="text-white font-bold text-[14px] drop-shadow-sm">${item.name}</span>
                             </div>
-                            <span class="text-red-400 font-black text-[11px]">+${item.chg.toFixed(1)}%</span>
+                            <span class="text-red-400 font-black text-[14px] drop-shadow-md">+${item.chg.toFixed(1)}%</span>
                         </div>
-                        <div class="flex justify-between items-center text-[9px] text-gray-500 border-t border-gray-800/50 pt-1 mt-0.5">
-                            <span>고점대비 붕괴율: <span class="${dropFromPeak < -10 ? 'text-red-900/80 font-bold' : 'text-gray-400'}">${dropFromPeak}%</span></span>
-                            <span>거래대금 ${item.vol}억</span>
+                        <div class="flex justify-between items-center text-[11px] text-gray-400 border-t border-gray-800/70 pt-1.5 mt-1">
+                            <span>고점 붕괴율: <span class="${dropFromPeak <= -10 ? 'text-purple-400 font-bold' : 'text-gray-300'}">${dropFromPeak}%</span></span>
+                            <span class="font-bold text-gray-300">거래대금 ${item.vol}억</span>
                         </div>
                     </div>
                 `;
@@ -469,23 +469,23 @@
                 const titleColor = isExploding ? "text-red-400 font-black animate-pulse" : "text-gray-300 font-bold";
                 const icon = isExploding ? `<i class="fas fa-fire text-red-500 mr-1 animate-ping"></i>` : `<span class="text-gray-600 font-mono text-[9px] mr-1">0${idx+1}</span>`;
 
-                let liveStatus = `<span class="text-[9px] text-gray-600 font-bold ml-2">잠복중..</span>`;
+                let liveStatus = `<span class="text-[14px] text-gray-400 font-bold ml-2">잠복중..</span>`;
                 if(isExploding) {
                      const sign = realTimeData.chg > 0 ? '+' : '';
                      const chgColor = realTimeData.chg > 0 ? 'text-red-400' : 'text-blue-400';
-                     liveStatus = `<span class="${chgColor} font-black text-[10px] drop-shadow-md ml-2">${sign}${realTimeData.chg.toFixed(1)}% <span class="text-gray-400 text-[8px] font-normal tracking-tighter">(${realTimeData.vol}억)</span></span>`;
+                     liveStatus = `<span class="${chgColor} font-black text-[14px] drop-shadow-md ml-3">${sign}${realTimeData.chg.toFixed(1)}% <span class="text-white text-[12px] font-bold tracking-tighter opacity-90">(${realTimeData.vol}억)</span></span>`;
                 }
 
                 return `
-                    <div class="flex flex-col p-2 rounded-lg border ${borderColor} transition-all">
-                        <div class="flex justify-between items-center mb-1">
+                    <div class="flex flex-col p-2.5 rounded-lg border ${borderColor} transition-all">
+                        <div class="flex justify-between items-center mb-1.5">
                             <div class="flex flex-row items-center">
-                                <span class="text-[11px] ${titleColor}">${icon}${item.name}</span>
+                                <span class="text-[15px] ${titleColor} drop-shadow-sm">${icon}${item.name}</span>
                                 ${liveStatus}
                             </div>
-                            <span class="text-[8px] bg-purple-900/50 text-purple-300 px-1 rounded border border-purple-700/50 shrink-0 ml-1">${item.type}</span>
+                            <span class="text-[10px] font-bold bg-purple-900/80 text-purple-200 px-1.5 py-0.5 rounded border border-purple-500/50 shrink-0 ml-1 drop-shadow-sm">${item.type}</span>
                         </div>
-                        <div class="text-[9px] text-gray-500/80 leading-tight">${item.reason}</div>
+                        <div class="text-[14px] text-white font-medium leading-relaxed drop-shadow-sm">${item.reason}</div>
                     </div>
                 `;
             }).join('');
@@ -526,8 +526,8 @@
 
                 return `
                     <div onclick="selectTheme('${theme}')" class="sector-box ${glowClass} ${isActive} ${widthClass} p-3 flex-grow" style="min-height: ${Math.max(60, weightRatio * 2)}px">
-                        <div class="text-[13px] text-white/90 drop-shadow-md z-10">${theme}</div>
-                        <div class="text-[10px] text-white/50 font-normal mt-1 z-10">${sec.totalVol.toLocaleString()} 억</div>
+                        <div class="text-[14px] text-white/90 drop-shadow-md z-10 font-bold">${theme}</div>
+                        <div class="text-[13px] text-white/70 font-medium mt-1 z-10">${sec.totalVol.toLocaleString()} 억</div>
                         ${avgVel > 1.5 ? `<i class="fas fa-fire text-red-500/30 absolute text-4xl -z-0 right-2 bottom-0"></i>` : ''}
                     </div>
                 `;
@@ -583,9 +583,9 @@
                 let badgeHTML = '';
                 if (safeVel >= 1.0 || (s.vol/1000) > 3) {
                     if (s.chg <= 0 || safePeak <= -5.0) {
-                        badgeHTML = '<span class="text-[9px] bg-purple-900/60 text-purple-400 border-purple-700/50 px-1.5 py-0.5 rounded border font-bold animate-pulse"><i class="fas fa-skull"></i> 강력 투매(도주)</span>';
+                        badgeHTML = '<span class="text-[12px] bg-purple-900/60 text-purple-400 border-purple-700/50 px-2 py-0.5 rounded border font-bold animate-pulse"><i class="fas fa-skull"></i> 강력 투매(도주)</span>';
                     } else {
-                        badgeHTML = '<span class="text-[9px] bg-red-900/60 text-red-500 border-red-700/50 px-1.5 py-0.5 rounded border font-bold"><i class="fas fa-fire"></i> 강력 매집중</span>';
+                        badgeHTML = '<span class="text-[12px] bg-red-900/60 text-red-500 border-red-700/50 px-2 py-0.5 rounded border font-bold"><i class="fas fa-fire"></i> 강력 매집중</span>';
                     }
                 }
 
@@ -593,50 +593,50 @@
                     <div class="glass-card flex flex-col h-full hover:border-gray-500 transition-colors">
                         <div class="flex justify-between items-start mb-4">
                             <div class="flex flex-col">
-                                <div class="flex items-center gap-1.5 mb-1.5">
-                                    <span class="text-[10px] text-gray-500 font-mono italic opacity-60">0${idx+1}</span>
-                                    <span class="text-[9px] bg-gray-800/80 text-gray-400 border-gray-700 px-1.5 py-0.5 rounded border font-bold">${themeText}</span>
+                                <div class="flex items-center gap-1.5 mb-2.5">
+                                    <span class="text-[13px] text-gray-500 font-mono italic opacity-60">0${idx+1}</span>
+                                    <span class="text-[12px] bg-gray-800/80 text-gray-300 border-gray-700 px-1.5 py-0.5 rounded border font-bold">${themeText}</span>
                                     ${badgeHTML}
                                 </div>
-                                <h2 class="text-xl md:text-2xl font-black text-white tracking-tight">${s.name}</h2>
+                                <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight drop-shadow-md">${s.name}</h2>
                             </div>
                             <div class="text-right">
-                                <div class="text-2xl md:text-3xl font-black ${chgColor} tracking-tighter drop-shadow-md">${sign}${s.chg.toFixed(1)}%</div>
-                                <div class="text-xs text-gray-500 font-bold mt-1">${s.vol.toLocaleString()} 억원</div>
+                                <div class="text-3xl md:text-3xl font-black ${chgColor} tracking-tighter drop-shadow-md">${sign}${s.chg.toFixed(1)}%</div>
+                                <div class="text-[14px] text-gray-300 font-bold mt-1 shadow-sm">${s.vol.toLocaleString()} 억원</div>
                             </div>
                         </div>
 
                         <div class="space-y-3 mb-4 flex-grow">
                             <!-- 거래금 Bar -->
-                            <div class="flex items-center justify-between text-[11px]">
-                                <span class="text-gray-400 font-medium w-16">거래금</span>
-                                <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
+                            <div class="flex items-center justify-between text-[13px] font-bold">
+                                <span class="text-gray-400 w-20">거래대금</span>
+                                <div class="flex-1 mx-2 h-2.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800 shadow-inner">
                                     <div class="h-full bg-emerald-500 stat-bar-fill" style="width: ${volPct}%"></div>
                                 </div>
-                                <span class="text-emerald-400 font-mono w-8 text-right">${Math.round(s.vol/1000)}k</span>
+                                <span class="text-emerald-400 font-mono w-12 text-right">${Math.round(s.vol/1000)}k</span>
                             </div>
                             <!-- 가속도 Bar -->
-                            <div class="flex items-center justify-between text-[11px]">
-                                <span class="text-gray-400 font-medium w-16">가속도(Vel)</span>
-                                <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
+                            <div class="flex items-center justify-between text-[13px] font-bold">
+                                <span class="text-gray-400 w-20">가속도(Vel)</span>
+                                <div class="flex-1 mx-2 h-2.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800 shadow-inner">
                                     <div class="h-full ${velBarColor} stat-bar-fill" style="width: ${velPct}%"></div>
                                 </div>
-                                <span class="${safeVel>0?'text-cyan-400':'text-gray-500'} font-mono w-8 text-right">${safeVel>0?'+':''}${safeVel.toFixed(1)}</span>
+                                <span class="${safeVel>0?'text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]':'text-gray-500'} font-mono w-12 text-right">${safeVel>0?'+':''}${safeVel.toFixed(1)}</span>
                             </div>
                             <!-- 고점유지력 Bar -->
-                            <div class="flex items-center justify-between text-[11px]">
-                                <span class="text-gray-400 font-medium w-16">고점유지력</span>
-                                <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
+                            <div class="flex items-center justify-between text-[13px] font-bold">
+                                <span class="text-gray-400 w-20">고점유지력</span>
+                                <div class="flex-1 mx-2 h-2.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800 shadow-inner">
                                     <div class="h-full ${peakBarColor} stat-bar-fill" style="width: ${peakSafePct}%"></div>
                                 </div>
-                                <span class="text-indigo-400 font-mono w-10 text-right">${safePeak.toFixed(2)}%</span>
+                                <span class="text-indigo-300 font-mono w-12 text-right">${safePeak.toFixed(2)}%</span>
                             </div>
                         </div>
 
                         ${s.news ? `
-                        <div class="mt-2 p-3 rounded-lg border border-yellow-600/40 bg-yellow-900/20 mb-1 pulse-news shadow-inner">
-                            <div class="text-[11px] font-bold text-yellow-500 mb-1"><i class="fas fa-bolt mr-1 text-yellow-400"></i>[정보/재료] 포착</div>
-                            <div class="text-[11px] text-gray-300 leading-relaxed font-medium">${s.news}</div>
+                        <div class="mt-2 p-3 rounded-lg border border-yellow-600/50 bg-yellow-900/30 mb-1 pulse-news shadow-inner">
+                            <div class="text-[13px] font-bold text-yellow-400 mb-1.5"><i class="fas fa-bolt mr-1 text-yellow-300"></i>[정보/재료] 포착</div>
+                            <div class="text-[14px] text-white leading-relaxed font-medium drop-shadow-sm">${s.news}</div>
                         </div>
                         ` : ''}
                     </div>
@@ -679,13 +679,30 @@
                 // format simple string line breaks
                 content = content.replace(/\n/g, '<br/>');
 
+                // 1분 이내 새로 들어온 피드 처리 (깜빡임 이펙트)
+                let pulseClass = "";
+                if (v.timestamp) {
+                    const now = new Date();
+                    const parts = v.timestamp.split(':');
+                    if(parts.length === 3) {
+                        const h = parseInt(parts[0], 10);
+                        const m = parseInt(parts[1], 10);
+                        const s = parseInt(parts[2], 10);
+                        const t = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, s);
+                        // 현재 시간 기준 60초(60000ms) 이내의 피드면 깜빡임
+                        if (now - t >= 0 && now - t <= 60000) {
+                            pulseClass = "animate-pulse shadow-[0_0_15px_rgba(250,204,21,0.3)] border border-yellow-400/80";
+                        }
+                    }
+                }
+
                 return `
-                    <div class="flex flex-col text-[11px] p-2.5 rounded-lg border ${badgeClass} mb-1">
-                        <div class="flex justify-between items-center mb-1">
-                            <span class="font-mono text-[9px] opacity-70">[${v.timestamp}]</span>
-                            <span class="font-black text-[10px]"><i class="fas ${icon} mr-1"></i>${v.coin_name}</span>
+                    <div class="flex flex-col text-[11px] p-2.5 rounded-lg border ${badgeClass} ${pulseClass} mb-1 transition-all duration-300">
+                        <div class="flex justify-between items-center mb-1 border-b border-white/10 pb-1">
+                            <span class="font-mono text-[14px] text-white font-black drop-shadow-lg">[${v.timestamp}]</span>
+                            <span class="font-black text-[15px] text-yellow-400 drop-shadow-md tracking-tight"><i class="fas ${icon} opacity-80 mr-1 text-white/50"></i>${v.coin_name}</span>
                         </div>
-                        <div class="text-gray-200/90 leading-snug drop-shadow-sm mt-0.5">${content}</div>
+                        <div class="text-gray-100 text-[12px] font-medium leading-relaxed drop-shadow-sm mt-1">${content}</div>
                     </div>
                 `;
             }).join('');
