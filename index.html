@@ -178,11 +178,26 @@
             </div>
         </section>
 
-        <!-- P2: Stock Commands (Detailed Cards) -->
-        <section class="panel w-full lg:w-1/2 h-[600px] lg:h-auto lg:flex-1">
-            <div class="panel-header text-white">
+        <!-- P2: Stock Commands & AI Briefing (Detailed Cards) -->
+        <section class="panel w-full lg:w-1/2 h-[600px] lg:h-auto lg:flex-1 flex flex-col">
+            <div class="panel-header text-white shrink-0">
                 <span id="command-title"><i class="fas fa-crosshairs text-red-500 mr-2"></i>Stock Commands <span class="text-gray-500 text-sm ml-2 font-normal">/ 타겟 전술 카드</span></span>
             </div>
+            
+            <!-- [NEW] Zhuge AI Core 실시간 통제 브리핑 창 -->
+            <div class="m-4 mb-0 p-4 border border-teal-500/50 bg-teal-950/20 rounded-lg shadow-[0_0_15px_rgba(20,184,166,0.15)] shrink-0 transition-all">
+                <div class="flex items-center justify-between mb-2 pb-2 border-b border-teal-800/60">
+                    <div class="flex items-center">
+                        <i class="fas fa-brain text-teal-400 mr-2 animate-pulse text-lg"></i>
+                        <span class="text-teal-300 font-bold tracking-wider text-[14px]">Zhuge AI Core (제갈공명 전술 브리핑)</span>
+                    </div>
+                    <span class="text-[10px] bg-teal-900/60 text-teal-200 px-1.5 py-0.5 rounded border border-teal-700">스마트 트리거 가동중</span>
+                </div>
+                <div id="zhuge-briefing-text" class="text-[13px] text-gray-300 leading-loose font-medium font-mono whitespace-pre-wrap">
+                    AI 코어 엔진 워밍업 중... (초기화)
+                </div>
+            </div>
+
             <div class="flex-1 p-4 overflow-y-auto custom-scrollbar grid grid-cols-1 md:grid-cols-2 gap-4 content-start" id="cards-container">
                 <!-- Cards injected here -->
             </div>
@@ -360,6 +375,14 @@
                 }
                 if (window.krxKostolany) {
                     kostolanyList = window.krxKostolany;
+                }
+                
+                // Zhuge AI Core
+                if (window.krxZhugeIntel && window.krxZhugeIntel !== "초기화 중...") {
+                    const el = document.getElementById('zhuge-briefing-text');
+                    if(el) {
+                        el.innerHTML = window.krxZhugeIntel.replace(/\n/g, '<br/>');
+                    }
                 }
                 
                 // Update KOSPI / KOSDAQ Tickers
