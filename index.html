@@ -546,7 +546,20 @@
             }
 
             // 중앙 메인 카드는 10개로 제한 (나머지 20개는 방어선 트래킹용)
-            const html = filtered.slice(0, 10).map((s, idx) => {
+            const top10 = filtered.slice(0, 10);
+            
+            const goodCards = [];
+            const badCards = [];
+            
+            top10.forEach((s, idx) => {
+                 let safePeak = s.peak !== undefined ? parseFloat(s.peak) : 0;
+                 if (s.chg <= 0 || safePeak <= -5.0) badCards.push({s, idx});
+                 else goodCards.push({s, idx});
+            });
+
+            const renderSingleCard = (item) => {
+                const s = item.s;
+                const idx = item.idx;
                 const chgColor = s.chg > 0 ? 'text-red-500' : 'text-blue-500';
                 const sign = s.chg > 0 ? '+' : '';
                 
@@ -557,6 +570,9 @@
                 let volPct = Math.min(100, (s.vol / 20000) * 100); 
                 let velPct = Math.min(100, Math.max(0, (safeVel / 4) * 100));
                 let velBarColor = safeVel > 1.5 ? 'bg-red-500' : 'bg-gray-500';
+                if (safeVel >= 1.0 && (s.chg <= 0 || safePeak <= -5.0)) {
+                    velBarColor = 'bg-purple-500'; // 투매 가속도 경고 (보라색)
+                }
                 if(safeVel < 0) { velPct = Math.min(100, Math.abs(safeVel/4) * 100); velBarColor = 'bg-blue-500'; }
                 
                 let peakSafePct = Math.max(0, 100 - (Math.abs(safePeak) / 5 * 100));
@@ -564,7 +580,14 @@
 
                 // Badge Logic Separation
                 let themeText = s.theme || '주도주';
-                let isStrong = (safeVel >= 1.0 || (s.vol/1000) > 3);
+                let badgeHTML = '';
+                if (safeVel >= 1.0 || (s.vol/1000) > 3) {
+                    if (s.chg <= 0 || safePeak <= -5.0) {
+                        badgeHTML = '<span class="text-[9px] bg-purple-900/60 text-purple-400 border-purple-700/50 px-1.5 py-0.5 rounded border font-bold animate-pulse"><i class="fas fa-skull"></i> 강력 투매(도주)</span>';
+                    } else {
+                        badgeHTML = '<span class="text-[9px] bg-red-900/60 text-red-500 border-red-700/50 px-1.5 py-0.5 rounded border font-bold"><i class="fas fa-fire"></i> 강력 매집중</span>';
+                    }
+                }
 
                 return `
                     <div class="glass-card flex flex-col h-full hover:border-gray-500 transition-colors">
@@ -573,7 +596,7 @@
                                 <div class="flex items-center gap-1.5 mb-1.5">
                                     <span class="text-[10px] text-gray-500 font-mono italic opacity-60">0${idx+1}</span>
                                     <span class="text-[9px] bg-gray-800/80 text-gray-400 border-gray-700 px-1.5 py-0.5 rounded border font-bold">${themeText}</span>
-                                    ${isStrong ? '<span class="text-[9px] bg-red-900/60 text-red-500 border-red-700/50 px-1.5 py-0.5 rounded border font-bold">🔥 강력 매집중</span>' : ''}
+                                    ${badgeHTML}
                                 </div>
                                 <h2 class="text-xl md:text-2xl font-black text-white tracking-tight">${s.name}</h2>
                             </div>
@@ -618,7 +641,17 @@
                         ` : ''}
                     </div>
                 `;
-            }).join('');
+            };
+
+            let html = '';
+            if (goodCards.length > 0) {
+                html += `<div class="col-span-full border-b border-red-900/40 pb-2 mb-2 mt-1"><span class="text-red-500 font-bold text-sm drop-shadow-md"><i class="fas fa-rocket mr-1"></i>🎯 집중 매수 타겟 (상승 돌격대)</span></div>`;
+                html += goodCards.map(renderSingleCard).join('');
+            }
+            if (badCards.length > 0) {
+                html += `<div class="col-span-full border-b border-purple-900/40 pb-2 mb-2 mt-4"><span class="text-purple-400 font-bold text-sm drop-shadow-md"><i class="fas fa-skull mr-1"></i>💀 투매 폭포수 (접근 금지)</span></div>`;
+                html += badCards.map(renderSingleCard).join('');
+            }
             document.getElementById('cards-container').innerHTML = html;
         }
 
