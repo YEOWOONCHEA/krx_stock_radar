@@ -357,9 +357,9 @@
         function fetchData() {
             const script = document.createElement('script');
             // 접속 환경(로컬 파일 vs 외부 도메인)에 따라 완벽하게 통신 경로 자동 분기
-            let dataUrl = '/krx_data.js';
+            let dataUrl = `/krx_data.js?t=${new Date().getTime()}`;
             if (window.location.protocol === 'file:') {
-                dataUrl = 'http://localhost:8088/krx_data.js';
+                dataUrl = `http://localhost:8088/krx_data.js?t=${new Date().getTime()}`;
             }
             script.src = `${dataUrl}?t=${new Date().getTime()}`;
             
@@ -460,44 +460,71 @@
             renderDefenseLine();
         }
 
-        // [Right Bottom] 7% Defense Line
+        // [Right Bottom] 7% Defense Line (어제 + 오늘 분리)
         function renderDefenseLine() {
-            // Filter stocks that are defending near the 7% line (lowered bottom boundary to 6.0% to catch shakeouts/fake breakdowns)
-            const defenders = topVolumeCache.filter(v => v.chg >= 6.0 && v.chg <= 12.0);
+            let html = '';
             
-            if (defenders.length === 0) {
-                document.getElementById('defense-container').innerHTML = `<div class="text-[14px] text-gray-500 font-bold text-center mt-6">현재 7% 지지선 방어 종목 없음</div>`;
-                return;
+            // [1] 어제 종목 렌더링
+            if (window.krxYesterdayDefenders && window.krxYesterdayDefenders.length > 0) {
+                html += `<div class="mb-3">`;
+                html += window.krxYesterdayDefenders.map(item => {
+                    const dropFromPeak = item.peak;
+                    const boxStyle = "bg-orange-950/20 border-orange-800/60 shadow-[0_0_8px_rgba(249,115,22,0.15)] hover:bg-orange-900/30";
+                    return `
+                        <div class="flex flex-col p-2.5 rounded-lg border ${boxStyle} transition-colors mb-1.5 opacity-90">
+                            <div class="flex justify-between items-center mb-1.5">
+                                <div class="flex items-center">
+                                    <span class="text-[10px] bg-orange-600 text-white px-1.5 py-0.5 rounded shadow-sm font-bold mr-2 tracking-tighter"><i class="fas fa-history mr-1"></i>어제 종목</span>
+                                    <span class="text-orange-200 font-bold text-[14px] drop-shadow-sm">${item.name}</span>
+                                </div>
+                                <span class="text-orange-400 font-black text-[14px] drop-shadow-md">+${parseFloat(item.chg).toFixed(1)}%</span>
+                            </div>
+                            <div class="flex justify-between items-center text-[12px] text-gray-500 border-t border-orange-900/40 pt-1.5">
+                                <span>마감 방어율: <span class="text-orange-300 font-bold">${dropFromPeak}%</span></span>
+                                <span class="font-bold text-gray-400 shadow-sm">${Math.round(item.vol)}억</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                html += `</div>`;
             }
 
-            const html = defenders.map(item => {
-                const dropFromPeak = item.peak; // e.g. -5.2
-                // 고점 대비 -10% 이상 폭락하면서 지지선에 도달한 경우 (투매 위험 매우 높음)
-                const isHeavyDump = dropFromPeak <= -10;
-                
-                const boxStyle = isHeavyDump 
-                    ? "bg-purple-950/20 border-purple-800/60 shadow-[0_0_8px_rgba(147,51,234,0.15)] hover:bg-purple-900/30" 
-                    : "bg-black/40 border-blue-900/60 shadow-[0_0_8px_rgba(59,130,246,0.1)] hover:bg-blue-900/20";
-                
-                const iconColor = isHeavyDump ? "text-purple-400 animate-pulse" : "text-blue-500";
-                const peakTextColor = isHeavyDump ? "text-red-400 font-black animate-pulse" : "text-gray-300 font-bold";
+            // [2] 오늘 실시간 방어선 렌더링
+            const defenders = topVolumeCache.filter(v => parseFloat(v.chg) >= 6.0 && parseFloat(v.chg) <= 12.0);
+            
+            if (defenders.length === 0) {
+                html += `<div class="text-[13px] text-blue-500/50 font-bold text-center mt-3 border border-blue-900/30 rounded p-2 bg-blue-950/10">오늘(Live) 7% 방어 종목 없음</div>`;
+            } else {
+                html += defenders.map(item => {
+                    const dropFromPeak = item.peak; // e.g. -5.2
+                    // 고점 대비 -10% 이상 폭락하면서 지지선에 도달한 경우 (투매 위험 매우 높음)
+                    const isHeavyDump = dropFromPeak <= -10;
+                    
+                    const boxStyle = isHeavyDump 
+                        ? "bg-purple-950/20 border-purple-800/60 shadow-[0_0_8px_rgba(147,51,234,0.15)] hover:bg-purple-900/30" 
+                        : "bg-black/40 border-blue-900/60 shadow-[0_0_8px_rgba(59,130,246,0.1)] hover:bg-blue-900/20";
+                    
+                    const iconColor = isHeavyDump ? "text-purple-400 animate-pulse" : "text-blue-500";
+                    const peakTextColor = isHeavyDump ? "text-red-400 font-black animate-pulse" : "text-gray-300 font-bold";
 
-                return `
-                    <div class="flex flex-col p-2.5 rounded-lg border ${boxStyle} transition-colors">
-                        <div class="flex justify-between items-center mb-1.5">
-                            <div class="flex items-center">
-                                <i class="fas fa-shield-alt ${iconColor} text-[13px] mr-1.5 align-middle mt-0.5"></i>
-                                <span class="text-white font-bold text-[15px] drop-shadow-sm">${item.name}</span>
+                    return `
+                        <div class="flex flex-col p-2.5 rounded-lg border ${boxStyle} transition-colors mb-1.5">
+                            <div class="flex justify-between items-center mb-1.5">
+                                <div class="flex items-center">
+                                    <i class="fas fa-shield-alt ${iconColor} text-[13px] mr-1.5 align-middle mt-0.5"></i>
+                                    <span class="text-white font-bold text-[15px] drop-shadow-sm">${item.name}</span>
+                                </div>
+                                <span class="text-red-400 font-black text-[15px] drop-shadow-md">+${parseFloat(item.chg).toFixed(1)}%</span>
                             </div>
-                            <span class="text-red-400 font-black text-[15px] drop-shadow-md">+${item.chg.toFixed(1)}%</span>
+                            <div class="flex justify-between items-center text-[13px] text-gray-400 border-t border-gray-800/70 pt-2 p-1">
+                                <span>실시간 고점붕괴: <span class="${peakTextColor}">${dropFromPeak}%</span></span>
+                                <span class="font-bold text-gray-300 shadow-sm">${Math.round(item.vol)}억</span>
+                            </div>
                         </div>
-                        <div class="flex justify-between items-center text-[13px] text-gray-400 border-t border-gray-800/70 pt-2 mt-1">
-                            <span>고점 붕괴율: <span class="${peakTextColor}">${dropFromPeak}%</span></span>
-                            <span class="font-bold text-gray-300 shadow-sm">거래대금 ${item.vol}억</span>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+                    `;
+                }).join('');
+            }
+            
             document.getElementById('defense-container').innerHTML = html;
         }
 
