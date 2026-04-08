@@ -218,7 +218,7 @@
                 <span class="text-[13px] font-bold"><i class="fas fa-shield-alt text-blue-500 mr-2"></i>PM:13:30 , 세력 (6%-12%) 지지 방어선</span>
                 <span class="text-[9px] bg-blue-900/40 text-blue-300 px-1 rounded border border-blue-800">오후장 노림수</span>
             </div>
-            <div class="p-2 overflow-y-auto custom-scrollbar flex flex-col gap-1.5 bg-gradient-to-b from-blue-950/20 to-transparent min-h-[160px] shrink-0" id="defense-container">
+            <div class="p-2 overflow-y-auto custom-scrollbar flex flex-col gap-1.5 bg-gradient-to-b from-blue-950/20 to-transparent min-h-[160px] max-h-[280px] shrink-0" id="defense-container">
             </div>
         </section>
 
@@ -356,9 +356,10 @@
         // 2. Data Fetch (CORS Bypass using Script Injection)
         function fetchData() {
             const script = document.createElement('script');
-            // 접속 환경(로컬 파일 vs 외부 도메인)에 따라 완벽하게 통신 경로 자동 분기
-            let dataUrl = `http://localhost:8088/krx_data.js`;
-            script.src = `${dataUrl}?t=${new Date().getTime()}`;
+            let dataUrl = `/krx_data.js`;
+            if (window.location.protocol === 'file:') {
+                dataUrl = `http://localhost:8088/krx_data.js`;
+            }
             
             script.onload = () => {
                 if(!isTelegramLoaded) loadTelegramSettings();
