@@ -424,8 +424,13 @@
             script.onerror = () => {
                 document.head.removeChild(script);
             };
+            
+            // Add cache-busting timestamp to prevent browser from caching old JSON
+            script.src = dataUrl + '?t=' + new Date().getTime();
             document.head.appendChild(script);
         }
+
+        // fetchData is initialized below
 
         function selectTheme(themeName) {
             selectedTheme = themeName;
