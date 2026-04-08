@@ -357,10 +357,7 @@
         function fetchData() {
             const script = document.createElement('script');
             // 접속 환경(로컬 파일 vs 외부 도메인)에 따라 완벽하게 통신 경로 자동 분기
-            let dataUrl = `/krx_data.js?t=${new Date().getTime()}`;
-            if (window.location.protocol === 'file:') {
-                dataUrl = `http://localhost:8088/krx_data.js?t=${new Date().getTime()}`;
-            }
+            let dataUrl = `http://localhost:8088/krx_data.js`;
             script.src = `${dataUrl}?t=${new Date().getTime()}`;
             
             script.onload = () => {
