@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1004MAS KRX 전술 레이더 (Ultimate 3-Panel)</title>
+    <title>1004MAS US SUPREME (Ultimate 3-Panel)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -119,22 +119,22 @@
     <header class="flex flex-col md:flex-row justify-between items-center px-2 shrink-0 gap-2 mb-2 lg:mb-0">
         <div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-start">
             <h1 class="text-xl md:text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-amber-500 flex items-center shrink-0">
-                <i class="fas fa-satellite-dish text-red-500 mr-2"></i> 1004MAS KRX SUPREME
+                <i class="fas fa-satellite-dish text-red-500 mr-2"></i> 1004MAS US SUPREME
             </h1>
             <span id="market-status-badge" class="text-[13px] md:text-[14px] font-bold bg-red-600/90 px-2 py-0.5 rounded text-white animate-pulse shrink-0">정규장 거래대금 폭발</span>
         </div>
         <div class="flex items-center gap-2 md:gap-4 w-full md:w-auto justify-between md:justify-end">
-            <!-- KOSPI / KOSDAQ Display -->
+            <!-- S&P500 / NASDAQ Display -->
             <div id="market-indices" class="hidden md:flex items-center gap-3">
-                <div id="idx-kospi-box" class="text-[14px] flex items-center font-mono font-bold px-3 py-1 rounded border border-gray-700 bg-black/60 shadow-inner transition-colors">
+                <div id="idx-sp500-box" class="text-[14px] flex items-center font-mono font-bold px-3 py-1 rounded border border-gray-700 bg-black/60 shadow-inner transition-colors">
                     <span class="text-gray-300 mr-2">코스피</span> 
-                    <span id="idx-kospi-price" class="text-white">-.--</span> 
-                    <span id="idx-kospi-chg" class="ml-2">-.--%</span>
+                    <span id="idx-sp500-price" class="text-white">-.--</span> 
+                    <span id="idx-sp500-chg" class="ml-2">-.--%</span>
                 </div>
-                <div id="idx-kosdaq-box" class="text-[14px] flex items-center font-mono font-bold px-3 py-1 rounded border border-gray-700 bg-black/60 shadow-inner transition-colors">
+                <div id="idx-nasdaq-box" class="text-[14px] flex items-center font-mono font-bold px-3 py-1 rounded border border-gray-700 bg-black/60 shadow-inner transition-colors">
                     <span class="text-gray-300 mr-2">코스닥</span> 
-                    <span id="idx-kosdaq-price" class="text-white">-.--</span> 
-                    <span id="idx-kosdaq-chg" class="ml-2">-.--%</span>
+                    <span id="idx-nasdaq-price" class="text-white">-.--</span> 
+                    <span id="idx-nasdaq-chg" class="ml-2">-.--%</span>
                 </div>
             </div>
             <div class="font-mono text-[12px] md:text-[13px] font-bold text-gray-400 flex items-center gap-2 bg-black/50 px-3 py-1 rounded border border-gray-700">
@@ -264,8 +264,8 @@
 
         // --- 텔레그램 연동 ---
         function loadTelegramSettings() {
-            const token = localStorage.getItem('tg_bot_token_krx');
-            const chatId = localStorage.getItem('tg_chat_id_krx');
+            const token = localStorage.getItem('tg_bot_token_us');
+            const chatId = localStorage.getItem('tg_chat_id_us');
             if(token) document.getElementById('tg_bot_token').value = token;
             if(chatId) document.getElementById('tg_chat_id').value = chatId;
             isTelegramLoaded = true;
@@ -274,19 +274,19 @@
         function saveTelegramSettings() {
             const token = document.getElementById('tg_bot_token').value.trim();
             const chatId = document.getElementById('tg_chat_id').value.trim();
-            localStorage.setItem('tg_bot_token_krx', token);
-            localStorage.setItem('tg_chat_id_krx', chatId);
+            localStorage.setItem('tg_bot_token_us', token);
+            localStorage.setItem('tg_chat_id_us', chatId);
             if(token && chatId) {
-                sendTelegramMessage("✅ <b>[1004MAS KRX Radar]</b>\n\n주공, 텔레그램 전령 시스템 연동이 정상적으로 완료되었습니다. 앞으로 한국 현물 시장 급등락 리포트를 이곳으로 보고하겠습니다.");
-                alert("한국 주식(KRX) 텔레그램 설정이 기기(로컬)에 저장되었습니다.");
+                sendTelegramMessage("✅ <b>[1004MAS US Radar]</b>\n\n주공, 텔레그램 전령 시스템 연동이 정상적으로 완료되었습니다. 앞으로 한국 현물 시장 급등락 리포트를 이곳으로 보고하겠습니다.");
+                alert("미국 주식(US) 텔레그램 설정이 기기(로컬)에 저장되었습니다.");
             } else {
                 alert("토큰과 Chat ID를 모두 입력해주세요.");
             }
         }
 
         async function sendTelegramMessage(text) {
-            const token = localStorage.getItem('tg_bot_token_krx');
-            const chatId = localStorage.getItem('tg_chat_id_krx');
+            const token = localStorage.getItem('tg_bot_token_us');
+            const chatId = localStorage.getItem('tg_chat_id_us');
             if(!token || !chatId) return;
             try {
                 await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
@@ -297,12 +297,12 @@
             } catch(e) { console.error("Telegram API Error", e); }
         }
 
-        function checkKRXAlerts(signals) {
+        function checkUSAlerts(signals) {
             if (signals.length === 0) return;
             // Get newly added signals
             const newSignals = signals.filter(s => !previousSignals.has(s.coin_name + s.timestamp));
             if (newSignals.length > 0) {
-                let msg = "🚨 <b>[1004MAS KRX Radar 타점 포착]</b>\n\n";
+                let msg = "🚨 <b>[1004MAS US Radar 타점 포착]</b>\n\n";
                 newSignals.forEach(v => {
                     const icon = v.signal === 'green' ? '🚀' : '💀';
                     msg += `${icon} <b>${v.coin_name}</b>\n${v.reason || v.news_detail || ''}\n\n`;
@@ -356,57 +356,57 @@
         // 2. Data Fetch (CORS Bypass using Script Injection)
         function fetchData() {
             const script = document.createElement('script');
-            let dataUrl = `/krx_data.js`;
+            let dataUrl = `/us_data.js`;
             if (window.location.protocol === 'file:') {
-                dataUrl = `http://localhost:8088/krx_data.js`;
-            } else if (window.location.hostname === 'krx.1004mas.com') {
+                dataUrl = `http://localhost:8088/us_data.js`;
+            } else if (window.location.hostname === 'us.1004mas.com') {
                 // 외부망(홈페이지)에서 접속 시, 주군의 로컬 컴퓨터로 연결되는 터널망 사용
-                dataUrl = `https://concentrations-show-transparent-editor.trycloudflare.com/krx_data.js`;
+                dataUrl = `https://concentrations-show-transparent-editor.trycloudflare.com/us_data.js`;
             }
             
             script.onload = () => {
                 if(!isTelegramLoaded) loadTelegramSettings();
                 
-                if (window.krxTopVolume) topVolumeCache = window.krxTopVolume;
-                if (window.krxWhaleSignals) {
-                    aiVerdictsCache = window.krxWhaleSignals;
-                    checkKRXAlerts(aiVerdictsCache);
+                if (window.usTopVolume) topVolumeCache = window.usTopVolume;
+                if (window.usWhaleSignals) {
+                    aiVerdictsCache = window.usWhaleSignals;
+                    checkUSAlerts(aiVerdictsCache);
                 }
-                if (window.krxKostolany) {
-                    kostolanyList = window.krxKostolany;
+                if (window.usKostolany) {
+                    kostolanyList = window.usKostolany;
                 }
                 
                 // Zhuge AI Core
-                if (window.krxZhugeIntel && window.krxZhugeIntel !== "초기화 중...") {
+                if (window.usZhugeIntel && window.usZhugeIntel !== "초기화 중...") {
                     const el = document.getElementById('zhuge-briefing-text');
                     if(el) {
-                        el.innerHTML = window.krxZhugeIntel.replace(/\n/g, '<br/>');
+                        el.innerHTML = window.usZhugeIntel.replace(/\n/g, '<br/>');
                     }
                 }
                 
-                // Update KOSPI / KOSDAQ Tickers
-                if (window.krxIndices) {
-                    const kospiBox = document.getElementById('idx-kospi-box');
-                    const kospi = document.getElementById('idx-kospi-price');
-                    const kospiChg = document.getElementById('idx-kospi-chg');
+                // Update S&P500 / NASDAQ Tickers
+                if (window.usIndices) {
+                    const kospiBox = document.getElementById('idx-sp500-box');
+                    const kospi = document.getElementById('idx-sp500-price');
+                    const kospiChg = document.getElementById('idx-sp500-chg');
                     
-                    const kosdaqBox = document.getElementById('idx-kosdaq-box');
-                    const kosdaq = document.getElementById('idx-kosdaq-price');
-                    const kosdaqChg = document.getElementById('idx-kosdaq-chg');
+                    const kosdaqBox = document.getElementById('idx-nasdaq-box');
+                    const kosdaq = document.getElementById('idx-nasdaq-price');
+                    const kosdaqChg = document.getElementById('idx-nasdaq-chg');
                     
-                    if(kospi && window.krxIndices['KOSPI']) {
-                        let c = parseFloat(window.krxIndices['KOSPI'].chg);
+                    if(kospi && window.usIndices['S&P500']) {
+                        let c = parseFloat(window.usIndices['S&P500'].chg);
                         let isUp = c > 0; let isDown = c < 0;
-                        kospi.innerText = window.krxIndices['KOSPI'].price;
+                        kospi.innerText = window.usIndices['S&P500'].price;
                         kospi.className = isUp ? "text-red-300 drop-shadow-sm" : (isDown ? "text-blue-300 drop-shadow-sm" : "text-white");
                         kospiChg.innerHTML = isUp ? `<i class="fas fa-caret-up"></i> +${c}%` : (isDown ? `<i class="fas fa-caret-down"></i> ${c}%` : `${c}%`);
                         kospiChg.className = "ml-2 text-[14px] " + (isUp ? "text-red-500 font-black" : (isDown ? "text-blue-500 font-black" : "text-gray-500 font-bold"));
                         if(kospiBox) kospiBox.className = "text-[14px] flex items-center font-mono font-bold px-3 py-1 rounded border shadow-inner transition-colors " + (isUp ? "border-red-900/60 bg-red-950/20" : (isDown ? "border-blue-900/60 bg-blue-950/20" : "border-gray-700 bg-black/60"));
                     }
-                    if(kosdaq && window.krxIndices['KOSDAQ']) {
-                        let c = parseFloat(window.krxIndices['KOSDAQ'].chg);
+                    if(kosdaq && window.usIndices['NASDAQ']) {
+                        let c = parseFloat(window.usIndices['NASDAQ'].chg);
                         let isUp = c > 0; let isDown = c < 0;
-                        kosdaq.innerText = window.krxIndices['KOSDAQ'].price;
+                        kosdaq.innerText = window.usIndices['NASDAQ'].price;
                         kosdaq.className = isUp ? "text-red-300 drop-shadow-sm" : (isDown ? "text-blue-300 drop-shadow-sm" : "text-white");
                         kosdaqChg.innerHTML = isUp ? `<i class="fas fa-caret-up"></i> +${c}%` : (isDown ? `<i class="fas fa-caret-down"></i> ${c}%` : `${c}%`);
                         kosdaqChg.className = "ml-2 text-[14px] " + (isUp ? "text-red-500 font-black" : (isDown ? "text-blue-500 font-black" : "text-gray-500 font-bold"));
@@ -471,9 +471,9 @@
             let html = '';
             
             // [1] 어제 종목 렌더링
-            if (window.krxYesterdayDefenders && window.krxYesterdayDefenders.length > 0) {
+            if (window.usYesterdayDefenders && window.usYesterdayDefenders.length > 0) {
                 html += `<div class="mb-3">`;
-                html += window.krxYesterdayDefenders.map(item => {
+                html += window.usYesterdayDefenders.map(item => {
                     const dropFromPeak = item.peak;
                     const boxStyle = "bg-orange-950/20 border-orange-800/60 shadow-[0_0_8px_rgba(249,115,22,0.15)] hover:bg-orange-900/30";
                     return `
