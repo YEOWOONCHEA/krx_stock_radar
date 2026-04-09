@@ -180,7 +180,7 @@
 
             <!-- Kostolany Sniper 8 Watchlist -->
             <div class="panel-header text-purple-400 border-t-0 bg-gradient-to-r from-purple-900/20 to-black shrink-0 mt-1">
-                <span class="text-[13px] font-black tracking-wider"><i class="fas fa-crosshairs text-purple-500 mr-2"></i>AM 09:00-10:10 , KOSTOLANY SNIPER 8</span>
+                <span class="text-[13px] font-black tracking-wider"><i class="fas fa-crosshairs text-purple-500 mr-2"></i>KOSTOLANY SNIPER 8</span>
                 <span class="text-[9px] bg-purple-900/60 text-purple-200 px-1.5 py-0.5 rounded border border-purple-700 animate-pulse">종배 타겟망</span>
             </div>
             <div class="flex-1 p-2 overflow-y-auto custom-scrollbar flex flex-col gap-1.5 bg-gradient-to-b from-purple-950/10 to-transparent min-h-[200px]" id="kostolany-container">
@@ -190,7 +190,7 @@
         <!-- P2: Stock Commands & AI Briefing (Detailed Cards) -->
         <section class="panel w-full lg:w-1/2 h-[600px] lg:h-auto lg:flex-1 flex flex-col">
             <div class="panel-header text-white shrink-0">
-                <span id="command-title"><i class="fas fa-crosshairs text-red-500 mr-2"></i>Stock Commands <span class="text-gray-500 text-sm ml-2 font-normal">/ 타겟 전술 카드</span></span>
+                <span id="command-title"><i class="fas fa-crosshairs text-red-500 mr-2"></i>Stock Commands</span>
             </div>
             
             <!-- [NEW] Zhuge AI Core 실시간 통제 브리핑 창 -->
@@ -236,7 +236,7 @@
             
             <!-- NEW: 7% Defense Watchlist -->
             <div class="panel-header text-blue-400 border-t border-gray-800 bg-blue-900/10 shrink-0">
-                <span class="text-[13px] font-bold"><i class="fas fa-shield-alt text-blue-500 mr-2"></i>PM:13:30 , 세력 (6%-12%) 지지 방어선</span>
+                <span class="text-[13px] font-bold"><i class="fas fa-shield-alt text-blue-500 mr-2"></i>PM:13:30 , 세력 (6%-12%) Support Line</span>
                 <span class="text-[9px] bg-blue-900/40 text-blue-300 px-1 rounded border border-blue-800">오후장 노림수</span>
             </div>
             <div class="p-2 overflow-y-auto custom-scrollbar flex flex-col gap-1.5 bg-gradient-to-b from-blue-950/20 to-transparent min-h-[160px] max-h-[280px] shrink-0" id="defense-container">
@@ -517,7 +517,7 @@
             // UI Update for Title
             const titleSpan = document.getElementById('command-title');
             if(themeName === 'ALL') {
-                titleSpan.innerHTML = `<i class="fas fa-crosshairs text-red-500 mr-2"></i>Stock Commands <span class="text-gray-500 text-sm ml-2 font-normal">/ 전체 타겟</span>`;
+                titleSpan.innerHTML = `<i class="fas fa-crosshairs text-red-500 mr-2"></i>Stock Commands`;
             } else {
                 titleSpan.innerHTML = `<i class="fas fa-filter text-amber-500 mr-2"></i>[${themeName}] 섹터 집중 포격중`;
             }
@@ -831,7 +831,7 @@
 
             let html = '';
             if (goodCards.length > 0) {
-                html += `<div class="col-span-full border-b border-red-900/40 pb-2 mb-2 mt-1"><span class="text-red-500 font-bold text-sm drop-shadow-md"><i class="fas fa-rocket mr-1"></i>🎯 집중 매수 타겟 (상승 돌격대)</span></div>`;
+                html += `<div class="col-span-full border-b border-red-900/40 pb-2 mb-2 mt-1"><span class="text-red-500 font-bold text-sm drop-shadow-md"><i class="fas fa-rocket mr-1"></i>🎯 Stocks to Watch</span></div>`;
                 html += goodCards.map(renderSingleCard).join('');
             }
             if (badCards.length > 0) {
