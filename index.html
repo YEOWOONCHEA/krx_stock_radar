@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1004MAS KRX 전술 레이더 (Ultimate 3-Panel)</title>
+    <title>1004MAS KRX ?꾩닠 ?덉씠??(Ultimate 3-Panel)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -121,18 +121,18 @@
             <h1 class="text-xl md:text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-amber-500 flex items-center shrink-0">
                 <i class="fas fa-satellite-dish text-red-500 mr-2"></i> 1004MAS KRX SUPREME
             </h1>
-            <span id="market-status-badge" class="text-[13px] md:text-[14px] font-bold bg-red-600/90 px-2 py-0.5 rounded text-white animate-pulse shrink-0">정규장 거래대금 폭발</span>
+            <span id="market-status-badge" class="text-[13px] md:text-[14px] font-bold bg-red-600/90 px-2 py-0.5 rounded text-white animate-pulse shrink-0">?뺢퇋??嫄곕옒?湲???컻</span>
         </div>
         <div class="flex items-center gap-2 md:gap-4 w-full md:w-auto justify-between md:justify-end">
             <!-- KOSPI / KOSDAQ Display -->
             <div id="market-indices" class="hidden md:flex items-center gap-3">
                 <div id="idx-kospi-box" class="text-[14px] flex items-center font-mono font-bold px-3 py-1 rounded border border-gray-700 bg-black/60 shadow-inner transition-colors">
-                    <span class="text-gray-300 mr-2">코스피</span> 
+                    <span class="text-gray-300 mr-2">肄붿뒪??/span> 
                     <span id="idx-kospi-price" class="text-white">-.--</span> 
                     <span id="idx-kospi-chg" class="ml-2">-.--%</span>
                 </div>
                 <div id="idx-kosdaq-box" class="text-[14px] flex items-center font-mono font-bold px-3 py-1 rounded border border-gray-700 bg-black/60 shadow-inner transition-colors">
-                    <span class="text-gray-300 mr-2">코스닥</span> 
+                    <span class="text-gray-300 mr-2">肄붿뒪??/span> 
                     <span id="idx-kosdaq-price" class="text-white">-.--</span> 
                     <span id="idx-kosdaq-chg" class="ml-2">-.--%</span>
                 </div>
@@ -141,8 +141,8 @@
                 <i class="fas fa-flag-checkered text-gray-500"></i> TARGET CLOSE
                 <span id="market-close-timer" class="text-red-500 text-[14px] ml-1">--:--:--</span>
             </div>
-            <button onclick="document.getElementById('settings-modal').classList.remove('hidden')" class="px-4 py-2 bg-gray-800 border border-gray-600 hover:border-gray-400 rounded-lg text-[14px] text-white font-bold transition-colors shadow-lg shadow-black/50 tooltip" title="텔레그램 환경설정">
-                <i class="fas fa-cog"></i> 설정
+            <button onclick="document.getElementById('settings-modal').classList.remove('hidden')" class="px-4 py-2 bg-gray-800 border border-gray-600 hover:border-gray-400 rounded-lg text-[14px] text-white font-bold transition-colors shadow-lg shadow-black/50 tooltip" title="?붾젅洹몃옩 ?섍꼍?ㅼ젙">
+                <i class="fas fa-cog"></i> ?ㅼ젙
             </button>
             <div id="live-clock" class="text-lg md:text-xl font-mono font-black text-white bg-black/80 px-4 py-1.5 rounded border border-gray-700 tracking-widest shrink-0">
                 --:--:--
@@ -160,21 +160,21 @@
                 <span class="text-[10px] bg-emerald-900/40 text-emerald-400 px-1 rounded border border-emerald-800">ALL</span>
             </div>
             <div class="p-3 overflow-y-auto custom-scrollbar flex flex-wrap content-start gap-2 max-h-[25vh] shrink-0 border-b border-gray-800" id="heatmap-container">
-                <div class="text-xs text-gray-600 w-full text-center mt-10">스캐닝 중...</div>
+                <div class="text-xs text-gray-600 w-full text-center mt-10">?ㅼ틦??以?..</div>
             </div>
             <!-- All Filter Reset -->
             <div class="p-2 border-b border-gray-800/50 bg-black/20 shrink-0">
                 <button onclick="selectTheme('ALL')" class="w-full py-1 text-xs font-bold text-gray-400 hover:text-white bg-gray-800/50 rounded border border-gray-700 hover:border-gray-500 transition-colors">
-                    <i class="fas fa-sync-alt mr-1"></i> 전체 섹터 초기화
+                    <i class="fas fa-sync-alt mr-1"></i> ?꾩껜 ?뱁꽣 珥덇린??
                 </button>
             </div>
 
-            <!-- NEW: 🔥 M&A / 경영권 분쟁 특별 감시구역 (P1으로 이동) -->
+            <!-- NEW: ?뵦 M&A / 寃쎌쁺沅?遺꾩웳 ?밸퀎 媛먯떆援ъ뿭 (P1?쇰줈 ?대룞) -->
             <div class="panel-header text-red-400 border-b border-gray-800 bg-red-950/20 shrink-0 shadow-[0_0_15px_rgba(220,38,38,0.15)] mt-1">
                 <span class="text-[13px] font-black"><i class="fas fa-biohazard text-red-500 mr-2 animate-ping"></i>M&A</span>
             </div>
             <div class="p-2 overflow-y-auto custom-scrollbar flex flex-col gap-1.5 bg-gradient-to-b from-red-950/10 to-transparent min-h-[120px] max-h-[180px] shrink-0 border-b border-gray-800/50" id="ma-surveillance-container">
-                <div class="text-[12px] text-red-900/80 font-bold w-full text-center mt-5">세력 자금 감시중...</div>
+                <div class="text-[12px] text-red-900/80 font-bold w-full text-center mt-5">?몃젰 ?먭툑 媛먯떆以?..</div>
             </div>
 
             <!-- Kostolany Sniper 8 Watchlist -->
@@ -191,7 +191,17 @@
                 <span id="command-title"><i class="fas fa-crosshairs text-red-500 mr-2"></i>Stock Commands</span>
             </div>
             
-
+            <!-- [NEW] Zhuge AI Core ?ㅼ떆媛??듭젣 釉뚮━??李?-->
+            <div class="m-4 mb-0 p-4 border border-teal-500/50 bg-teal-950/20 rounded-lg shadow-[0_0_15px_rgba(20,184,166,0.15)] shrink-0 transition-all">
+                <div class="flex items-center justify-between mb-2 pb-2 border-b border-teal-800/60">
+                    <div class="flex items-center">
+                        <i class="fas fa-brain text-teal-400 mr-2 animate-pulse text-lg"></i>
+                        <span class="text-teal-300 font-bold tracking-wider text-[14px]">Zhuge AI Core</span>
+                    </div>
+                </div>
+                <div id="zhuge-briefing-text" class="text-[13px] text-gray-300 leading-loose font-medium font-mono whitespace-pre-wrap">
+                    AI 肄붿뼱 ?붿쭊 ?뚮컢??以?.. (珥덇린??
+                </div></div>
 
             <div class="flex-1 p-4 overflow-y-auto custom-scrollbar grid grid-cols-1 md:grid-cols-2 gap-4 content-start" id="cards-container">
                 <!-- Cards injected here -->
@@ -232,25 +242,25 @@
     <!-- Toast Notification Container -->
     <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <!-- 환경 설정 모달 (텔레그램) -->
+    <!-- ?섍꼍 ?ㅼ젙 紐⑤떖 (?붾젅洹몃옩) -->
     <div id="settings-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex justify-center items-center">
         <div class="bg-gray-900 border border-gray-700 rounded-xl p-6 w-full max-w-md shadow-[0_0_30px_rgba(0,0,0,0.8)] relative">
             <button onclick="document.getElementById('settings-modal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
                 <i class="fas fa-times text-2xl"></i>
             </button>
-            <h3 class="text-xl font-black text-white mb-6 border-b border-gray-800 pb-3"><i class="fas fa-cog mr-2 text-gray-400"></i> 환경 설정</h3>
+            <h3 class="text-xl font-black text-white mb-6 border-b border-gray-800 pb-3"><i class="fas fa-cog mr-2 text-gray-400"></i> ?섍꼍 ?ㅼ젙</h3>
             
             <div class="mb-4 space-y-3">
-                <div class="text-[14px] text-gray-300 font-bold mb-2"><i class="fab fa-telegram text-blue-400 text-lg mr-1"></i> Telegram 봇 연동 (KRX 실전 알람)</div>
+                <div class="text-[14px] text-gray-300 font-bold mb-2"><i class="fab fa-telegram text-blue-400 text-lg mr-1"></i> Telegram 遊??곕룞 (KRX ?ㅼ쟾 ?뚮엺)</div>
                 <input type="password" id="tg_bot_token" placeholder="Bot Token (ex: 1234:ABC...)" class="w-full bg-black border border-gray-700 rounded p-3 text-[14px] text-white focus:outline-none focus:border-red-500 transition-colors">
                 <input type="text" id="tg_chat_id" placeholder="Chat ID (ex: 1234567890)" class="w-full bg-black border border-gray-700 rounded p-3 text-[14px] text-white focus:outline-none focus:border-red-500 transition-colors">
-                <button onclick="saveTelegramSettings()" class="w-full bg-red-600/30 hover:bg-red-600/70 border border-red-500/50 text-red-200 mt-2 rounded p-3 text-[15px] transition-colors font-bold shadow-lg"><i class="fas fa-save mr-1"></i> KRX망 텔레그램 연동</button>
+                <button onclick="saveTelegramSettings()" class="w-full bg-red-600/30 hover:bg-red-600/70 border border-red-500/50 text-red-200 mt-2 rounded p-3 text-[15px] transition-colors font-bold shadow-lg"><i class="fas fa-save mr-1"></i> KRX留??붾젅洹몃옩 ?곕룞</button>
             </div>
             
             <div class="mt-8 border-t border-gray-800 pt-6">
-                <h4 class="text-gray-400 font-bold mb-3 text-sm">KRX 레이더 통제소</h4>
+                <h4 class="text-gray-400 font-bold mb-3 text-sm">KRX ?덉씠???듭젣??/h4>
                 <p class="text-[12px] text-gray-500">
-                    실시간으로 거래대금이 폭발하거나, 고점 대비 급락을 보이는 투매 종목을 포착하여 즉각적으로 주군의 핸드폰으로 타점을 전송합니다.
+                    ?ㅼ떆媛꾩쑝濡?嫄곕옒?湲덉씠 ??컻?섍굅?? 怨좎젏 ?鍮?湲됰씫??蹂댁씠???щℓ 醫낅ぉ???ъ갑?섏뿬 利됯컖?곸쑝濡?二쇨뎔???몃뱶?곗쑝濡???먯쓣 ?꾩넚?⑸땲??
                 </p>
             </div>
         </div>
@@ -264,14 +274,14 @@
         let previousSignals = new Set();
         let isTelegramLoaded = false;
         
-        // M&A 및 특별 관리 대상 (하드코딩 - 향후 동적 주입 가능)
-        const MA_TARGETS = ['가온칩스', '오픈엣지테크놀로지', '퀄리타스반도체', '레인보우로보틱스', '고려아연', '루닛', '피에스케이홀딩스', '테크윙', '영풍'];
-        let hasAlertedMA = new Set(); // 당일 알림 중복 방지
+        // M&A 諛??밸퀎 愿由????(?섎뱶肄붾뵫 - ?ν썑 ?숈쟻 二쇱엯 媛??
+        const MA_TARGETS = ['媛?⑥묩??, '?ㅽ뵂?ｌ??뚰겕?濡쒖?', '?꾨━??ㅻ컲?꾩껜', '?덉씤蹂댁슦濡쒕낫?깆뒪', '怨좊젮?꾩뿰', '猷⑤떅', '?쇱뿉?ㅼ??댄??⑹뒪', '?뚰겕??, '?곹뭾'];
+        let hasAlertedMA = new Set(); // ?뱀씪 ?뚮┝ 以묐났 諛⑹?
 
-        // 코스톨라니 스나이퍼 종목 캐시 (파이썬 백엔드가 조건에 맞는 종배 타겟을 자동 생성하여 주입)
+        // 肄붿뒪?⑤씪???ㅻ굹?댄띁 醫낅ぉ 罹먯떆 (?뚯씠??諛깆뿏?쒓? 議곌굔??留욌뒗 醫낅같 ?寃잛쓣 ?먮룞 ?앹꽦?섏뿬 二쇱엯)
         let kostolanyList = [];
 
-        // --- 텔레그램 연동 ---
+        // --- ?붾젅洹몃옩 ?곕룞 ---
         function loadTelegramSettings() {
             const token = localStorage.getItem('tg_bot_token_krx');
             const chatId = localStorage.getItem('tg_chat_id_krx');
@@ -286,10 +296,10 @@
             localStorage.setItem('tg_bot_token_krx', token);
             localStorage.setItem('tg_chat_id_krx', chatId);
             if(token && chatId) {
-                sendTelegramMessage("✅ <b>[1004MAS KRX Radar]</b>\n\n주공, 텔레그램 전령 시스템 연동이 정상적으로 완료되었습니다. 앞으로 한국 현물 시장 급등락 리포트를 이곳으로 보고하겠습니다.");
-                alert("한국 주식(KRX) 텔레그램 설정이 기기(로컬)에 저장되었습니다.");
+                sendTelegramMessage("??<b>[1004MAS KRX Radar]</b>\n\n二쇨났, ?붾젅洹몃옩 ?꾨졊 ?쒖뒪???곕룞???뺤긽?곸쑝濡??꾨즺?섏뿀?듬땲?? ?욎쑝濡??쒓뎅 ?꾨Ъ ?쒖옣 湲됰벑??由ы룷?몃? ?닿납?쇰줈 蹂닿퀬?섍쿋?듬땲??");
+                alert("?쒓뎅 二쇱떇(KRX) ?붾젅洹몃옩 ?ㅼ젙??湲곌린(濡쒖뺄)????λ릺?덉뒿?덈떎.");
             } else {
-                alert("토큰과 Chat ID를 모두 입력해주세요.");
+                alert("?좏겙怨?Chat ID瑜?紐⑤몢 ?낅젰?댁＜?몄슂.");
             }
         }
 
@@ -311,9 +321,9 @@
             // Get newly added signals
             const newSignals = signals.filter(s => !previousSignals.has(s.coin_name + s.timestamp));
             if (newSignals.length > 0) {
-                let msg = "🚨 <b>[1004MAS KRX Radar 타점 포착]</b>\n\n";
+                let msg = "?슚 <b>[1004MAS KRX Radar ????ъ갑]</b>\n\n";
                 newSignals.forEach(v => {
-                    const icon = v.signal === 'green' ? '🚀' : '💀';
+                    const icon = v.signal === 'green' ? '??' : '??';
                     msg += `${icon} <b>${v.coin_name}</b>\n${v.reason || v.news_detail || ''}\n\n`;
                     previousSignals.add(v.coin_name + v.timestamp);
                 });
@@ -328,9 +338,9 @@
             if(!textInput) return;
 
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin mb-1"></i>분해..';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mb-1"></i>遺꾪빐..';
             const oldBriefing = briefingBox.innerHTML;
-            briefingBox.innerHTML = '<span class="text-teal-400 font-bold animate-pulse">제갈량이 정보를 5조각으로 분해 및 요약 분석 중입니다...</span>';
+            briefingBox.innerHTML = '<span class="text-teal-400 font-bold animate-pulse">?쒓컝?됱씠 ?뺣낫瑜?5議곌컖?쇰줈 遺꾪빐 諛??붿빟 遺꾩꽍 以묒엯?덈떎...</span>';
 
             let apiUrl = '/api/analyze_deep';
             if (window.location.protocol === 'file:') {
@@ -345,17 +355,17 @@
                 });
                 const data = await res.json();
                 if(data.status === 'ok') {
-                    briefingBox.innerHTML = '<span class="text-amber-400 font-bold">[심층 분석 결과]</span><br/>' + data.result.replace(/\n/g, '<br/>');
+                    briefingBox.innerHTML = '<span class="text-amber-400 font-bold">[?ъ링 遺꾩꽍 寃곌낵]</span><br/>' + data.result.replace(/\n/g, '<br/>');
                 } else {
-                    briefingBox.innerHTML = '<span class="text-red-400">분석 실패: ' + data.message + '</span>';
+                    briefingBox.innerHTML = '<span class="text-red-400">遺꾩꽍 ?ㅽ뙣: ' + data.message + '</span>';
                     setTimeout(() => briefingBox.innerHTML = oldBriefing, 5000);
                 }
             } catch(e) {
-                briefingBox.innerHTML = '<span class="text-red-400">네트워크 오류</span>';
+                briefingBox.innerHTML = '<span class="text-red-400">?ㅽ듃?뚰겕 ?ㅻ쪟</span>';
                 setTimeout(() => briefingBox.innerHTML = oldBriefing, 3000);
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-magic mb-1"></i>분석';
+                btn.innerHTML = '<i class="fas fa-magic mb-1"></i>遺꾩꽍';
                 document.getElementById('zhuge-deep-text').value = '';
             }
         }
@@ -383,23 +393,23 @@
 
             const badge = document.getElementById('market-status-badge');
             if (h === 8 && m >= 30 && m <= 59) {
-                badge.innerText = "PRE-MARKET 동시호가";
+                badge.innerText = "PRE-MARKET ?숈떆?멸?";
                 badge.className = "text-[13px] font-bold bg-purple-600 px-2 py-0.5 rounded text-white animate-pulse shrink-0";
             } else if (h === 9 || (h >= 10 && h < 15) || (h === 15 && m < 20)) {
-                badge.innerText = "정규장 (실시간 감시중)";
+                badge.innerText = "?뺢퇋??(?ㅼ떆媛?媛먯떆以?";
                 badge.className = "text-[13px] font-bold bg-red-600/90 px-2 py-0.5 rounded text-white animate-pulse shrink-0";
             } else if (h === 15 && m >= 20 && m <= 30) {
-                badge.innerText = "OVERNIGHT 종배 수급 감시";
+                badge.innerText = "OVERNIGHT 醫낅같 ?섍툒 媛먯떆";
                 badge.className = "text-[13px] font-bold bg-blue-600 px-2 py-0.5 rounded text-white shrink-0";
             } else {
-                badge.innerText = "24/7 야간 제갈량 감시중";
+                badge.innerText = "24/7 ?쇨컙 ?쒓컝??媛먯떆以?;
                 badge.className = "text-[13px] font-bold bg-teal-600/80 px-2 py-0.5 rounded border border-teal-500/50 text-white animate-pulse shadow-lg shrink-0";
             }
         }
         setInterval(updateClocks, 1000);
         updateClocks();
         let lastDataHash = "";
-        const cardAppearanceTime = {}; // [신규 효과] 돌격대 카드 최초 등장 시간 기록용
+        const cardAppearanceTime = {}; // [?좉퇋 ?④낵] ?뚭꺽? 移대뱶 理쒖큹 ?깆옣 ?쒓컙 湲곕줉??
 
         // 2. Data Fetch (CORS Bypass using Script Injection)
         function fetchData() {
@@ -408,8 +418,8 @@
             if (window.location.protocol === 'file:') {
                 dataUrl = `http://localhost:8088/krx_data.js`;
             } else if (window.location.hostname === 'krx.1004mas.com') {
-                // 외부망(홈페이지)에서 접속 시, 주군의 로컬 컴퓨터로 연결되는 터널망 사용
-                dataUrl = `https://economy-administrators-pregnancy-thehun.trycloudflare.com/krx_data.js`;
+                // ?몃?留??덊럹?댁?)?먯꽌 ?묒냽 ?? 二쇨뎔??濡쒖뺄 而댄벂?곕줈 ?곌껐?섎뒗 ?곕꼸留??ъ슜
+                dataUrl = `https://smile-sunny-newest-clients.trycloudflare.com/krx_data.js`;
             }
             
             script.onload = () => {
@@ -425,7 +435,7 @@
                 }
                 
                 // Zhuge AI Core
-                if (window.krxZhugeIntel && window.krxZhugeIntel !== "초기화 중...") {
+                if (window.krxZhugeIntel && window.krxZhugeIntel !== "珥덇린??以?..") {
                     const el = document.getElementById('zhuge-briefing-text');
                     if(el) {
                         el.innerHTML = window.krxZhugeIntel.replace(/\n/g, '<br/>');
@@ -462,7 +472,7 @@
                     }
                 }
 
-                // 최적화: 데이터가 동일하면 불필요한 화면깜빡임(DOM 재렌더링) 방지
+                // 理쒖쟻?? ?곗씠?곌? ?숈씪?섎㈃ 遺덊븘?뷀븳 ?붾㈃源쒕묀??DOM ?щ젋?붾쭅) 諛⑹?
                 const currentHash = JSON.stringify(topVolumeCache) + JSON.stringify(aiVerdictsCache) + JSON.stringify(kostolanyList) + selectedTheme + (window.krxN8nLogs ? window.krxN8nLogs.join() : "");
                 if (lastDataHash !== currentHash) {
                     renderAll();
@@ -485,14 +495,14 @@
 
         function selectTheme(themeName) {
             selectedTheme = themeName;
-            lastDataHash = ""; // 강제 재렌더링 트리거
+            lastDataHash = ""; // 媛뺤젣 ?щ젋?붾쭅 ?몃━嫄?
             
             // UI Update for Title
             const titleSpan = document.getElementById('command-title');
             if(themeName === 'ALL') {
                 titleSpan.innerHTML = `<i class="fas fa-crosshairs text-red-500 mr-2"></i>Stock Commands`;
             } else {
-                titleSpan.innerHTML = `<i class="fas fa-filter text-amber-500 mr-2"></i>[${themeName}] 섹터 집중 포격중`;
+                titleSpan.innerHTML = `<i class="fas fa-filter text-amber-500 mr-2"></i>[${themeName}] ?뱁꽣 吏묒쨷 ?ш꺽以?;
             }
 
             renderAll();
@@ -508,7 +518,7 @@
             });
 
             renderHeatmap(merged);
-            renderMATargets(merged); // M&A 타겟 집중 감시 렌더
+            renderMATargets(merged); // M&A ?寃?吏묒쨷 媛먯떆 ?뚮뜑
             renderCards(merged);
             renderFeed();
             renderKostolany();
@@ -524,20 +534,20 @@
             }
         }
 
-        // [Right Bottom] 7% Defense Line (어제 + 오늘 분리)
+        // [Right Bottom] 7% Defense Line (?댁젣 + ?ㅻ뒛 遺꾨━)
         function renderDefenseLine() {
             let html = '';
-            // [1] 어제 종목 렌더링 삭제 (주군 명령에 따라 A급 라이브 타겟만 송출)
+            // [1] ?댁젣 醫낅ぉ ?뚮뜑留???젣 (二쇨뎔 紐낅졊???곕씪 A湲??쇱씠釉??寃잙쭔 ?≪텧)
 
-            // [2] 오늘 실시간 방어선 렌더링 (A급 굳히기 필터 적용)
+            // [2] ?ㅻ뒛 ?ㅼ떆媛?諛⑹뼱???뚮뜑留?(A湲?援논엳湲??꾪꽣 ?곸슜)
             const defenders = topVolumeCache.filter(v => parseFloat(v.chg) >= 7.0 && parseFloat(v.chg) <= 12.0 && parseFloat(v.peak) >= -10.0);
             
             if (defenders.length === 0) {
-                html += `<div class="text-[13px] text-blue-500/50 font-bold text-center mt-3 border border-blue-900/30 rounded p-2 bg-blue-950/10">오늘(Live) 7% 방어 종목 없음</div>`;
+                html += `<div class="text-[13px] text-blue-500/50 font-bold text-center mt-3 border border-blue-900/30 rounded p-2 bg-blue-950/10">?ㅻ뒛(Live) 7% 諛⑹뼱 醫낅ぉ ?놁쓬</div>`;
             } else {
                 html += defenders.map(item => {
                     const dropFromPeak = item.peak; // e.g. -5.2
-                    // 고점 대비 -10% 이상 폭락하면서 지지선에 도달한 경우 (투매 위험 매우 높음)
+                    // 怨좎젏 ?鍮?-10% ?댁긽 ??씫?섎㈃??吏吏?좎뿉 ?꾨떖??寃쎌슦 (?щℓ ?꾪뿕 留ㅼ슦 ?믪쓬)
                     const isHeavyDump = dropFromPeak <= -10;
                     
                     const boxStyle = isHeavyDump 
@@ -557,8 +567,8 @@
                                 <span class="text-red-400 font-black text-[15px] drop-shadow-md">+${parseFloat(item.chg).toFixed(1)}%</span>
                             </div>
                             <div class="flex justify-between items-center text-[13px] text-gray-400 border-t border-gray-800/70 pt-2 p-1">
-                                <span>실시간 고점붕괴: <span class="${peakTextColor}">${dropFromPeak}%</span></span>
-                                <span class="font-bold text-gray-300 shadow-sm">${Math.round(item.vol)}억</span>
+                                <span>?ㅼ떆媛?怨좎젏遺뺢눼: <span class="${peakTextColor}">${dropFromPeak}%</span></span>
+                                <span class="font-bold text-gray-300 shadow-sm">${Math.round(item.vol)}??/span>
                             </div>
                         </div>
                     `;
@@ -571,7 +581,7 @@
         // [Left Bottom] Kostolany Sniper
         function renderKostolany() {
             if (kostolanyList.length === 0) {
-                document.getElementById('kostolany-container').innerHTML = '<div class="text-[13px] text-purple-700 font-bold w-full text-center mt-10">스나이퍼 목표물 탐지 대기중...</div>';
+                document.getElementById('kostolany-container').innerHTML = '<div class="text-[13px] text-purple-700 font-bold w-full text-center mt-10">?ㅻ굹?댄띁 紐⑺몴臾??먯? ?湲곗쨷...</div>';
                 return;
             }
 
@@ -582,7 +592,7 @@
                 let borderColor = "border-gray-800 bg-black/40";
                 let titleColor = "text-gray-300 font-bold";
                 let icon = `<span class="text-gray-600 font-mono text-[9px] mr-1">0${idx+1}</span>`;
-                let liveStatus = `<span class="text-[14px] text-gray-400 font-bold ml-2">잠복중..</span>`;
+                let liveStatus = `<span class="text-[14px] text-gray-400 font-bold ml-2">?좊났以?.</span>`;
                 let displayType = item.type;
                 let typeBgClass = "bg-purple-900/80 text-purple-200 border-purple-500/50";
 
@@ -590,19 +600,19 @@
                     const isDumping = realTimeData.chg <= 0;
                     const sign = realTimeData.chg > 0 ? '+' : '';
                     const chgColor = realTimeData.chg > 0 ? 'text-red-400' : 'text-blue-400';
-                    liveStatus = `<span class="${chgColor} font-black text-[14px] drop-shadow-md ml-3">${sign}${realTimeData.chg.toFixed(1)}% <span class="text-white text-[12px] font-bold tracking-tighter opacity-90">(${realTimeData.vol}억)</span></span>`;
+                    liveStatus = `<span class="${chgColor} font-black text-[14px] drop-shadow-md ml-3">${sign}${realTimeData.chg.toFixed(1)}% <span class="text-white text-[12px] font-bold tracking-tighter opacity-90">(${realTimeData.vol}??</span></span>`;
                     
                     if (!isDumping) {
-                        // 정상 상승 (돌격)
+                        // ?뺤긽 ?곸듅 (?뚭꺽)
                         borderColor = "border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)] bg-red-950/20";
                         titleColor = "text-red-400 font-black animate-pulse";
                         icon = `<i class="fas fa-fire text-red-500 mr-1 animate-ping"></i>`;
                     } else {
-                        // 전일 타겟이 당일 폭락 중 (위험)
+                        // ?꾩씪 ?寃잛씠 ?뱀씪 ??씫 以?(?꾪뿕)
                         borderColor = "border-blue-800 shadow-[0_0_10px_rgba(30,58,138,0.5)] bg-blue-950/30";
                         titleColor = "text-blue-400 font-black animate-pulse";
                         icon = `<i class="fas fa-skull text-blue-500 mr-1 animate-pulse"></i>`;
-                        displayType = "[위험] 수급 이탈중";
+                        displayType = "[?꾪뿕] ?섍툒 ?댄깉以?;
                         typeBgClass = "bg-gray-800/80 text-gray-400 border-gray-600";
                     }
                 }
@@ -658,7 +668,7 @@
                 return `
                     <div onclick="selectTheme('${theme}')" class="sector-box ${glowClass} ${isActive} ${widthClass} p-3 flex-grow" style="min-height: ${Math.max(60, weightRatio * 2)}px">
                         <div class="text-[14px] text-white/90 drop-shadow-md z-10 font-bold">${theme}</div>
-                        <div class="text-[13px] text-white/70 font-medium mt-1 z-10">${sec.totalVol.toLocaleString()} 억</div>
+                        <div class="text-[13px] text-white/70 font-medium mt-1 z-10">${sec.totalVol.toLocaleString()} ??/div>
                         ${avgVel > 1.5 ? `<i class="fas fa-fire text-red-500/30 absolute text-4xl -z-0 right-2 bottom-0"></i>` : ''}
                     </div>
                 `;
@@ -672,18 +682,18 @@
             const filtered = selectedTheme === 'ALL' ? mergedData : mergedData.filter(s => s.theme === selectedTheme);
             
             if(filtered.length === 0) {
-                document.getElementById('cards-container').innerHTML = `<div class="col-span-full text-gray-500 text-center py-10 text-sm">해당 섹터에 탐지된 거래대금 돌파 타겟이 없습니다.</div>`;
+                document.getElementById('cards-container').innerHTML = `<div class="col-span-full text-gray-500 text-center py-10 text-sm">?대떦 ?뱁꽣???먯???嫄곕옒?湲??뚰뙆 ?寃잛씠 ?놁뒿?덈떎.</div>`;
                 return;
             }
 
-            // 중앙 메인 카드는 10개로 제한 (나머지 20개는 방어선 트래킹용)
+            // 以묒븰 硫붿씤 移대뱶??10媛쒕줈 ?쒗븳 (?섎㉧吏 20媛쒕뒗 諛⑹뼱???몃옒?뱀슜)
             const top10 = filtered.slice(0, 10);
             
             // --- NEW BLINK LOGIC INITIALIZATION ---
             let isInitialLoad = Object.keys(cardAppearanceTime).length === 0;
             top10.forEach(s => {
                 if (!cardAppearanceTime[s.name]) {
-                    // 처음 랜더링될 때 한꺼번에 10개가 깜빡이는 것을 방지
+                    // 泥섏쓬 ?쒕뜑留곷맆 ???쒓볼踰덉뿉 10媛쒓? 源쒕묀?대뒗 寃껋쓣 諛⑹?
                     cardAppearanceTime[s.name] = isInitialLoad ? 0 : Date.now();
                 }
             });
@@ -712,7 +722,7 @@
                 let velPct = Math.min(100, Math.max(0, (safeVel / 4) * 100));
                 let velBarColor = safeVel > 1.5 ? 'bg-red-500' : 'bg-gray-500';
                 if (safeVel >= 1.0 && (s.chg <= 0 || safePeak <= -5.0)) {
-                    velBarColor = 'bg-purple-500'; // 투매 가속도 경고 (보라색)
+                    velBarColor = 'bg-purple-500'; // ?щℓ 媛?띾룄 寃쎄퀬 (蹂대씪??
                 }
                 if(safeVel < 0) { velPct = Math.min(100, Math.abs(safeVel/4) * 100); velBarColor = 'bg-blue-500'; }
                 
@@ -721,31 +731,31 @@
 
                 // Badge & Theme Logic Separation
                 let isDumping = (s.chg <= 0 || safePeak <= -5.0);
-                let themeText = s.theme || '개별주';
+                let themeText = s.theme || '媛쒕퀎二?;
                 
-                // 폭락주인데 '주도주'라고 표시되는 모순 수정
-                if (isDumping && themeText === '주도주') {
-                    themeText = '개별급락';
+                // ??씫二쇱씤??'二쇰룄二??쇨퀬 ?쒖떆?섎뒗 紐⑥닚 ?섏젙
+                if (isDumping && themeText === '二쇰룄二?) {
+                    themeText = '媛쒕퀎湲됰씫';
                 }
 
                 let badgeHTML = '';
                 if (safeVel >= 1.0 || (s.vol/1000) > 3) {
                     if (isDumping) {
-                        badgeHTML = '<span class="text-[12px] bg-purple-900/60 text-purple-400 border-purple-700/50 px-2 py-0.5 rounded border font-bold animate-pulse"><i class="fas fa-skull"></i> 강력 투매(도주)</span>';
+                        badgeHTML = '<span class="text-[12px] bg-purple-900/60 text-purple-400 border-purple-700/50 px-2 py-0.5 rounded border font-bold animate-pulse"><i class="fas fa-skull"></i> 媛뺣젰 ?щℓ(?꾩＜)</span>';
                     } else {
-                        badgeHTML = '<span class="text-[12px] bg-red-900/60 text-red-500 border-red-700/50 px-2 py-0.5 rounded border font-bold"><i class="fas fa-fire"></i> 강력 매집중</span>';
+                        badgeHTML = '<span class="text-[12px] bg-red-900/60 text-red-500 border-red-700/50 px-2 py-0.5 rounded border font-bold"><i class="fas fa-fire"></i> 媛뺣젰 留ㅼ쭛以?/span>';
                     }
                 }
 
-                // 테마 뱃지 색상도 폭락 상태면 보라색 톤으로 변경
+                // ?뚮쭏 諭껋? ?됱긽????씫 ?곹깭硫?蹂대씪???ㅼ쑝濡?蹂寃?
                 let themeBadgeColor = isDumping ? "bg-purple-950/40 text-purple-300 border-purple-800/50" : "bg-gray-800/80 text-gray-300 border-gray-700";
 
                 let nowMs = Date.now();
                 let isNewCard = (nowMs - cardAppearanceTime[s.name]) < 120000;
                 let cssBlinkClass = isNewCard ? "animate-pulse border-amber-400 shadow-[0_0_20px_rgba(251,191,36,0.6)] bg-amber-900/30 ring-1 ring-amber-400" : "border-transparent hover:border-gray-500";
-                let newBadge = isNewCard ? '<span class="text-[11px] bg-amber-400 text-black px-1.5 py-0.5 rounded cursor-pointer font-black tracking-tighter shadow-md animate-bounce ml-1 flex-shrink-0">NEW 징집!</span>' : '';
+                let newBadge = isNewCard ? '<span class="text-[11px] bg-amber-400 text-black px-1.5 py-0.5 rounded cursor-pointer font-black tracking-tighter shadow-md animate-bounce ml-1 flex-shrink-0">NEW 吏뺤쭛!</span>' : '';
 
-                let maBadge = MA_TARGETS.includes(s.name) ? `<span class="text-[11px] bg-red-600/80 text-white border-red-400 px-1.5 py-0.5 rounded border font-black shadow-[0_0_8px_rgba(220,38,38,0.8)] animate-pulse ml-1"><i class="fas fa-crown"></i> M&A피인수</span>` : '';
+                let maBadge = MA_TARGETS.includes(s.name) ? `<span class="text-[11px] bg-red-600/80 text-white border-red-400 px-1.5 py-0.5 rounded border font-black shadow-[0_0_8px_rgba(220,38,38,0.8)] animate-pulse ml-1"><i class="fas fa-crown"></i> M&A?쇱씤??/span>` : '';
 
                 return `
                     <div class="glass-card flex flex-col h-full transition-all ${cssBlinkClass}">
@@ -761,30 +771,30 @@
                             </div>
                             <div class="text-right">
                                 <div class="text-3xl md:text-3xl font-black ${chgColor} tracking-tighter drop-shadow-md">${sign}${s.chg.toFixed(1)}%</div>
-                                <div class="text-[14px] text-gray-300 font-bold mt-1 shadow-sm">${s.vol.toLocaleString()} 억원</div>
+                                <div class="text-[14px] text-gray-300 font-bold mt-1 shadow-sm">${s.vol.toLocaleString()} ?듭썝</div>
                             </div>
                         </div>
 
                         <div class="space-y-3 mb-4 flex-grow">
-                            <!-- 거래금 Bar -->
+                            <!-- 嫄곕옒湲?Bar -->
                             <div class="flex items-center justify-between text-[13px] font-bold">
-                                <span class="text-gray-400 w-20">거래대금</span>
+                                <span class="text-gray-400 w-20">嫄곕옒?湲?/span>
                                 <div class="flex-1 mx-2 h-2.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800 shadow-inner">
                                     <div class="h-full bg-emerald-500 stat-bar-fill" style="width: ${volPct}%"></div>
                                 </div>
                                 <span class="text-emerald-400 font-mono w-12 text-right">${Math.round(s.vol/1000)}k</span>
                             </div>
-                            <!-- 가속도 Bar -->
+                            <!-- 媛?띾룄 Bar -->
                             <div class="flex items-center justify-between text-[13px] font-bold">
-                                <span class="text-gray-400 w-20">가속도(Vel)</span>
+                                <span class="text-gray-400 w-20">媛?띾룄(Vel)</span>
                                 <div class="flex-1 mx-2 h-2.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800 shadow-inner">
                                     <div class="h-full ${velBarColor} stat-bar-fill" style="width: ${velPct}%"></div>
                                 </div>
                                 <span class="${safeVel>0?'text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]':'text-gray-500'} font-mono w-12 text-right">${safeVel>0?'+':''}${safeVel.toFixed(1)}</span>
                             </div>
-                            <!-- 고점유지력 Bar -->
+                            <!-- 怨좎젏?좎???Bar -->
                             <div class="flex items-center justify-between text-[13px] font-bold">
-                                <span class="text-gray-400 w-20">고점유지력</span>
+                                <span class="text-gray-400 w-20">怨좎젏?좎???/span>
                                 <div class="flex-1 mx-2 h-2.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800 shadow-inner">
                                     <div class="h-full ${peakBarColor} stat-bar-fill" style="width: ${peakSafePct}%"></div>
                                 </div>
@@ -794,7 +804,7 @@
 
                         ${s.news ? `
                         <div class="mt-2 p-3 rounded-lg border border-yellow-600/50 bg-yellow-900/30 mb-1 pulse-news shadow-inner">
-                            <div class="text-[13px] font-bold text-yellow-400 mb-1.5"><i class="fas fa-bolt mr-1 text-yellow-300"></i>[정보/재료] 포착</div>
+                            <div class="text-[13px] font-bold text-yellow-400 mb-1.5"><i class="fas fa-bolt mr-1 text-yellow-300"></i>[?뺣낫/?щ즺] ?ъ갑</div>
                             <div class="text-[14px] text-white leading-relaxed font-medium drop-shadow-sm">${s.news}</div>
                         </div>
                         ` : ''}
@@ -804,11 +814,11 @@
 
             let html = '';
             if (goodCards.length > 0) {
-                html += `<div class="col-span-full border-b border-red-900/40 pb-2 mb-2 mt-1"><span class="text-red-500 font-bold text-sm drop-shadow-md"><i class="fas fa-rocket mr-1"></i>🎯 Stocks to Watch</span></div>`;
+                html += `<div class="col-span-full border-b border-red-900/40 pb-2 mb-2 mt-1"><span class="text-red-500 font-bold text-sm drop-shadow-md"><i class="fas fa-rocket mr-1"></i>?렞 Stocks to Watch</span></div>`;
                 html += goodCards.map(renderSingleCard).join('');
             }
             if (badCards.length > 0) {
-                // html += `<div class="col-span-full border-b border-purple-900/40 pb-2 mb-2 mt-4"><span class="text-purple-400 font-bold text-sm drop-shadow-md"><i class="fas fa-skull mr-1"></i>💀 투매 폭포수 (접근 금지)</span></div>`;
+                // html += `<div class="col-span-full border-b border-purple-900/40 pb-2 mb-2 mt-4"><span class="text-purple-400 font-bold text-sm drop-shadow-md"><i class="fas fa-skull mr-1"></i>?? ?щℓ ??룷??(?묎렐 湲덉?)</span></div>`;
                 // html += badCards.map(renderSingleCard).join('');
             }
             document.getElementById('cards-container').innerHTML = html;
@@ -825,11 +835,11 @@
                 const chgColor = isPumping ? 'text-red-400 font-bold drop-shadow-md' : 'text-blue-400 font-bold drop-shadow-md';
                 const boxStyle = isPumping ? 'bg-red-950/30 border-red-800/70' : 'bg-black/50 border-gray-800/70';
                 
-                // 세력 진입 알람 로직 (거래대금 300억 넘거나 당일 5% 이상 폭등)
+                // ?몃젰 吏꾩엯 ?뚮엺 濡쒖쭅 (嫄곕옒?湲?300???섍굅???뱀씪 5% ?댁긽 ??벑)
                 if ((item.vol >= 300 || item.chg >= 5.0) && !hasAlertedMA.has(item.name)) {
-                    showToast(`🔥 [특별감시구역] ${item.name} 세력(고래) 수급 대폭발! M&A 찌라시 임박 추정!`, 'red');
+                    showToast(`?뵦 [?밸퀎媛먯떆援ъ뿭] ${item.name} ?몃젰(怨좊옒) ?섍툒 ???컻! M&A 李뚮씪???꾨컯 異붿젙!`, 'red');
                     if ('speechSynthesis' in window) {
-                        const utterance = new SpeechSynthesisUtterance(`${item.name}의 거대 자본이 포착되었습니다. 타점을 확인하십시오.`);
+                        const utterance = new SpeechSynthesisUtterance(`${item.name}??嫄곕? ?먮낯???ъ갑?섏뿀?듬땲?? ??먯쓣 ?뺤씤?섏떗?쒖삤.`);
                         utterance.lang = 'ko-KR';
                         window.speechSynthesis.speak(utterance);
                     }
@@ -844,7 +854,7 @@
                         </div>
                         <div class="flex items-center gap-3">
                             <span class="${chgColor} text-[14px]">${sign}${item.chg.toFixed(1)}%</span>
-                            <span class="text-gray-300 font-mono text-[13px] bg-black/60 px-1 rounded border border-gray-800">${item.vol.toLocaleString()}억</span>
+                            <span class="text-gray-300 font-mono text-[13px] bg-black/60 px-1 rounded border border-gray-800">${item.vol.toLocaleString()}??/span>
                         </div>
                     </div>
                 `;
@@ -856,7 +866,7 @@
         // [Right] Intelligence Feed
         function renderFeed() {
             if(aiVerdictsCache.length === 0) {
-                 document.getElementById('feed-container').innerHTML = `<div class="text-gray-500 text-center py-10 text-xs">수신된 정보 없습니다.</div>`;
+                 document.getElementById('feed-container').innerHTML = `<div class="text-gray-500 text-center py-10 text-xs">?섏떊???뺣낫 ?놁뒿?덈떎.</div>`;
                  return;
             }
 
@@ -873,11 +883,11 @@
                 }
 
                 // Append any generic DART strings if available
-                let content = v.news_detail ? `<span class="text-amber-500 font-black"><i class="fas fa-bolt mr-1"></i>[실시간 수급포착]</span> ${v.news_detail}` : v.reason;
+                let content = v.news_detail ? `<span class="text-amber-500 font-black"><i class="fas fa-bolt mr-1"></i>[?ㅼ떆媛??섍툒?ъ갑]</span> ${v.news_detail}` : v.reason;
                 // format simple string line breaks
                 content = content.replace(/\n/g, '<br/>');
 
-                // 1분 이내 새로 들어온 피드 처리 (깜빡임 이펙트)
+                // 1遺??대궡 ?덈줈 ?ㅼ뼱???쇰뱶 泥섎━ (源쒕묀???댄럺??
                 let pulseClass = "";
                 if (v.timestamp) {
                     const now = new Date();
@@ -887,7 +897,7 @@
                         const m = parseInt(parts[1], 10);
                         const s = parseInt(parts[2], 10);
                         const t = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, s);
-                        // 현재 시간 기준 60초(60000ms) 이내의 피드면 깜빡임
+                        // ?꾩옱 ?쒓컙 湲곗? 60珥?60000ms) ?대궡???쇰뱶硫?源쒕묀??
                         if (now - t >= 0 && now - t <= 60000) {
                             pulseClass = "animate-pulse shadow-[0_0_15px_rgba(250,204,21,0.3)] border border-yellow-400/80";
                         }
@@ -909,7 +919,7 @@
         }
 
         async function executeOrder(stockName, side) {
-            showToast(`📡 [${side}] ${stockName} 타겟 서버전송 중...`, 'gray');
+            showToast(`?뱻 [${side}] ${stockName} ?寃??쒕쾭?꾩넚 以?..`, 'gray');
             try {
                 const res = await fetch('/api/order', {
                     method: 'POST',
@@ -918,12 +928,12 @@
                 });
                 const data = await res.json();
                 if(data.status === 'SUCCESS') {
-                    showToast(`🔥 ${data.msg}`, 'green');
+                    showToast(`?뵦 ${data.msg}`, 'green');
                 } else {
-                    showToast(`❌ [주문실패] ${data.msg}`, 'red');
+                    showToast(`??[二쇰Ц?ㅽ뙣] ${data.msg}`, 'red');
                 }
             } catch(e) {
-                 showToast(`❌ [서버오류] 통신 실패 (시뮬레이션 모드 연결 끊김)`, 'red');
+                 showToast(`??[?쒕쾭?ㅻ쪟] ?듭떊 ?ㅽ뙣 (?쒕??덉씠??紐⑤뱶 ?곌껐 ?딄?)`, 'red');
             }
         }
         
@@ -955,3 +965,4 @@
     </script>
 </body>
 </html>
+
