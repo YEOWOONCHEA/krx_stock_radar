@@ -150,21 +150,48 @@
         </div>
     </header>
 
-    <!-- Global Macro Ticker Bar (Bloomberg Style) -->
-    <div class="flex items-center justify-between px-4 py-1.5 mb-2 bg-gradient-to-r from-gray-900/80 via-black/80 to-gray-900/80 border-y border-gray-700/50 shadow-[0_4px_15px_rgba(0,0,0,0.5)] shrink-0 overflow-x-auto custom-scrollbar">
-        <div class="flex items-center text-[13px] font-bold text-gray-300 gap-6 whitespace-nowrap min-w-max mx-auto">
-            <div class="flex items-center gap-2 cursor-pointer hover:text-white transition-colors tooltip" title="나스닥 100 지수"><i class="fas fa-globe-americas text-blue-400"></i> 나스닥 <span id="macro-nq" class="text-white font-mono">16,500.00</span> <span id="macro-nq-chg" class="text-emerald-400 font-mono">+1.2%</span></div>
-            <div class="w-px h-3 bg-gray-700"></div>
-            <div class="flex items-center gap-2 cursor-pointer hover:text-white transition-colors tooltip" title="S&P 500 지수"><i class="fas fa-chart-line text-purple-400"></i> S&P 500 <span id="macro-sp" class="text-white font-mono">5,200.00</span> <span id="macro-sp-chg" class="text-emerald-400 font-mono">+0.8%</span></div>
-            <div class="w-px h-3 bg-gray-700"></div>
-            <div class="flex items-center gap-2 cursor-pointer hover:text-white transition-colors tooltip" title="원/달러 환율"><i class="fas fa-money-bill-wave text-emerald-400"></i> 환율(USD/KRW) <span id="macro-usd" class="text-white font-mono">1,350.50</span> <span id="macro-usd-chg" class="text-red-400 font-mono">-0.1%</span></div>
-            <div class="w-px h-3 bg-gray-700"></div>
-            <div class="flex items-center gap-2 cursor-pointer hover:text-white transition-colors tooltip" title="미국 10년물 국채 금리"><i class="fas fa-landmark text-gray-400"></i> 美 10년물 국채 <span id="macro-10y" class="text-white font-mono">4.52%</span> <span id="macro-10y-chg" class="text-emerald-400 font-mono">+0.01</span></div>
-            <div class="w-px h-3 bg-gray-700"></div>
-            <div class="flex items-center gap-2 cursor-pointer hover:text-white transition-colors tooltip" title="WTI 원유 선물"><i class="fas fa-oil-can text-amber-700"></i> WTI 원유 <span id="macro-wti" class="text-white font-mono">$82.40</span> <span id="macro-wti-chg" class="text-red-400 font-mono">-1.5%</span></div>
-            <div class="w-px h-3 bg-gray-700"></div>
-            <div class="flex items-center gap-2 cursor-pointer hover:text-white transition-colors tooltip" title="국제 금 선물"><i class="fas fa-coins text-yellow-400"></i> 금(Gold) <span id="macro-gold" class="text-white font-mono">$2,350.10</span> <span id="macro-gold-chg" class="text-emerald-400 font-mono">+0.5%</span></div>
+    <!-- Global Macro Ticker Bar (TradingView Real-Time Embed) -->
+    <div class="w-full h-[40px] mb-2 bg-black/60 border-y border-gray-700/50 shadow-[0_4px_15px_rgba(0,0,0,0.5)] shrink-0 overflow-hidden relative z-10 transition-all hover:bg-black/90">
+        <!-- TradingView Widget BEGIN -->
+        <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+            {
+            "symbols": [
+                {
+                "proName": "OANDA:NAS100USD",
+                "title": "나스닥 100"
+                },
+                {
+                "proName": "OANDA:SPX500USD",
+                "title": "S&P 500"
+                },
+                {
+                "proName": "FX_IDC:USDKRW",
+                "title": "원/달러 환율"
+                },
+                {
+                "proName": "TVC:US10Y",
+                "title": "미 10년물 국채"
+                },
+                {
+                "proName": "NYMEX:CL1!",
+                "title": "WTI 원유"
+                },
+                {
+                "proName": "COMEX:GC1!",
+                "title": "국제 금"
+                }
+            ],
+            "showSymbolLogo": true,
+            "isTransparent": true,
+            "displayMode": "regular",
+            "colorTheme": "dark",
+            "locale": "kr"
+            }
+            </script>
         </div>
+        <!-- TradingView Widget END -->
     </div>
 
     <!-- 3-Panel Main Area -->
@@ -477,7 +504,7 @@ let lastDataHash = "";
                 dataUrl = `http://localhost:8088/krx_data.js`;
             } else if (window.location.hostname === 'krx.1004mas.com') {
                 // 외부망(홈페이지)에서 접속 시, 주군의 로컬 컴퓨터로 연결되는 터널망 사용
-                dataUrl = `https://part-casio-sports-continental.trycloudflare.com/krx_data.js`;
+                dataUrl = `https://ways-colour-dealt-raising.trycloudflare.com/krx_data.js`;
             }
             
             script.onload = () => {
@@ -861,27 +888,27 @@ let lastDataHash = "";
                         <div class="space-y-1.5 mb-2 flex-grow mt-1">
                             <!-- 거래금 Bar -->
                             <div class="flex items-center justify-between text-[12px] font-bold">
-                                <span class="text-gray-400 w-16">거래대금</span>
+                                <span class="text-gray-400 whitespace-nowrap min-w-[55px]">거래대금</span>
                                 <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800 shadow-inner">
                                     <div class="h-full bg-emerald-500 stat-bar-fill" style="width: ${volPct}%"></div>
                                 </div>
-                                <span class="text-emerald-400 font-mono w-10 text-right">${Math.round(s.vol/1000)}k</span>
+                                <span class="text-emerald-400 font-mono whitespace-nowrap min-w-[40px] text-right">${Math.round(s.vol/1000)}k</span>
                             </div>
                             <!-- 가속도 Bar -->
                             <div class="flex items-center justify-between text-[12px] font-bold">
-                                <span class="text-gray-400 w-16">가속도</span>
+                                <span class="text-gray-400 whitespace-nowrap min-w-[55px]">가속도</span>
                                 <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800 shadow-inner">
                                     <div class="h-full ${velBarColor} stat-bar-fill" style="width: ${velPct}%"></div>
                                 </div>
-                                <span class="${safeVel>0?'text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]':'text-gray-500'} font-mono w-10 text-right">${safeVel>0?'+':''}${safeVel.toFixed(1)}</span>
+                                <span class="${safeVel>0?'text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]':'text-gray-500'} font-mono whitespace-nowrap min-w-[40px] text-right">${safeVel>0?'+':''}${safeVel.toFixed(1)}</span>
                             </div>
                             <!-- 고점유지력 Bar -->
                             <div class="flex items-center justify-between text-[12px] font-bold">
-                                <span class="text-gray-400 w-16">고점유지력</span>
+                                <span class="text-gray-400 whitespace-nowrap min-w-[55px] tracking-tighter">유지력</span>
                                 <div class="flex-1 mx-2 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800 shadow-inner">
                                     <div class="h-full ${peakBarColor} stat-bar-fill" style="width: ${peakSafePct}%"></div>
                                 </div>
-                                <span class="text-indigo-300 font-mono w-10 text-right">${safePeak.toFixed(1)}%</span>
+                                <span class="text-indigo-300 font-mono whitespace-nowrap min-w-[40px] text-right">${safePeak.toFixed(1)}%</span>
                             </div>
                         </div>
 
