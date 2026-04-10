@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1004MAS KRX 전술 레이더 (Ultimate 3-Panel)</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // [방어막 1단계] UI Safe Mode: 자바스크립트 마비 방지 로직
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            const errBox = document.createElement('div');
+            errBox.style = "position:fixed; top:20px; left:50%; transform:translateX(-50%); background:rgba(185,28,28,0.95); color:white; padding:20px; z-index:9999; border-radius:10px; border:2px solid #fca5a5; font-weight:bold; box-shadow:0 0 30px rgba(220,38,38,0.8); max-width:80%; font-size:14px; word-break:break-all;";
+            errBox.innerHTML = `⚠️ [1004MAS 시스템 에러 탐지]<br><br><b>내용:</b> ${msg}<br><b>위치:</b> ${url} (Line: ${lineNo}, Col: ${columnNo})<br><br><span style="font-size:12px;opacity:0.8;">사령관님, 제갈량에게 이 에러 화면을 캡처하여 보고하십시오. 시스템 백지화(다운)를 방어했습니다.</span>`;
+            document.body.appendChild(errBox);
+            return false;
+        };
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { 
@@ -24,8 +34,9 @@
         
         @media (min-width: 1024px) {
             body { 
-                height: 100vh; 
-                overflow: hidden; 
+                min-height: 100vh; 
+                height: auto; 
+                overflow-y: auto; 
             }
         }
         
@@ -461,7 +472,7 @@ let lastDataHash = "";
         let globalFeedLogs = [];
         const seenFeedKeys = new Set();
         function pushToFeed(item, moduleName, contextMsg, colorType, iconType) {
-            const key = item.name + moduleName + item.chg; 
+            const key = item.name + moduleName + contextMsg; 
             if (seenFeedKeys.has(key)) return;
             seenFeedKeys.add(key);
 
@@ -480,7 +491,7 @@ let lastDataHash = "";
                             <span class="text-[12px] font-bold"><i class="fas ${iconType} mr-1"></i>[${timeStr}] ${moduleName}</span>
                             <span class="text-[13px] font-black text-white drop-shadow-sm">${item.name}</span>
                         </div>
-                        <div class="text-[14px] text-gray-200 font-bold leading-relaxed mt-0.5">
+                        <div class="text-[12px] text-gray-200 font-medium leading-relaxed mt-0.5">
                             ${contextMsg}
                         </div>
                         <div class="flex justify-between items-center mt-1.5 text-[11px]">
@@ -504,7 +515,7 @@ let lastDataHash = "";
                 dataUrl = `http://localhost:8088/krx_data.js`;
             } else if (window.location.hostname === 'krx.1004mas.com') {
                 // 외부망(홈페이지)에서 접속 시, 주군의 로컬 컴퓨터로 연결되는 터널망 사용
-                dataUrl = `https://test-strips-jenny-keith.trycloudflare.com/krx_data.js`;
+                dataUrl = `https://krx.1004mas.com/krx_data.js`;
             }
             
             script.onload = () => {
@@ -857,12 +868,16 @@ let lastDataHash = "";
                 let cssBlinkClass = isNewCard ? "animate-pulse border-amber-400 shadow-[0_0_20px_rgba(251,191,36,0.6)] bg-amber-900/30 ring-1 ring-amber-400" : "border-transparent hover:border-gray-500";
                 let newBadge = isNewCard ? '<span class="text-[11px] bg-amber-400 text-black px-1.5 py-0.5 rounded cursor-pointer font-black tracking-tighter shadow-md animate-bounce ml-1 flex-shrink-0">NEW 징집!</span>' : '';
                 
-                if (isNewCard && cardAppearanceTime[s.name] > 0) {
+                if (isNewCard) {
                     if (isDumping) {
                         pushToFeed(s, "Stocks to Watch", "폭락 타겟 레이더 포착!", "purple", "fa-skull");
                     } else {
                         pushToFeed(s, "Stocks to Watch", "강력 매수 수급 포착 (상위 진입)!", "amber", "fa-rocket");
                     }
+                }
+
+                if (s.news && !s.news.includes("초기화")) {
+                    pushToFeed(s, "Zhuge Analyst", s.news, "blue", "fa-brain");
                 }
 
                 let maBadge = MA_TARGETS.includes(s.name) ? `<span class="text-[11px] bg-red-600/80 text-white border-red-400 px-1.5 py-0.5 rounded border font-black shadow-[0_0_8px_rgba(220,38,38,0.8)] animate-pulse ml-1"><i class="fas fa-crown"></i> M&A피인수</span>` : '';
@@ -912,10 +927,10 @@ let lastDataHash = "";
                             </div>
                         </div>
 
-                        ${s.news ? `
+                        ${(s.news && safeVel >= 0.2) ? `
                         <div class="mt-2 p-3 rounded-lg border border-yellow-600/50 bg-yellow-900/30 mb-1 pulse-news shadow-inner">
-                            <div class="text-[13px] font-bold text-yellow-400 mb-1.5"><i class="fas fa-bolt mr-1 text-yellow-300"></i>[정보/재료] 포착</div>
-                            <div class="text-[14px] text-white leading-relaxed font-medium drop-shadow-sm">${s.news}</div>
+                            <div class="text-[12px] font-bold text-yellow-400 mb-1.5"><i class="fas fa-bolt mr-1 text-yellow-300"></i>[정보/재료] 포착</div>
+                            <div class="text-[12px] text-white leading-relaxed font-medium drop-shadow-sm">${s.news}</div>
                         </div>
                         ` : ''}
                     </div>
