@@ -249,7 +249,7 @@
                 
             </div>
 
-            <div class="flex-1 p-4 overflow-y-auto custom-scrollbar grid grid-cols-1 md:grid-cols-2 gap-4 content-start" id="cards-container">
+            <div class="flex-1 p-3 overflow-y-auto custom-scrollbar grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 content-start" id="cards-container">
                 <!-- Cards injected here -->
             </div>
         </section>
@@ -504,7 +504,7 @@ let lastDataHash = "";
                 dataUrl = `http://localhost:8088/krx_data.js`;
             } else if (window.location.hostname === 'krx.1004mas.com') {
                 // 외부망(홈페이지)에서 접속 시, 주군의 로컬 컴퓨터로 연결되는 터널망 사용
-                dataUrl = `https://perception-harvard-mrna-plenty.trycloudflare.com/krx_data.js`;
+                dataUrl = `https://applications-hawk-timeline-evaluated.trycloudflare.com/krx_data.js`;
             }
             
             script.onload = () => {
