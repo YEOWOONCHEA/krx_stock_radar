@@ -460,7 +460,7 @@ let lastDataHash = "";
                 dataUrl = `http://localhost:8088/krx_data.js`;
             } else if (window.location.hostname === 'krx.1004mas.com') {
                 // 외부망(홈페이지)에서 접속 시, 주군의 로컬 컴퓨터로 연결되는 터널망 사용
-                dataUrl = `https://proceeding-loving-magazines-sustained.trycloudflare.com/krx_data.js`;
+                dataUrl = `https://brands-rural-berkeley-context.trycloudflare.com/krx_data.js`;
             }
             
             script.onload = () => {
@@ -745,14 +745,6 @@ let lastDataHash = "";
                 return 0; // 고래 여부가 같으면 기존 거래대금 순서 유지
             });
             // -------------------------------------------------------------
-            const whaleNames = aiVerdictsCache.map(v => v.coin_name);
-            filtered.sort((a, b) => {
-                const aIsWhale = whaleNames.includes(a.name);
-                const bIsWhale = whaleNames.includes(b.name);
-                if (aIsWhale && !bIsWhale) return -1;
-                if (!aIsWhale && bIsWhale) return 1;
-                return 0;
-            });
             const top10 = filtered.slice(0, 10);
             
             // --- NEW BLINK LOGIC INITIALIZATION ---
