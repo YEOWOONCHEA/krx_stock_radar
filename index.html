@@ -410,8 +410,47 @@
         }
         setInterval(updateClocks, 1000);
         updateClocks();
-        let lastDataHash = "";
+let lastDataHash = "";
         const cardAppearanceTime = {}; // [신규 효과] 돌격대 카드 최초 등장 시간 기록용
+
+        // --- NEW: Intelligence Feed 통합 로직 ---
+        let globalFeedLogs = [];
+        const seenFeedKeys = new Set();
+        function pushToFeed(item, moduleName, contextMsg, colorType, iconType) {
+            const key = item.name + moduleName + item.chg; 
+            if (seenFeedKeys.has(key)) return;
+            seenFeedKeys.add(key);
+
+            const now = new Date();
+            const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') + ':' + String(now.getSeconds()).padStart(2, '0');
+            
+            let bgClass = "bg-gray-800/80 border-gray-700 text-gray-400";
+            if (colorType === 'red') bgClass = "bg-red-950/40 border-red-800 text-red-400";
+            if (colorType === 'purple') bgClass = "bg-purple-950/40 border-purple-800 text-purple-400";
+            if (colorType === 'amber') bgClass = "bg-amber-950/40 border-amber-800 text-amber-400";
+            if (colorType === 'blue') bgClass = "bg-blue-950/40 border-blue-800 text-blue-400";
+
+            const msgHtml = `
+                    <div class="mb-2 p-2.5 rounded-lg border flex flex-col \${bgClass} shadow-sm animate-pulse">
+                        <div class="flex justify-between items-center mb-1 border-b border-opacity-30 pb-1 \${bgClass.replace('bg-','border-')}">
+                            <span class="text-[12px] font-bold"><i class="fas \${iconType} mr-1"></i>[\${timeStr}] \${moduleName}</span>
+                            <span class="text-[13px] font-black text-white drop-shadow-sm">\${item.name}</span>
+                        </div>
+                        <div class="text-[14px] text-gray-200 font-bold leading-relaxed mt-0.5">
+                            \${contextMsg}
+                        </div>
+                        <div class="flex justify-between items-center mt-1.5 text-[11px]">
+                            <span><span class="text-white">\${item.chg>0?'+':''}\${parseFloat(item.chg).toFixed(1)}%</span> \${item.vol? '('+Math.round(item.vol)+'억)' : ''}</span>
+                            <span>Vel: \${item.vel? parseFloat(item.vel).toFixed(1) : '0'}</span>
+                        </div>
+                    </div>
+            `;
+            
+            globalFeedLogs.unshift(msgHtml);
+            if (globalFeedLogs.length > 50) globalFeedLogs.pop();
+            renderFeed(); // 즉각 렌더링 반영
+        }
+        // ----------------------------------------
 
         // 2. Data Fetch (CORS Bypass using Script Injection)
         function fetchData() {
@@ -421,7 +460,7 @@
                 dataUrl = `http://localhost:8088/krx_data.js`;
             } else if (window.location.hostname === 'krx.1004mas.com') {
                 // 외부망(홈페이지)에서 접속 시, 주군의 로컬 컴퓨터로 연결되는 터널망 사용
-                dataUrl = `https://quote-colours-enormous-familiar.trycloudflare.com/krx_data.js`;
+                dataUrl = `https://incl-when-olympic-earth.trycloudflare.com/krx_data.js`;
             }
             
             script.onload = () => {
@@ -551,6 +590,11 @@
                     const dropFromPeak = item.peak; // e.g. -5.2
                     // 고점 대비 -10% 이상 폭락하면서 지지선에 도달한 경우 (투매 위험 매우 높음)
                     const isHeavyDump = dropFromPeak <= -10;
+                    if (isHeavyDump) {
+                        pushToFeed(item, "Support Line", "고점 대비 폭락! 지지선 도달 (투매위험)", "purple", "fa-shield-alt");
+                    } else {
+                        pushToFeed(item, "Support Line", "7% 방어선 지지 테스트 중", "blue", "fa-shield-alt");
+                    }
                     
                     const boxStyle = isHeavyDump 
                         ? "bg-purple-950/20 border-purple-800/60 shadow-[0_0_8px_rgba(147,51,234,0.15)] hover:bg-purple-900/30" 
@@ -609,6 +653,7 @@
                         borderColor = "border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.3)] bg-red-950/20";
                         titleColor = "text-red-400 font-black animate-pulse";
                         icon = `<i class="fas fa-fire text-red-500 mr-1 animate-ping"></i>`;
+                        pushToFeed(realTimeData, "Sniper 8", "수급 돌파! 스나이퍼 타점 도달", "red", "fa-crosshairs");
                     } else {
                         // 전일 타겟이 당일 폭락 중 (위험)
                         borderColor = "border-blue-800 shadow-[0_0_10px_rgba(30,58,138,0.5)] bg-blue-950/30";
@@ -616,6 +661,7 @@
                         icon = `<i class="fas fa-skull text-blue-500 mr-1 animate-pulse"></i>`;
                         displayType = "[위험] 수급 이탈중";
                         typeBgClass = "bg-gray-800/80 text-gray-400 border-gray-600";
+                        pushToFeed(realTimeData, "Sniper 8", "스나이퍼 목표물 기준선 이탈 중 💀", "blue", "fa-skull");
                     }
                 }
 
@@ -756,6 +802,14 @@
                 let isNewCard = (nowMs - cardAppearanceTime[s.name]) < 120000;
                 let cssBlinkClass = isNewCard ? "animate-pulse border-amber-400 shadow-[0_0_20px_rgba(251,191,36,0.6)] bg-amber-900/30 ring-1 ring-amber-400" : "border-transparent hover:border-gray-500";
                 let newBadge = isNewCard ? '<span class="text-[11px] bg-amber-400 text-black px-1.5 py-0.5 rounded cursor-pointer font-black tracking-tighter shadow-md animate-bounce ml-1 flex-shrink-0">NEW 징집!</span>' : '';
+                
+                if (isNewCard && cardAppearanceTime[s.name] > 0) {
+                    if (isDumping) {
+                        pushToFeed(s, "Stocks to Watch", "폭락 타겟 레이더 포착!", "purple", "fa-skull");
+                    } else {
+                        pushToFeed(s, "Stocks to Watch", "강력 매수 수급 포착 (상위 진입)!", "amber", "fa-rocket");
+                    }
+                }
 
                 let maBadge = MA_TARGETS.includes(s.name) ? `<span class="text-[11px] bg-red-600/80 text-white border-red-400 px-1.5 py-0.5 rounded border font-black shadow-[0_0_8px_rgba(220,38,38,0.8)] animate-pulse ml-1"><i class="fas fa-crown"></i> M&A피인수</span>` : '';
 
@@ -839,6 +893,7 @@
                 
                 // 세력 진입 알람 로직 (거래대금 300억 넘거나 당일 5% 이상 폭등)
                 if ((item.vol >= 300 || item.chg >= 5.0) && !hasAlertedMA.has(item.name)) {
+                    pushToFeed(item, "M&A Target", "세력(고래) 수급 대폭발! 찌라시 임박 추정", "red", "fa-crown");
                     showToast(`🔥 [특별감시구역] ${item.name} 세력(고래) 수급 대폭발! M&A 찌라시 임박 추정!`, 'red');
                     if ('speechSynthesis' in window) {
                         const utterance = new SpeechSynthesisUtterance(`${item.name}의 거대 자본이 포착되었습니다. 타점을 확인하십시오.`);
