@@ -308,7 +308,16 @@
 
         <!-- P3: Intelligence Feed & 7% Defense -->
         <section class="panel w-full lg:w-1/4 h-[300px] lg:h-auto flex flex-col">
-            <div class="panel-header text-amber-500 shrink-0">
+
+            <!-- [NEW] 10:10 작전 퇴각 레이더 -->
+            <div class="panel-header text-red-500 border-b border-gray-800 bg-red-950/30 shrink-0 shadow-[0_0_15px_rgba(220,38,38,0.15)] flex justify-between items-center">
+                <span class="text-[13px] font-black tracking-widest animate-pulse"><i class="fas fa-siren-on text-red-500 mr-2"></i>AMBER ALERT (퇴각 레이더)</span>
+                <span class="text-[9px] text-red-300 font-bold border border-red-700 bg-red-900/40 px-1 rounded">10:10 이후 방어</span>
+            </div>
+            <div class="p-2 overflow-y-auto custom-scrollbar flex flex-col gap-1.5 bg-gradient-to-b from-red-950/40 to-transparent min-h-[0px] max-h-[160px] shrink-0 border-b border-gray-800/80" id="retreat-container">
+            </div>
+
+            <div class="panel-header text-amber-500 shrink-0 mt-1">
                 <span><i class="fas fa-bolt text-amber-500 mr-2"></i>Intelligence Feed</span>
                 <div class="w-1.5 h-1.5 bg-amber-500 rounded-full animate-ping"></div>
             </div>
@@ -658,6 +667,7 @@ let lastDataHash = "";
             renderHeatmap(merged);
             renderMATargets(merged); // M&A 타겟 집중 감시 렌더
             renderCards(merged);
+            renderRetreatWarning(merged); // [NEW] 퇴각 레이더
             renderFeed();
             renderKostolany();
             renderDefenseLine();
@@ -967,6 +977,12 @@ let lastDataHash = "";
                 let cssBlinkClass = isNewCard ? "animate-pulse border-amber-400 shadow-[0_0_20px_rgba(251,191,36,0.6)] bg-amber-900/30 ring-1 ring-amber-400" : "border-transparent hover:border-gray-500";
                 let newBadge = isNewCard ? '<span class="text-[11px] bg-amber-400 text-black px-1.5 py-0.5 rounded cursor-pointer font-black tracking-tighter shadow-md animate-bounce ml-1 flex-shrink-0">NEW 징집!</span>' : '';
                 
+                // --- NEW: Pseudo Execution Strength & Vol Ratio ---
+                const pseudoStrength = Math.min(999, Math.round(100 + (safeVel * 35)));
+                const pseudoVolRatio = Math.min(5000, Math.round(300 + (s.vol * 1.2)));
+                const strengthColor = pseudoStrength >= 100 ? 'text-red-400 border-red-800 bg-red-950/60' : 'text-blue-400 border-blue-800 bg-blue-950/60';
+                // ------------------------------------------------
+
                 if (isNewCard) {
                     if (isDumping) {
                         pushToFeed(s, "Stocks to Watch", "폭락 타겟 레이더 포착!", "purple", "fa-skull");
@@ -993,9 +1009,13 @@ let lastDataHash = "";
                                 </div>
                                 <h2 class="text-xl md:text-xl font-black text-white tracking-tight drop-shadow-md mt-0.5">${s.name}${maBadge}</h2>
                             </div>
-                            <div class="text-right">
-                                <div class="text-2xl md:text-2xl font-black ${chgColor} tracking-tighter drop-shadow-md leading-none mt-1">${sign}${s.chg.toFixed(1)}%</div>
-                                <div class="text-[12px] text-gray-300 font-bold mt-1 shadow-sm">${s.vol.toLocaleString()} 억원</div>
+                            <div class="text-right flex flex-col items-end">
+                                <div class="text-2xl md:text-2xl font-black ${chgColor} tracking-tighter drop-shadow-md leading-none mt-1 mb-1">${sign}${s.chg.toFixed(1)}%</div>
+                                <div class="text-[12px] text-gray-300 font-bold shadow-sm mb-1 whitespace-nowrap">${s.vol.toLocaleString()} 억원</div>
+                                <div class="flex gap-1 mt-0.5">
+                                    <div class="text-[10px] ${strengthColor} font-black tracking-tighter px-1 py-0.5 rounded border shrink-0">체결 ${pseudoStrength}%</div>
+                                    <div class="text-[10px] text-yellow-400 font-black tracking-tighter bg-yellow-950/60 px-1 py-0.5 rounded border border-yellow-800 shrink-0">비율 ${pseudoVolRatio}%</div>
+                                </div>
                             </div>
                         </div>
 
@@ -1086,6 +1106,43 @@ let lastDataHash = "";
             }).join('');
             
             document.getElementById('ma-surveillance-container').innerHTML = html;
+        }
+
+        // --- NEW: 작전 퇴각 레이더 (Trailing Stop) ---
+        function renderRetreatWarning(mergedData) {
+            // 조건: 고래수급 or 스나이퍼 명단에 속한 주요 종목이, 당일 폭락(-chg)이거나 
+            // 최고점 대비 -5% 이탈(peak <= -4) 혹은 속도 음수(vel < -0.5)일 때 경고
+            const sniperNames = kostolanyList.map(k => k.name);
+            const whaleNames = aiVerdictsCache.map(v => v.coin_name);
+            
+            const warningTargets = mergedData.filter(s => {
+                const isImportant = sniperNames.includes(s.name) || whaleNames.includes(s.name);
+                const isDumping = (s.chg <= 0) || (s.peak <= -4.0) || (s.vel < -0.5);
+                return isImportant && isDumping;
+            });
+
+            const container = document.getElementById('retreat-container');
+            if(warningTargets.length === 0) {
+                container.innerHTML = `<div class="text-[11px] text-gray-500 text-center py-4 font-mono">10:10 현재 주도주 투매 징후 없음. 정상 수급 유지중.</div>`;
+                return;
+            }
+
+            let html = warningTargets.map(s => {
+                const chgColor = s.chg < 0 ? 'text-blue-500' : 'text-gray-400';
+                return `
+                    <div class="flex flex-col p-2 rounded bg-black/60 border border-red-900/60 shadow-[inset_0_0_10px_rgba(220,38,38,0.1)] hover:bg-black/80 transition-colors">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[13px] font-black text-red-400 drop-shadow-md"><i class="fas fa-exclamation-triangle mr-1 animate-pulse text-red-500"></i>${s.name}</span>
+                            <span class="text-[13px] font-black ${chgColor}">${s.chg > 0 ? '+' : ''}${s.chg.toFixed(1)}%</span>
+                        </div>
+                        <div class="flex justify-between items-center mt-1.5">
+                            <span class="text-[11px] text-gray-400 font-bold">고점대비: <span class="text-indigo-400 font-mono">${s.peak !== undefined ? s.peak + '%' : 'N/A'}</span></span>
+                            <span class="text-[10px] bg-red-950/80 text-red-300 border border-red-700/80 rounded px-1.5 py-0.5 animate-pulse font-black shadow-sm">전량 매도 경고 (이탈)</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            container.innerHTML = html;
         }
 
         // [Right] Intelligence Feed
