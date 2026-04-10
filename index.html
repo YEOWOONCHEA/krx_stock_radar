@@ -191,19 +191,7 @@
                 <span id="command-title"><i class="fas fa-crosshairs text-red-500 mr-2"></i>Stock Commands</span>
             </div>
             
-            <!-- [NEW] Zhuge AI Core 실시간 통제 브리핑 창 -->
-            <div class="m-4 mb-0 p-4 border border-teal-500/50 bg-teal-950/20 rounded-lg shadow-[0_0_15px_rgba(20,184,166,0.15)] shrink-0 transition-all">
-                <div class="flex items-center justify-between mb-2 pb-2 border-b border-teal-800/60">
-                    <div class="flex items-center">
-                        <i class="fas fa-brain text-teal-400 mr-2 animate-pulse text-lg"></i>
-                        <span class="text-teal-300 font-bold tracking-wider text-[14px]">Zhuge AI Core</span>
-                    </div>
-                </div>
-                <div id="zhuge-briefing-text" class="text-[13px] text-gray-300 leading-loose font-medium font-mono whitespace-pre-wrap">
-                    AI 코어 엔진 워밍업 중... (초기화)
-                </div>
 
-            </div>
 
             <div class="flex-1 p-4 overflow-y-auto custom-scrollbar grid grid-cols-1 md:grid-cols-2 gap-4 content-start" id="cards-container">
                 <!-- Cards injected here -->
@@ -421,7 +409,7 @@
                 dataUrl = `http://localhost:8088/krx_data.js`;
             } else if (window.location.hostname === 'krx.1004mas.com') {
                 // 외부망(홈페이지)에서 접속 시, 주군의 로컬 컴퓨터로 연결되는 터널망 사용
-                dataUrl = `https://cst-pillow-sri-rapidly.trycloudflare.com/krx_data.js`;
+                dataUrl = `https://economy-administrators-pregnancy-thehun.trycloudflare.com/krx_data.js`;
             }
             
             script.onload = () => {
