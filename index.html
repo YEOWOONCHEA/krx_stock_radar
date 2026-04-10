@@ -460,7 +460,7 @@ let lastDataHash = "";
                 dataUrl = `http://localhost:8088/krx_data.js`;
             } else if (window.location.hostname === 'krx.1004mas.com') {
                 // 외부망(홈페이지)에서 접속 시, 주군의 로컬 컴퓨터로 연결되는 터널망 사용
-                dataUrl = `https://diploma-sat-principal-amy.trycloudflare.com/krx_data.js`;
+                dataUrl = `https://proceeding-loving-magazines-sustained.trycloudflare.com/krx_data.js`;
             }
             
             script.onload = () => {
@@ -735,6 +735,24 @@ let lastDataHash = "";
             }
 
             // 중앙 메인 카드는 10개로 제한 (나머지 20개는 방어선 트래킹용)
+            // --- NEW: Intelligence Feed (고래 수급) 최상위 강제 노출 로직 ---
+            const whaleNames = aiVerdictsCache.map(v => v.coin_name);
+            filtered.sort((a, b) => {
+                const aIsWhale = whaleNames.includes(a.name);
+                const bIsWhale = whaleNames.includes(b.name);
+                if (aIsWhale && !bIsWhale) return -1;
+                if (!aIsWhale && bIsWhale) return 1;
+                return 0; // 고래 여부가 같으면 기존 거래대금 순서 유지
+            });
+            // -------------------------------------------------------------
+            const whaleNames = aiVerdictsCache.map(v => v.coin_name);
+            filtered.sort((a, b) => {
+                const aIsWhale = whaleNames.includes(a.name);
+                const bIsWhale = whaleNames.includes(b.name);
+                if (aIsWhale && !bIsWhale) return -1;
+                if (!aIsWhale && bIsWhale) return 1;
+                return 0;
+            });
             const top10 = filtered.slice(0, 10);
             
             // --- NEW BLINK LOGIC INITIALIZATION ---
@@ -922,57 +940,68 @@ let lastDataHash = "";
 
         // [Right] Intelligence Feed
         function renderFeed() {
-            if(aiVerdictsCache.length === 0) {
+            let htmlStr = "";
+            let isEmpty = true;
+
+            if(aiVerdictsCache.length > 0) {
+                isEmpty = false;
+                htmlStr += aiVerdictsCache.map(v => {
+                    let badgeClass = "bg-gray-800/80 border-gray-700 text-gray-400";
+                    let icon = "fa-info-circle";
+                    
+                    if(v.signal === 'green') {
+                        badgeClass = "bg-red-950/40 border-red-800 text-red-400";
+                        icon = "fa-crosshairs";
+                    } else if(v.signal === 'purple') {
+                        badgeClass = "bg-purple-950/40 border-purple-800 text-purple-400";
+                        icon = "fa-skull";
+                    }
+
+                    // Append any generic DART strings if available
+                    let content = v.news_detail ? `<span class="text-amber-500 font-black"><i class="fas fa-bolt mr-1"></i>[실시간 수급포착]</span> ${v.news_detail}` : v.reason;
+                    // format simple string line breaks
+                    content = content.replace(/\n/g, '<br/>');
+
+                    // 1분 이내 새로 들어온 피드 처리 (깜빡임 이펙트)
+                    let pulseClass = "";
+                    if (v.timestamp) {
+                        const now = new Date();
+                        const parts = v.timestamp.split(':');
+                        if(parts.length === 3) {
+                            const h = parseInt(parts[0], 10);
+                            const m = parseInt(parts[1], 10);
+                            const s = parseInt(parts[2], 10);
+                            const t = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, s);
+                            // 현재 시간 기준 60초(60000ms) 이내의 피드면 깜빡임
+                            if (now - t >= 0 && now - t <= 60000) {
+                                pulseClass = "animate-pulse shadow-[0_0_15px_rgba(250,204,21,0.3)] border border-yellow-400/80";
+                            }
+                        }
+                    }
+
+                    return `
+                        <div class="flex flex-col text-[11px] p-2.5 rounded-lg border ${badgeClass} ${pulseClass} mb-1 transition-all duration-300">
+                            <div class="flex justify-between items-center mb-1 border-b border-white/10 pb-1">
+                                <span class="font-mono text-[14px] text-white font-black drop-shadow-lg">[${v.timestamp}]</span>
+                                <span class="font-black text-[15px] text-yellow-400 drop-shadow-md tracking-tight"><i class="fas ${icon} opacity-80 mr-1 text-white/50"></i>${v.coin_name}</span>
+                            </div>
+                            <div class="text-gray-100 text-[12px] font-medium leading-relaxed drop-shadow-sm mt-1">${content}</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            if(globalFeedLogs.length > 0) {
+                isEmpty = false;
+                htmlStr += globalFeedLogs.join('');
+            }
+
+            if(isEmpty) {
                  document.getElementById('feed-container').innerHTML = `<div class="text-gray-500 text-center py-10 text-xs">수신된 정보 없습니다.</div>`;
                  return;
             }
-
-            const html = aiVerdictsCache.map(v => {
-                let badgeClass = "bg-gray-800/80 border-gray-700 text-gray-400";
-                let icon = "fa-info-circle";
-                
-                if(v.signal === 'green') {
-                    badgeClass = "bg-red-950/40 border-red-800 text-red-400";
-                    icon = "fa-crosshairs";
-                } else if(v.signal === 'purple') {
-                    badgeClass = "bg-purple-950/40 border-purple-800 text-purple-400";
-                    icon = "fa-skull";
-                }
-
-                // Append any generic DART strings if available
-                let content = v.news_detail ? `<span class="text-amber-500 font-black"><i class="fas fa-bolt mr-1"></i>[실시간 수급포착]</span> ${v.news_detail}` : v.reason;
-                // format simple string line breaks
-                content = content.replace(/\n/g, '<br/>');
-
-                // 1분 이내 새로 들어온 피드 처리 (깜빡임 이펙트)
-                let pulseClass = "";
-                if (v.timestamp) {
-                    const now = new Date();
-                    const parts = v.timestamp.split(':');
-                    if(parts.length === 3) {
-                        const h = parseInt(parts[0], 10);
-                        const m = parseInt(parts[1], 10);
-                        const s = parseInt(parts[2], 10);
-                        const t = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, s);
-                        // 현재 시간 기준 60초(60000ms) 이내의 피드면 깜빡임
-                        if (now - t >= 0 && now - t <= 60000) {
-                            pulseClass = "animate-pulse shadow-[0_0_15px_rgba(250,204,21,0.3)] border border-yellow-400/80";
-                        }
-                    }
-                }
-
-                return `
-                    <div class="flex flex-col text-[11px] p-2.5 rounded-lg border ${badgeClass} ${pulseClass} mb-1 transition-all duration-300">
-                        <div class="flex justify-between items-center mb-1 border-b border-white/10 pb-1">
-                            <span class="font-mono text-[14px] text-white font-black drop-shadow-lg">[${v.timestamp}]</span>
-                            <span class="font-black text-[15px] text-yellow-400 drop-shadow-md tracking-tight"><i class="fas ${icon} opacity-80 mr-1 text-white/50"></i>${v.coin_name}</span>
-                        </div>
-                        <div class="text-gray-100 text-[12px] font-medium leading-relaxed drop-shadow-sm mt-1">${content}</div>
-                    </div>
-                `;
-            }).join('');
             
-            document.getElementById('feed-container').innerHTML = html;
+            document.getElementById('feed-container').innerHTML = htmlStr;
         }
 
         async function executeOrder(stockName, side) {
