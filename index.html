@@ -242,8 +242,45 @@
 
         <!-- P2: Stock Commands & AI Briefing (Detailed Cards) -->
         <section class="panel w-full lg:w-1/2 h-[600px] lg:h-auto lg:flex-1 flex flex-col">
-            <div class="panel-header text-white shrink-0">
-                <span id="command-title"><i class="fas fa-crosshairs text-red-500 mr-2"></i>Stock Commands</span>
+            <!-- [NEW] LIVE MARKET DATA (KOSPI & KOSDAQ) -->
+            <div class="panel-header text-amber-400 border-b border-gray-800 bg-amber-950/20 shrink-0 shadow-[0_0_15px_rgba(245,158,11,0.15)] flex justify-between items-center">
+                <span class="text-[14px] font-black tracking-widest"><i class="fas fa-chart-line text-amber-500 mr-2"></i>LIVE MARKET DATA</span>
+                <span class="text-[11px] text-gray-500 font-mono tracking-wider"><i class="fas fa-unlock-alt text-green-500 mr-1"></i>ENCRYPTED</span>
+            </div>
+            
+            <!-- Realtime Chart Area -->
+            <div class="p-0 border-b border-gray-800/80 shrink-0 relative bg-[#0a0a0c] h-[300px] lg:h-[350px]">
+                <!-- TradingView Advanced Chart Widget BEGIN -->
+                <div class="tradingview-widget-container" style="height:100%;width:100%">
+                  <div class="tradingview-widget-container__widget" style="height:calc(100% - 0px);width:100%"></div>
+                  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                  {
+                  "autosize": true,
+                  "symbol": "KRX:KOSPI",
+                  "interval": "D",
+                  "timezone": "Asia/Seoul",
+                  "theme": "dark",
+                  "style": "1",
+                  "locale": "kr",
+                  "enable_publishing": false,
+                  "backgroundColor": "rgba(10, 10, 12, 1)",
+                  "gridColor": "rgba(40, 40, 45, 0.5)",
+                  "hide_top_toolbar": true,
+                  "hide_legend": true,
+                  "toolbar_bg": "rgba(0, 0, 0, 1)",
+                  "save_image": false,
+                  "container_id": "tradingview_kospi",
+                  "hide_volume": false,
+                  "support_host": "https://www.tradingview.com"
+                }
+                  </script>
+                </div>
+                <!-- TradingView Advanced Chart Widget END -->
+            </div>
+
+            <!-- Existing Stock Commands -->
+            <div class="panel-header text-white shrink-0 mt-1 border-t border-gray-800/50 bg-black/40">
+                <span id="command-title"><i class="fas fa-crosshairs text-red-500 mr-2 animate-ping"></i>Stock Commands</span>
             </div>
             
             <!-- [NEW] Zhuge AI Core 실시간 통제 브리핑 창 -->
