@@ -431,17 +431,17 @@ let lastDataHash = "";
             if (colorType === 'blue') bgClass = "bg-blue-950/40 border-blue-800 text-blue-400";
 
             const msgHtml = `
-                    <div class="mb-2 p-2.5 rounded-lg border flex flex-col \${bgClass} shadow-sm animate-pulse">
-                        <div class="flex justify-between items-center mb-1 border-b border-opacity-30 pb-1 \${bgClass.replace('bg-','border-')}">
-                            <span class="text-[12px] font-bold"><i class="fas \${iconType} mr-1"></i>[\${timeStr}] \${moduleName}</span>
-                            <span class="text-[13px] font-black text-white drop-shadow-sm">\${item.name}</span>
+                    <div class="mb-2 p-2.5 rounded-lg border flex flex-col ${bgClass} shadow-sm animate-pulse">
+                        <div class="flex justify-between items-center mb-1 border-b border-opacity-30 pb-1 ${bgClass.replace('bg-','border-')}">
+                            <span class="text-[12px] font-bold"><i class="fas ${iconType} mr-1"></i>[${timeStr}] ${moduleName}</span>
+                            <span class="text-[13px] font-black text-white drop-shadow-sm">${item.name}</span>
                         </div>
                         <div class="text-[14px] text-gray-200 font-bold leading-relaxed mt-0.5">
-                            \${contextMsg}
+                            ${contextMsg}
                         </div>
                         <div class="flex justify-between items-center mt-1.5 text-[11px]">
-                            <span><span class="text-white">\${item.chg>0?'+':''}\${parseFloat(item.chg).toFixed(1)}%</span> \${item.vol? '('+Math.round(item.vol)+'억)' : ''}</span>
-                            <span>Vel: \${item.vel? parseFloat(item.vel).toFixed(1) : '0'}</span>
+                            <span><span class="text-white">${item.chg>0?'+':''}${parseFloat(item.chg).toFixed(1)}%</span> ${item.vol? '('+Math.round(item.vol)+'억)' : ''}</span>
+                            <span>Vel: ${item.vel? parseFloat(item.vel).toFixed(1) : '0'}</span>
                         </div>
                     </div>
             `;
@@ -460,7 +460,7 @@ let lastDataHash = "";
                 dataUrl = `http://localhost:8088/krx_data.js`;
             } else if (window.location.hostname === 'krx.1004mas.com') {
                 // 외부망(홈페이지)에서 접속 시, 주군의 로컬 컴퓨터로 연결되는 터널망 사용
-                dataUrl = `https://incl-when-olympic-earth.trycloudflare.com/krx_data.js`;
+                dataUrl = `https://diploma-sat-principal-amy.trycloudflare.com/krx_data.js`;
             }
             
             script.onload = () => {
