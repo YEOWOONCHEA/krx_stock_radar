@@ -1,103 +1,155 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html class="dark scroll-smooth" lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow, noarchive">
     <title>1004MAS KRX 전술 레이더 (Ultimate 3-Panel)</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Stitch Web Fonts & Icons -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stitch Design System: KRX Quantum Pulse Config -->
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ffb4ab",
+                    "surface-container-highest": "#2e3733",
+                    "on-primary-fixed": "#002019",
+                    "primary-container": "#00ffd1",
+                    "surface-tint": "#00e0b7",
+                    "on-primary": "#00382c",
+                    "primary": "#fffffd",
+                    "on-surface": "#dbe5df",
+                    "on-error": "#690005",
+                    "tertiary-fixed": "#ffdadb",
+                    "surface-container-low": "#151d1a",
+                    "surface-container": "#19211e",
+                    "surface": "#0c1512",
+                    "primary-fixed-dim": "#00e0b7",
+                    "primary-fixed": "#15ffd1",
+                    "inverse-on-surface": "#29322f",
+                    "tertiary-fixed-dim": "#ffb2b8",
+                    "on-tertiary-fixed-variant": "#91002c",
+                    "on-secondary-fixed": "#221b00",
+                    "secondary-fixed-dim": "#e9c400",
+                    "on-primary-fixed-variant": "#005141",
+                    "on-secondary": "#3a3000",
+                    "on-primary-container": "#00725c",
+                    "error-container": "#93000a",
+                    "on-error-container": "#ffdad6",
+                    "on-background": "#dbe5df",
+                    "background": "#0c1512",
+                    "on-secondary-fixed-variant": "#544600",
+                    "inverse-surface": "#dbe5df",
+                    "on-tertiary-fixed": "#40000f",
+                    "surface-bright": "#323b38",
+                    "tertiary": "#fffeff",
+                    "outline-variant": "#3a4a44",
+                    "surface-variant": "#2e3733",
+                    "surface-dim": "#0c1512",
+                    "on-surface-variant": "#b9cbc3",
+                    "on-secondary-container": "#725f00",
+                    "surface-container-lowest": "#07100d",
+                    "on-tertiary-container": "#c80441",
+                    "secondary-container": "#ffdb3c",
+                    "inverse-primary": "#006b57",
+                    "tertiary-container": "#ffd9db",
+                    "surface-container-high": "#232c28",
+                    "on-tertiary": "#67001d",
+                    "secondary": "#fff9ef",
+                    "outline": "#83958d",
+                    "secondary-fixed": "#ffe16d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "element-tight": "0.5rem",
+                    "container-padding": "1.5rem",
+                    "panel-gap": "1.25rem",
+                    "element-medium": "1rem",
+                    "grid-columns": "12"
+            },
+            "fontFamily": {
+                    "label-caps": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "data-lg": ["JetBrains Mono"],
+                    "data-md": ["JetBrains Mono"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "label-caps": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.08em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "data-lg": ["20px", {"lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                    "data-md": ["14px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+    
     <style>
-        body { 
-            background: #051424; 
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(0, 242, 255, 0.08) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(255, 202, 40, 0.05) 0px, transparent 50%);
-            color: #cbd5e1; 
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif; 
+        body {
+            background: radial-gradient(circle at top left, #0A0E17 0%, #000000 100%) !important;
+            overflow: hidden;
+            height: 100vh;
             min-height: 100vh !important;
-            height: auto !important;
-            overflow-x: hidden !important;
-            overflow-y: auto !important;
+            color: #cbd5e1;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
             margin: 0;
             padding: 0;
         }
-        /* Antigravity 확장프로그램 scroll-lock 강제 무효화 */
+        
+        /* Antigravity scroll-lock 강제 무효화 */
         html:root body.antigravity-scroll-lock,
         html body.antigravity-scroll-lock,
         body.antigravity-scroll-lock,
         body[style*="overflow: hidden"],
         body[style*="overflow:hidden"] {
-            overflow-y: auto !important;
-            overflow: auto !important;
-            height: auto !important;
-            min-height: 100vh !important;
-        }
-        
-        @media (min-width: 1024px) {
-            body { 
-                min-height: 100vh;
-                overflow-y: auto;
-            }
-        }
-        
-        .panel {
-            background: rgba(5, 20, 36, 0.45);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 242, 255, 0.1);
-            border-radius: 0.75rem;
-            display: flex;
-            flex-direction: column;
-            overflow: visible;
+            overflow: hidden !important;
+            height: 100vh !important;
         }
 
-        .panel-header {
-            padding: 1rem;
-            border-bottom: 1px solid rgba(0, 242, 255, 0.1);
-            background: rgba(0, 0, 0, 0.2);
-            font-weight: 800;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
-
-        /* Premium Glowing and Glassmorphism Styles (v12.0) */
         .glass-panel {
-            background: rgba(5, 20, 36, 0.5) !important;
+            background: rgba(18, 24, 38, 0.7) !important;
             backdrop-filter: blur(20px) !important;
             -webkit-backdrop-filter: blur(20px) !important;
-            border: 1px solid rgba(0, 242, 255, 0.1) !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6) !important;
-            border-radius: 16px !important;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .glass-panel:hover {
-            border: 1px solid rgba(0, 242, 255, 0.35) !important;
-            box-shadow: 0 16px 48px rgba(0, 242, 255, 0.15) !important;
-            transform: translateY(-2px);
-        }
-        .font-mono-jetbrains {
-            font-family: 'JetBrains Mono', monospace !important;
-        }
-        .gold-pulsing-glow {
-            box-shadow: 0 0 20px rgba(245, 158, 11, 0.15), inset 0 0 15px rgba(245, 158, 11, 0.05);
-            border: 1.5px solid rgba(245, 158, 11, 0.4) !important;
-            animation: goldPulse 2s infinite alternate;
-        }
-        @keyframes goldPulse {
-            0% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.15), border-color: rgba(245, 158, 11, 0.4); }
-            100% { box-shadow: 0 0 35px rgba(245, 158, 11, 0.5), border-color: rgba(245, 158, 11, 0.9); }
+            border: 1px solid rgba(0, 255, 209, 0.35) !important;
+            box-shadow: 0 16px 48px rgba(0, 255, 209, 0.15) !important;
         }
         
+        .neon-glow-teal { box-shadow: 0 0 15px rgba(0, 255, 209, 0.2); }
+        .neon-glow-gold { box-shadow: 0 0 15px rgba(233, 196, 0, 0.2); }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
+
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .font-mono-jetbrains { font-family: 'JetBrains Mono', monospace !important; }
+
         /* Drawer Slide-out Control Center */
         .control-drawer {
             position: fixed;
@@ -107,7 +159,7 @@
             height: 100%;
             background: rgba(8, 10, 16, 0.95);
             backdrop-filter: blur(20px);
-            border-left: 1px solid rgba(102, 252, 241, 0.15);
+            border-left: 1px solid rgba(0, 255, 209, 0.15);
             box-shadow: -10px 0 30px rgba(0,0,0,0.8);
             transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 99;
@@ -118,24 +170,7 @@
             right: 0;
         }
 
-        /* Unified Card Styles */
-        .glass-card { 
-            background: rgba(20, 20, 24, 0.8); 
-            border: 1px solid rgba(255, 255, 255, 0.05); 
-            border-radius: 0.75rem;
-            padding: 1rem;
-            transition: all 0.2s;
-        }
-        .glass-card:hover {  border-color: rgba(239, 68, 68, 0.3); }
-        .stat-bar-fill { transition: width 0.5s ease; }
-        .pulse-news { animation: pulseNews border 2s infinite; }
-        @keyframes pulseNews { 
-            0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.2); } 
-            70% { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); } 
-            100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); } 
-        }
-
-        /* Sector Heatmap Blocks */
+        /* Sector Heatmap Blocks & Colors */
         .sector-box {
             display: flex;
             flex-direction: column;
@@ -189,83 +224,79 @@
             50%  { outline: 6px solid rgba(220,38,38,0.9); box-shadow: inset 0 0 60px 20px rgba(220,38,38,0.3); }
             75%  { outline: 6px solid rgba(255,255,255,0.95); box-shadow: inset 0 0 40px 10px rgba(255,50,50,0.25); }
             100% { outline: 6px solid rgba(255,255,255,0); box-shadow: inset 0 0 0px 0px rgba(255,255,255,0); }
-        @keyframes neonPulse {
-            0% {
-                border-color: rgba(0, 242, 255, 0.2);
-                box-shadow: 0 0 0 rgba(0, 242, 255, 0);
-            }
-            30% {
-                border-color: rgba(0, 242, 255, 1);
-                box-shadow: 0 0 15px rgba(0, 242, 255, 0.6);
-            }
-            100% {
-                border-color: rgba(0, 242, 255, 0.2);
-                box-shadow: 0 0 0 rgba(0, 242, 255, 0);
-            }
         }
-
+        
+        @keyframes neonPulse {
+            0% { border-color: rgba(0, 255, 209, 0.2); box-shadow: 0 0 0 rgba(0, 255, 209, 0); }
+            30% { border-color: rgba(0, 255, 209, 1); box-shadow: 0 0 15px rgba(0, 255, 209, 0.6); }
+            100% { border-color: rgba(0, 255, 209, 0.2); box-shadow: 0 0 0 rgba(0, 255, 209, 0); }
+        }
         .panel-highlight {
             animation: neonPulse 1.5s ease-in-out;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
-
     </style>
-
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 </head>
-<body class="h-screen overflow-hidden flex flex-col">
+<body class="text-on-surface font-body-sm selection:bg-primary-container selection:text-on-primary-container">
 
-    <!-- 🌍 [상단 내비게이션 바] Premium Neon Terminal Header -->
-    <header class="w-full bg-[#051424]/90 backdrop-blur-md border-b border-[#00f2ff]/10 px-6 py-4 flex items-center justify-between z-50 shrink-0 select-none">
+    <!-- 🌍 [상단 내비게이션 바] Stitch Header -->
+    <header class="fixed top-0 w-full z-50 flex justify-between items-center px-container-padding h-16 bg-surface/70 backdrop-blur-xl border-b border-white/10 select-none">
         <div class="flex items-center gap-8">
-            <span class="text-xl font-extrabold text-[#00f2ff] tracking-widest font-mono-jetbrains animate-pulse">NEON_TERMINAL</span>
-            <nav class="hidden md:flex items-center gap-6 text-xs font-black tracking-wider text-slate-400">
-                <a href="#panel-intel" id="nav-intel" class="nav-link hover:text-[#00f2ff] transition-colors pb-1 border-b-2 border-[#00f2ff] text-[#00f2ff]">DASHBOARD</a>
-                <a href="#panel-macro" id="nav-macro" class="nav-link hover:text-[#00f2ff] transition-colors pb-1">WATCHLIST</a>
-                <a href="#panel-xray" id="nav-xray" class="nav-link hover:text-[#00f2ff] transition-colors pb-1">ANALYSIS</a>
-                <a href="#panel-sniper" id="nav-sniper" class="nav-link hover:text-[#00f2ff] transition-colors pb-1">ORDERS</a>
+            <h1 class="font-display-lg text-headline-md text-[#15ffd1] drop-shadow-[0_0_8px_rgba(0,255,209,0.5)] font-mono-jetbrains animate-pulse">NEON_TERMINAL</h1>
+            <nav class="hidden md:flex gap-6">
+                <a class="text-primary-fixed border-b-2 border-primary-fixed font-label-caps text-label-caps h-16 flex items-center" href="#panel-intel" id="nav-intel">DASHBOARD</a>
+                <a class="text-on-surface-variant font-label-caps text-label-caps hover:text-primary-fixed-dim transition-colors h-16 flex items-center" href="#panel-macro" id="nav-macro">WATCHLIST</a>
+                <a class="text-on-surface-variant font-label-caps text-label-caps hover:text-primary-fixed-dim transition-colors h-16 flex items-center" href="#panel-xray" id="nav-xray">ANALYSIS</a>
+                <a class="text-on-surface-variant font-label-caps text-label-caps hover:text-primary-fixed-dim transition-colors h-16 flex items-center" href="#panel-sniper" id="nav-sniper">ORDERS</a>
             </nav>
         </div>
         <div class="flex items-center gap-4 text-slate-400">
-            <button onclick="toggleControlDrawer()" class="hover:text-[#00f2ff] transition-colors relative">
+            <button onclick="toggleControlDrawer()" class="hover:text-primary-fixed transition-colors relative">
                 <i class="fas fa-bell"></i>
-                <span class="absolute -top-1.5 -right-1.5 w-2 h-2 bg-[#ffca28] rounded-full animate-ping"></span>
+                <span class="absolute -top-1.5 -right-1.5 w-2 h-2 bg-secondary-fixed rounded-full animate-ping"></span>
             </button>
-            <button onclick="document.getElementById('settings-modal').classList.remove('hidden')" class="hover:text-[#00f2ff] transition-colors"><i class="fas fa-cog"></i></button>
-            <div class="flex items-center gap-2 bg-[#0A192F] border border-[#00f2ff]/20 rounded-full px-3 py-1 text-xs font-bold text-slate-300">
-                <span class="w-1.5 h-1.5 bg-[#00f2ff] rounded-full animate-pulse"></span>
-                <span>ELITE_TRADER</span>
-                <i class="fas fa-user-circle text-sm text-[#00f2ff]"></i>
+            <button onclick="document.getElementById('settings-modal').classList.remove('hidden')" class="hover:text-primary-fixed transition-colors"><span class="material-symbols-outlined text-base">settings</span></button>
+            <div class="flex items-center gap-2 pl-4 border-l border-white/10 text-xs font-bold text-slate-300">
+                <span class="font-label-caps text-label-caps text-on-surface">ELITE_TRADER</span>
+                <span class="material-symbols-outlined text-primary-fixed">account_circle</span>
             </div>
         </div>
     </header>
 
     <!-- [전체 콘텐츠 영역 래퍼] -->
-    <div class="flex flex-1 w-full overflow-hidden relative">
-        <!-- 🧭 [좌측 세로 내비게이션 바] Premium Sidebar Icons -->
-        <aside class="hidden lg:flex flex-col items-center gap-6 bg-[#051424]/80 backdrop-blur-md border-r border-[#00f2ff]/10 w-16 py-6 z-40 shrink-0 select-none">
-            <button id="side-intel" class="side-btn w-10 h-10 flex items-center justify-center rounded-lg bg-[#00f2ff]/10 text-[#00f2ff] hover:bg-[#00f2ff]/20 hover:text-white transition-all duration-300" title="Tactical Intel">
-                <i class="fas fa-th-large"></i>
-            </button>
-            <button id="side-macro" class="side-btn w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-[#00f2ff]/10 hover:text-[#00f2ff] transition-all duration-300" title="Macro & Heatmap">
-                <i class="fas fa-eye"></i>
-            </button>
-            <button id="side-xray" class="side-btn w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-[#00f2ff]/10 hover:text-[#00f2ff] transition-all duration-300" title="X-Ray & Stealth">
-                <i class="fas fa-chart-line"></i>
-            </button>
-            <button id="side-sniper" class="side-btn w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-[#00f2ff]/10 hover:text-[#00f2ff] transition-all duration-300" title="Sniper Execution">
-                <i class="fas fa-exchange-alt"></i>
-            </button>
-            <button onclick="toggleControlDrawer()" class="w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-[#00f2ff]/10 hover:text-[#00f2ff] transition-all duration-300 mt-auto" title="Settings & Logs">
-                <i class="fas fa-history"></i>
-            </button>
+    <div class="flex w-full h-[calc(100vh-64px)] mt-16 overflow-hidden relative">
+        <!-- 🧭 [좌측 세로 내비게이션 바] Stitch Sidebar -->
+        <aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-16 hover:w-64 bg-surface-container-low/70 backdrop-blur-2xl border-r border-white/10 transition-all duration-300 z-40 overflow-hidden flex flex-col py-panel-gap select-none">
+            <div class="flex flex-col gap-2">
+                <a class="flex items-center gap-4 px-5 py-3 bg-[#00ffd1]/10 text-primary-fixed border-l-4 border-primary-fixed group cursor-pointer" href="#panel-intel" id="side-intel">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <span class="font-label-caps text-label-caps opacity-0 group-hover:opacity-100 transition-opacity">DASHBOARD</span>
+                </a>
+                <a class="flex items-center gap-4 px-5 py-3 text-on-surface-variant hover:bg-surface-container-highest/50 hover:text-on-surface group cursor-pointer transition-colors" href="#panel-macro" id="side-macro">
+                    <span class="material-symbols-outlined">visibility</span>
+                    <span class="font-label-caps text-label-caps opacity-0 group-hover:opacity-100 transition-opacity">WATCHLIST</span>
+                </a>
+                <a class="flex items-center gap-4 px-5 py-3 text-on-surface-variant hover:bg-surface-container-highest/50 hover:text-on-surface group cursor-pointer transition-colors" href="#panel-xray" id="side-xray">
+                    <span class="material-symbols-outlined">query_stats</span>
+                    <span class="font-label-caps text-label-caps opacity-0 group-hover:opacity-100 transition-opacity">ANALYSIS</span>
+                </a>
+                <a class="flex items-center gap-4 px-5 py-3 text-on-surface-variant hover:bg-surface-container-highest/50 hover:text-on-surface group cursor-pointer transition-colors" href="#panel-sniper" id="side-sniper">
+                    <span class="material-symbols-outlined">swap_horiz</span>
+                    <span class="font-label-caps text-label-caps opacity-0 group-hover:opacity-100 transition-opacity">ORDERS</span>
+                </a>
+                <a onclick="toggleControlDrawer()" class="flex items-center gap-4 px-5 py-3 text-on-surface-variant hover:bg-surface-container-highest/50 hover:text-on-surface group cursor-pointer transition-colors mt-auto" title="Settings & Logs">
+                    <span class="material-symbols-outlined">history</span>
+                    <span class="font-label-caps text-label-caps opacity-0 group-hover:opacity-100 transition-opacity">LOG_HISTORY</span>
+                </a>
+            </div>
         </aside>
 
         <!-- 🖥️ [우측 메인 대시보드 콘텐츠 스크롤 영역] -->
-        <div id="main-content-scroll" class="flex-1 flex flex-col p-4 gap-4 overflow-y-auto custom-scrollbar scroll-smooth">
+        <main class="pl-16 w-full h-full grid grid-cols-4 gap-panel-gap p-panel-gap box-border overflow-y-auto custom-scrollbar">
             
-            <!-- 🌍 TradingView 글로벌 시장 실시간 티커 -->
-            <div class="tradingview-widget-container shrink-0" style="height:46px;">
+            <!-- 🌍 TradingView 글로벌 시장 실시간 티커 (Full Width) -->
+            <div class="col-span-4 tradingview-widget-container shrink-0" style="height:46px;">
               <div class="tradingview-widget-container__widget"></div>
               <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
               {
@@ -286,8 +317,8 @@
               </script>
             </div>
 
-            <!-- 📡 [기둥 1] 글로벌-로컬 동조 신호등 (Global-Local Sync Light) -->
-            <div id="global-sync-light" class="w-full shrink-0 transition-all">
+            <!-- 📡 [기둥 1] 글로벌-로컬 동조 신호등 (Full Width) -->
+            <div id="global-sync-light" class="col-span-4 shrink-0 transition-all">
                 <div class="flex items-center gap-3 bg-slate-900/60 border border-slate-700/50 rounded-xl px-4 py-2.5">
                     <span class="flex h-3 w-3 relative">
                         <span class="relative inline-flex rounded-full h-3 w-3 bg-slate-400"></span>
@@ -296,8 +327,8 @@
                 </div>
             </div>
 
-            <!-- 🏛️ [기둥 2] 1004MAS 핵심 전술 교리 (Tactical Doctrine) -->
-            <div id="tactical-doctrine-panel" class="w-full shrink-0 transition-all mb-1">
+            <!-- 🏛️ [기둥 2] 1004MAS 핵심 전술 교리 (Full Width) -->
+            <div id="tactical-doctrine-panel" class="col-span-4 shrink-0 transition-all mb-1">
                 <div class="flex flex-col lg:flex-row gap-3 bg-[#0B0E14] border border-slate-700/50 rounded-xl p-4 glass-panel relative overflow-hidden">
                     <div class="flex items-center gap-3 shrink-0 lg:border-r lg:border-slate-800 lg:pr-5">
                         <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-yellow-600 text-black shadow-inner shadow-amber-300">
@@ -310,7 +341,6 @@
                     </div>
 
                     <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-3 items-center mt-3 lg:mt-0 text-xs">
-                        <!-- 1순위: 예탁금 -->
                         <div class="flex gap-2.5 items-start bg-black/40 p-2.5 rounded-lg border border-slate-800/40 hover:border-slate-700 transition-colors">
                             <span class="bg-amber-500/20 text-amber-400 font-black px-1.5 py-0.5 rounded text-[10px] uppercase shrink-0 mt-0.5">1순위 수급</span>
                             <div class="flex flex-col">
@@ -319,7 +349,6 @@
                             </div>
                         </div>
                         
-                        <!-- 1순위: 수출데이터 -->
                         <div class="flex gap-2.5 items-start bg-black/40 p-2.5 rounded-lg border border-slate-800/40 hover:border-slate-700 transition-colors">
                             <span class="bg-amber-500/20 text-amber-400 font-black px-1.5 py-0.5 rounded text-[10px] uppercase shrink-0 mt-0.5">1순위 실적</span>
                             <div class="flex flex-col">
@@ -328,7 +357,6 @@
                             </div>
                         </div>
 
-                        <!-- 2순위: 투자 사이클 -->
                         <div class="flex gap-2.5 items-start bg-black/40 p-2.5 rounded-lg border border-slate-800/40 hover:border-slate-700 transition-colors">
                             <span class="bg-teal-500/20 text-teal-400 font-black px-1.5 py-0.5 rounded text-[10px] uppercase shrink-0 mt-0.5">2순위 사이클</span>
                             <div class="flex flex-col">
@@ -340,240 +368,250 @@
                 </div>
             </div>
 
-            <!-- 4-Panel Main Area (v12.0 Ultra-High Win-Rate Tactical Command) -->
-            <main class="flex flex-col lg:flex-row gap-4 min-h-[calc(100vh-170px)] w-full">
-        
-        <!-- ================= PANEL 1: TACTICAL INTEL & BRIEFING (좌측 1) ================= -->
-        <section id="panel-intel" class="panel w-full lg:w-1/4 flex flex-col gap-4">
-            <div class="panel-header text-slate-100 shrink-0">
-                <span><i class="fas fa-brain text-teal-400 mr-2"></i>🏛️ TACTICAL INTEL</span>
-                <span id="command-title" class="hidden"></span> <!-- JS 호환용 숨김 -->
-            </div>
-
-            <div id="legacy-zhuge-briefing-wrapper" style="display:none;">
-                <div id="zhuge-briefing-text"></div>
-            </div>
-
-            <!-- Morning Rundown 마크다운 리포트 -->
-            <div class="mx-3 bg-[rgba(10,12,16,0.85)] border border-slate-700/50 rounded-xl p-4 flex-1 flex flex-col h-[calc(100vh-290px)] glass-panel">
-                <div class="flex justify-between items-center mb-3 pb-2 border-b border-indigo-800/40 shrink-0">
-                    <span class="text-[11px] font-black text-indigo-200 tracking-widest uppercase">
-                        <i class="fas fa-sun text-amber-400 mr-2 animate-pulse"></i>Morning Rundown
-                    </span>
-                    <span class="text-[10px] text-slate-400 font-bold" id="rundown-date">Loading...</span>
-                </div>
-                <div id="morning-rundown-content" class="text-[11px] text-slate-300 flex flex-col gap-2 flex-1 overflow-y-auto custom-scrollbar pr-1 markdown-body">
-                    <div class="animate-pulse flex gap-2 items-center">
-                        <i class="fas fa-spinner fa-spin text-amber-500"></i>
-                        <span>Fetching latest intelligence...</span>
+            <!-- ================= COLUMN 1: TACTICAL INTEL (좌측 1) ================= -->
+            <section id="panel-intel" class="col-span-1 flex flex-col gap-panel-gap h-[calc(100vh-270px)] overflow-hidden">
+                <div class="glass-panel rounded-xl p-element-medium flex flex-col h-full">
+                    <div class="flex items-center justify-between mb-4 shrink-0">
+                        <h2 class="font-headline-md text-headline-md text-primary-fixed"><i class="fas fa-brain text-teal-400 mr-2"></i>Morning Rundown</h2>
+                        <span class="text-[10px] text-on-surface-variant font-data-md" id="rundown-date">Loading...</span>
                     </div>
-                </div>
-            </div>
-
-            <!-- [v20.0] Sentiment Score 위젯 추가 -->
-            <div class="mx-3 mb-4 p-3 bg-gradient-to-r from-teal-950/40 to-slate-900/60 border border-teal-500/20 rounded-xl flex items-center justify-between shrink-0 glass-panel">
-                <div class="flex items-center gap-2">
-                    <i class="fas fa-chart-line text-teal-400 text-sm animate-pulse"></i>
-                    <span class="text-[10px] font-black text-slate-300 tracking-wider">MARKET SENTIMENT</span>
-                </div>
-                <span class="text-[11px] font-black text-teal-400 font-mono-jetbrains bg-teal-950/60 px-2 py-0.5 rounded border border-teal-500/30">
-                    74% BULLISH
-                </span>
-            </div>
-        </section>
-
-        <!-- ================= PANEL 2: MACRO & SECTOR HEATMAP (중앙 2) ================= -->
-        <section id="panel-macro" class="panel w-full lg:w-1/4 flex flex-col gap-4">
-            <div class="panel-header text-slate-300 shrink-0">
-                <span><i class="fas fa-globe text-teal-400 mr-2"></i>🌐 MACRO & HEATMAP</span>
-            </div>
-
-            <!-- Market Indices Card -->
-            <div id="market-indices" class="mx-3 p-2.5 rounded-xl border border-slate-700/50 bg-[#0B0E14] shrink-0 flex gap-2 glass-panel">
-                <div id="idx-kospi-box" class="flex-1 flex justify-between items-center px-2 py-1.5 rounded bg-black/40 border border-slate-700/50 relative overflow-hidden group">
-                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-600/80" id="idx-kospi-indicator"></div>
-                    <span class="text-slate-400 text-[9px] uppercase font-bold pl-1">KOSPI</span>
-                    <div class="flex items-center gap-1.5">
-                        <span id="idx-kospi-price" class="text-slate-100 text-[11px] font-black font-mono tracking-tight">-.--</span> 
-                        <span id="idx-kospi-chg" class="text-[10px] font-black">-.--%</span>
+                    
+                    <div id="legacy-zhuge-briefing-wrapper" style="display:none;">
+                        <div id="zhuge-briefing-text"></div>
                     </div>
-                </div>
-                <div id="idx-kosdaq-box" class="flex-1 flex justify-between items-center px-2 py-1.5 rounded bg-black/40 border border-slate-700/50 relative overflow-hidden group">
-                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-blue-600/80" id="idx-kosdaq-indicator"></div>
-                    <span class="text-slate-400 text-[9px] uppercase font-bold pl-1">KOSDAQ</span>
-                    <div class="flex items-center gap-1.5">
-                        <span id="idx-kosdaq-price" class="text-slate-100 text-[11px] font-black font-mono tracking-tight">-.--</span> 
-                        <span id="idx-kosdaq-chg" class="text-[10px] font-black">-.--%</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sector Heatmap -->
-            <div class="mx-3 bg-slate-950/20 border border-slate-700/30 rounded-xl shrink-0 flex flex-col min-h-[170px] flex-1 glass-panel">
-                <div class="p-3 border-b border-slate-800/60 flex justify-between items-center shrink-0">
-                    <span class="text-[11px] font-black text-slate-200"><i class="fas fa-th text-teal-400 mr-1.5"></i>Sector Volume Heatmap</span>
-                    <button onclick="selectTheme('ALL')" class="text-[9px] bg-slate-800 hover:bg-slate-700 border border-slate-700 px-2 py-0.5 rounded text-slate-300 transition-colors">
-                        <i class="fas fa-sync-alt"></i> 초기화
-                    </button>
-                </div>
-                <div class="p-2 flex flex-col gap-2 flex-1 overflow-y-auto custom-scrollbar" id="heatmap-container">
-                    <div class="text-[11px] text-gray-600 font-bold w-full text-center mt-6 animate-pulse">섹터 스캐닝 중...</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= PANEL 3: PRE-MARKET X-RAY & STEALTH (중앙 3) ================= -->
-        <section id="panel-xray" class="panel w-full lg:w-1/4 flex flex-col gap-4">
-            <div class="panel-header text-slate-300 shrink-0">
-                <span><i class="fas fa-mask text-teal-400 mr-2"></i>🔍 X-RAY & STEALTH</span>
-            </div>
-
-            <!-- 장전 X-Ray 실시간 세력 계기판 -->
-            <div id="xray-gauge-panel" class="mx-3 p-3 bg-slate-950/40 border border-slate-700/50 rounded-xl shrink-0 flex flex-col gap-2.5 glass-panel">
-                <div class="flex justify-between items-center pb-2 border-b border-slate-800/60">
-                    <span class="text-[11px] font-black text-slate-200 tracking-wider">장전 실시간 세력 계기판</span>
-                    <div id="xray-gauge-status">
-                        <span class="text-[9px] text-slate-500 font-mono">초기화 중...</span>
-                    </div>
-                </div>
-                <div class="flex flex-col gap-1.5">
-                    <div class="flex justify-between items-center text-[10px] font-bold text-slate-400">
-                        <span>순수 매수 강도 (Net Power)</span>
-                        <span id="xray-power-text" class="text-teal-400">대기 중</span>
-                    </div>
-                    <div class="w-full h-2.5 bg-black/60 rounded-full overflow-hidden border border-slate-800">
-                        <div id="xray-power-bar" class="h-full bg-slate-700 rounded-full transition-all duration-500" style="width: 20%;"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 스텔스 3대 패턴 탑 스코어러 -->
-            <div class="mx-3 flex-1 flex flex-col min-h-[220px] ring-1 ring-red-900/40 rounded-xl overflow-hidden glass-panel">
-                <div class="flex items-center justify-between bg-red-950/10 border-b border-slate-800/60 p-2.5 shrink-0">
-                    <div class="flex flex-col">
-                        <div class="text-[11px] font-black text-amber-500 tracking-wider flex items-center gap-1.5">
-                            <i class="fas fa-crosshairs text-amber-500 text-sm"></i>스텔스 3대 패턴 스코어러
+                    
+                    <!-- Morning Rundown 마크다운 리포트 동적 렌더링 영역 -->
+                    <div id="morning-rundown-content" class="flex-grow text-[11px] text-slate-300 overflow-y-auto custom-scrollbar pr-1 markdown-body space-y-4">
+                        <div class="animate-pulse flex gap-2 items-center">
+                            <i class="fas fa-spinner fa-spin text-amber-500"></i>
+                            <span>Fetching latest intelligence...</span>
                         </div>
-                        <div class="text-[8px] text-slate-500 mt-0.5">P1 투명인간 + P2 압력밥솥 + P3 사각지대</div>
                     </div>
-                    <span class="section-update-time text-[8px] text-slate-500 font-mono"></span>
-                </div>
-                <div class="flex flex-col gap-2 p-2 flex-1 overflow-y-auto custom-scrollbar" id="unified-squad-container">
-                    <div class="text-[11px] text-red-900/60 font-bold w-full text-center mt-3">전술망 데이터 파싱 대기 중...</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= PANEL 4: GOLDEN SNIPER EXECUTION (우측 4) ================= -->
-        <section id="panel-sniper" class="panel w-full lg:w-1/4 flex flex-col gap-4">
-            <div class="panel-header text-slate-100 shrink-0">
-                <span><i class="fas fa-crosshairs text-red-500 mr-2"></i>🎯 SNIPER EXECUTION</span>
-            </div>
-
-            <!-- 골드 스나이퍼 락온 타격창 -->
-            <div class="mx-3 flex flex-col shrink-0 gap-2">
-                <div id="premarket-alert-container" class="w-full">
-                    <div class="w-full bg-[#171410] border border-amber-900/30 rounded-xl p-4 text-center text-slate-500 font-bold text-[11px] flex flex-col items-center justify-center min-h-[140px] glass-panel">
-                        <i class="fas fa-radar text-amber-500/20 text-2xl mb-2"></i>
-                        <span>장전 세력 매집 시그널 감시 중...</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 실시간 수급 Squeeze 주도주 리스트 -->
-            <div class="mx-3 flex-1 flex flex-col min-h-[220px] border border-slate-800/60 rounded-xl overflow-hidden glass-panel">
-                <div class="flex items-center justify-between bg-slate-950/40 p-2.5 border-b border-slate-800/60 shrink-0">
-                    <div class="flex items-center gap-1.5">
-                        <div class="w-5 h-5 flex items-center justify-center rounded bg-red-950/80 border border-red-800/40 shadow-inner shrink-0">
-                            <i class="fas fa-bolt text-amber-500 text-[10px] animate-pulse"></i>
+                    
+                    <!-- Sentiment Score 위젯 고정 배치 -->
+                    <div class="mt-4 pt-4 border-t border-white/10 shrink-0">
+                        <div class="flex justify-between items-center px-2">
+                            <span class="text-label-caps font-label-caps text-on-surface-variant">SENTIMENT SCORE</span>
+                            <span class="text-primary-fixed font-data-lg">74% BULLISH</span>
                         </div>
+                        <div class="w-full bg-white/10 h-1 mt-2 rounded-full overflow-hidden">
+                            <div class="h-full bg-[#00ffd1] neon-glow-teal" style="width: 74%"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= COLUMN 2: MACRO & SECTOR HEATMAP (중앙 2) ================= -->
+            <section id="panel-macro" class="col-span-1 flex flex-col gap-panel-gap h-[calc(100vh-270px)] overflow-hidden">
+                <!-- Top: Index Mini Cards -->
+                <div class="grid grid-cols-2 gap-4 h-28 shrink-0">
+                    <div id="idx-kospi-box" class="glass-panel rounded-xl p-4 flex flex-col justify-between relative overflow-hidden group">
+                        <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-600/80" id="idx-kospi-indicator"></div>
+                        <div class="flex justify-between items-start">
+                            <span class="font-label-caps text-label-caps text-on-surface-variant">KOSPI</span>
+                            <span class="material-symbols-outlined text-primary-fixed-dim text-sm">trending_up</span>
+                        </div>
+                        <div>
+                            <div id="idx-kospi-price" class="font-data-lg text-white">-.--</div>
+                            <div id="idx-kospi-chg" class="font-data-md text-primary-fixed">-.--%</div>
+                        </div>
+                    </div>
+                    <div id="idx-kosdaq-box" class="glass-panel rounded-xl p-4 flex flex-col justify-between relative overflow-hidden group">
+                        <div class="absolute left-0 top-0 bottom-0 w-1 bg-blue-600/80" id="idx-kosdaq-indicator"></div>
+                        <div class="flex justify-between items-start">
+                            <span class="font-label-caps text-label-caps text-on-surface-variant">KOSDAQ</span>
+                            <span class="material-symbols-outlined text-error text-sm">trending_down</span>
+                        </div>
+                        <div>
+                            <div id="idx-kosdaq-price" class="font-data-lg text-white">-.--</div>
+                            <div id="idx-kosdaq-chg" class="font-data-md text-error">-.--%</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Bottom: Heatmap -->
+                <div class="glass-panel rounded-xl p-element-medium flex-grow flex flex-col overflow-hidden">
+                    <div class="flex justify-between items-center mb-4 shrink-0">
+                        <h3 class="font-headline-md text-label-caps text-on-surface"><i class="fas fa-th text-teal-400 mr-1.5"></i>Sector Volume Heatmap</h3>
+                        <button onclick="selectTheme('ALL')" class="text-[9px] bg-slate-800 hover:bg-slate-700 border border-slate-700 px-2 py-0.5 rounded text-slate-300 transition-colors">
+                            <i class="fas fa-sync-alt"></i> 초기화
+                        </button>
+                    </div>
+                    <div class="flex-grow overflow-y-auto custom-scrollbar" id="heatmap-container">
+                        <div class="text-[11px] text-gray-600 font-bold w-full text-center mt-6 animate-pulse">섹터 스캐닝 중...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= COLUMN 3: X-RAY & STEALTH (중앙 3) ================= -->
+            <section id="panel-xray" class="col-span-1 flex flex-col gap-panel-gap h-[calc(100vh-270px)] overflow-hidden">
+                <!-- Top: Net Power Gauge -->
+                <div id="xray-gauge-panel" class="glass-panel rounded-xl p-element-medium h-40 flex flex-col shrink-0">
+                    <div class="flex justify-between items-center pb-2 border-b border-white/10 mb-2">
+                        <h3 class="font-headline-md text-label-caps text-primary-fixed">장전 실시간 세력 계기판</h3>
+                        <div id="xray-gauge-status">
+                            <span class="text-[9px] text-slate-500 font-mono">초기화 중...</span>
+                        </div>
+                    </div>
+                    <div class="flex-grow flex flex-col justify-center relative">
+                        <div class="flex justify-between mb-1">
+                            <span class="text-[9px] font-label-caps text-on-surface-variant">ACCUMULATION</span>
+                            <span class="text-[9px] font-label-caps text-on-surface-variant">DISTRIBUTION</span>
+                        </div>
+                        <div class="h-4 w-full bg-[#05070A] border border-white/10 rounded-full relative overflow-hidden">
+                            <div class="absolute h-full left-1/2 -translate-x-1/2 w-[1px] bg-white/30 z-10"></div>
+                            <!-- Gauge Fill -->
+                            <div id="xray-power-bar" class="h-full bg-gradient-to-r from-primary-fixed to-primary-container transition-all duration-500" style="width: 50%"></div>
+                        </div>
+                        <div class="mt-2 flex justify-between items-end">
+                            <span id="xray-power-text" class="font-data-md text-primary-fixed">Net Buy --</span>
+                            <div class="flex flex-col items-end">
+                                <span class="text-[8px] font-label-caps text-on-surface-variant">POWER INDEX</span>
+                                <span class="font-data-md text-white">-- / 10</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Bottom: Stealth Leaderboard -->
+                <div class="glass-panel rounded-xl p-element-medium flex-grow flex flex-col overflow-hidden">
+                    <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-4 shrink-0">
                         <div class="flex flex-col">
-                            <span class="text-[11px] font-black text-amber-500 tracking-wider">실시간 수급 Squeeze</span>
-                            <span class="text-[8px] text-slate-500 mt-0.5">거래대금 폭발 감지</span>
+                            <h3 class="font-headline-md text-label-caps text-on-surface flex items-center gap-1.5">
+                                <i class="fas fa-crosshairs text-amber-500 text-sm"></i>스텔스 3대 패턴 스코어러
+                            </h3>
+                            <span class="text-[8px] text-slate-500 mt-0.5">P1 투명인간 + P2 압력밥솥 + P3 사각지대</span>
                         </div>
+                        <span class="section-update-time text-[8px] text-slate-500 font-mono"></span>
                     </div>
-                    <!-- Counter indicators -->
-                    <div class="flex gap-1.5">
-                        <span id="vi-alert-count" class="hidden"></span>
-                        <span id="kostolany-count" class="text-[9px] bg-red-950/60 text-red-400 px-1.5 py-0.5 rounded border border-red-900/30 font-bold tracking-wider">
-                            대기 중
-                        </span>
+                    <div class="flex-grow overflow-y-auto custom-scrollbar" id="unified-squad-container">
+                        <div class="text-[11px] text-red-900/60 font-bold w-full text-center mt-3">전술망 데이터 파싱 대기 중...</div>
                     </div>
                 </div>
-                
-                <div class="flex flex-col gap-2 p-3 flex-1 overflow-y-auto custom-scrollbar" id="kostolany-container">
-                    <div class="text-[10px] text-gray-500 text-center py-6">실시간 수급 돌파 감시 대기 중...</div>
+            </section>
+
+            <!-- ================= COLUMN 4: SNIPER EXECUTION (우측 4) ================= -->
+            <section id="panel-sniper" class="col-span-1 flex flex-col gap-panel-gap h-[calc(100vh-270px)] overflow-hidden">
+                <!-- Top: Alert Window -->
+                <div class="glass-panel rounded-xl p-element-medium h-[40%] flex flex-col overflow-hidden shrink-0">
+                    <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-secondary-fixed animate-pulse text-base">radar</span>
+                            <h3 class="font-headline-md text-label-caps text-secondary-fixed">장전 세력 매집 시그널 감시</h3>
+                        </div>
+                        <span id="vi-alert-count" class="text-[9px] bg-amber-950/30 text-yellow-300 px-1.5 py-0.5 rounded border border-yellow-700/50 font-bold">대기 중</span>
+                    </div>
+                    <div class="flex-grow custom-scrollbar overflow-y-auto space-y-2" id="vi-alert-container">
+                        <div class="text-[10px] text-gray-500 text-center py-2">실시간 감시 대기 중...</div>
+                    </div>
                 </div>
-            </div>
+                <!-- Bottom: Squeeze List -->
+                <div class="glass-panel rounded-xl p-element-medium flex-grow flex flex-col overflow-hidden">
+                    <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-4 shrink-0">
+                        <div class="flex items-center gap-1.5">
+                            <div class="w-5 h-5 flex items-center justify-center rounded bg-red-950/80 border border-red-800/40 shadow-inner">
+                                <i class="fas fa-bolt text-amber-500 text-[10px] animate-pulse"></i>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-[11px] font-black text-amber-500 tracking-wider">실시간 수급 Squeeze</span>
+                                <span class="text-[8px] text-slate-500 mt-0.5">거래대금 폭발 감지</span>
+                            </div>
+                        </div>
+                        <span id="kostolany-count" class="text-[9px] bg-red-950/60 text-red-400 px-1.5 py-0.5 rounded border border-red-900/30 font-bold tracking-wider">대기 중</span>
+                    </div>
+                    <div class="flex-grow custom-scrollbar overflow-y-auto space-y-3" id="kostolany-container">
+                        <div class="text-[10px] text-gray-500 text-center py-6">실시간 수급 돌파 감시 대기 중...</div>
+                    </div>
+                    
+                    <!-- Buy Action Button -->
+                    <div class="shrink-0 mt-4 border-t border-white/10 pt-3">
+                        <button id="instant-buy-btn" class="w-full py-3 bg-primary-container text-on-primary-fixed font-bold rounded-lg border-t border-white/20 hover:bg-[#15ffd1] transition-all active:scale-95 neon-glow-teal uppercase tracking-wide">
+                            INSTANT EXECUTION (BUY)
+                        </button>
+                    </div>
+                </div>
+            </section>
         </main>
+    </div>
+
+    <!-- Collapsible Drawer Toggle Gear Button -->
+    <button onclick="toggleControlDrawer()" class="fixed bottom-4 left-4 z-50 w-10 h-10 bg-slate-900/90 border border-teal-500/50 rounded-full flex items-center justify-center text-teal-400 hover:text-teal-200 shadow-xl hover:scale-105 active:scale-95 transition-all">
+        <span class="material-symbols-outlined">settings</span>
+    </button>
+
+    <!-- Slid-out Collapsible Control Center Panel (Hides n8n logs and node configurations from default view) -->
+    <div id="control-center-drawer" class="control-drawer">
+        <div class="flex justify-between items-center pb-4 border-b border-slate-800/60 mb-5">
+            <h4 class="text-sm font-black text-teal-400 tracking-wider uppercase"><i class="fas fa-sliders-h mr-2"></i>Command Control Center</h4>
+            <button onclick="toggleControlDrawer()" class="text-slate-500 hover:text-slate-100 transition-colors p-1"><span class="material-symbols-outlined text-lg">close</span></button>
+        </div>
+        
+        <!-- Nodes buttons configurations -->
+        <div class="mb-5 space-y-3">
+            <div class="text-xs text-slate-300 font-bold mb-2"><i class="fas fa-server text-teal-400 mr-1.5"></i>시스템 연동 상태 설정</div>
+            <div class="grid grid-cols-2 gap-2 text-[10px]">
+                <button onclick="document.getElementById('settings-modal').classList.remove('hidden')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded font-bold transition-all"><i class="fas fa-cog mr-1"></i> API & 텔레그램 설정</button>
+                <button onclick="selectTheme('ALL')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded font-bold transition-all"><i class="fas fa-sync-alt mr-1"></i> 섹터 필터 초기화</button>
+            </div>
+        </div>
+
+        <!-- Terminal / n8n logs -->
+        <div class="flex flex-col gap-2">
+            <div class="text-xs text-slate-300 font-bold"><i class="fas fa-terminal text-teal-400 mr-1.5"></i>n8n & Scrapers Logs Terminal</div>
+            <div class="p-3 w-full bg-black text-teal-400 font-mono text-[10px] rounded-lg border border-slate-800 opacity-90 leading-tight h-[220px] overflow-y-auto custom-scrollbar" id="agent-terminal-container">
+                대기 중...
+            </div>
+        </div>
+        
+        <div class="mt-8 pt-4 border-t border-slate-800/60 text-[10px] text-slate-500 text-center">
+            1004MAS v12.0 Tactical Commander Center. Decoupled and Optimized.
         </div>
     </div>
 
-        <!-- Collapsible Drawer Toggle Gear Button -->
-        <button onclick="toggleControlDrawer()" class="fixed bottom-4 left-4 z-50 w-10 h-10 bg-slate-900/90 border border-teal-500/50 rounded-full flex items-center justify-center text-teal-400 hover:text-teal-200 shadow-xl hover:scale-105 active:scale-95 transition-all">
-            <i class="fas fa-cog text-lg"></i>
-        </button>
+    <!-- ================= HIDDEN LEGACY CONTAINERS (JS Compatibility) ================= -->
+    <div id="legacy-containers" style="display:none;">
+        <div id="dawn-recon-container"></div>
+        <div id="diplomatic-tabs"></div>
+        <div id="diplomatic-container"></div>
+        <div id="ma-surveillance-container"></div>
+        <div id="defense-container"></div>
+        <div id="trinity-container"></div>
+        <div id="retreat-container"></div>
+        <div id="retreat-wrapper"></div>
+        <div id="guerrilla-section"></div>
+        <div id="guerrilla-container"></div>
+        <div id="feed-container"></div>
+        <div id="live-clock" class="hidden"></div>
+        <div id="market-close-timer" class="hidden"></div>
+        <div id="market-status-badge" class="hidden"></div>
+        <div id="countdown-timer" class="hidden"></div>
+        <div id="btn-deep-analyze" class="hidden"></div>
+        <div id="zhuge-deep-text" class="hidden"></div>
+        <!-- [v20.1] vi-alert-container는 동적으로 사용되나 JS 에러방지용 껍데기 백업 -->
+        <div id="backup-vi-alert-container"></div>
+    </div>
 
-        <!-- Slid-out Collapsible Control Center Panel (Hides n8n logs and node configurations from default view) -->
-        <div id="control-center-drawer" class="control-drawer">
-            <div class="flex justify-between items-center pb-4 border-b border-slate-800/60 mb-5">
-                <h4 class="text-sm font-black text-teal-400 tracking-wider uppercase"><i class="fas fa-sliders-h mr-2"></i>Command Control Center</h4>
-                <button onclick="toggleControlDrawer()" class="text-slate-500 hover:text-slate-100 transition-colors p-1"><i class="fas fa-times text-lg"></i></button>
-            </div>
-            
-            <!-- Nodes buttons configurations -->
-            <div class="mb-5 space-y-3">
-                <div class="text-xs text-slate-300 font-bold mb-2"><i class="fas fa-server text-teal-400 mr-1.5"></i>시스템 연동 상태 설정</div>
-                <div class="grid grid-cols-2 gap-2 text-[10px]">
-                    <button onclick="document.getElementById('settings-modal').classList.remove('hidden')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded font-bold transition-all"><i class="fas fa-cog mr-1"></i> API & 텔레그램 설정</button>
-                    <button onclick="selectTheme('ALL')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded font-bold transition-all"><i class="fas fa-sync-alt mr-1"></i> 섹터 필터 초기화</button>
-                </div>
-            </div>
+    <script>
+        function toggleControlDrawer() {
+            const drawer = document.getElementById('control-center-drawer');
+            drawer.classList.toggle('open');
+        }
+    </script>
 
-            <!-- Terminal / n8n logs -->
-            <div class="flex flex-col gap-2">
-                <div class="text-xs text-slate-300 font-bold"><i class="fas fa-terminal text-teal-400 mr-1.5"></i>n8n & Scrapers Logs Terminal</div>
-                <div class="p-3 w-full bg-black text-teal-400 font-mono text-[10px] rounded-lg border border-slate-800 opacity-90 leading-tight h-[220px] overflow-y-auto custom-scrollbar" id="agent-terminal-container">
-                    대기 중...
-                </div>
-            </div>
-            
-            <div class="mt-8 pt-4 border-t border-slate-800/60 text-[10px] text-slate-500 text-center">
-                1004MAS v12.0 Tactical Commander Center. Decoupled and Optimized.
-            </div>
-        </div>
-
-        <!-- ================= HIDDEN LEGACY CONTAINERS (JS Compatibility) ================= -->
-        <div id="legacy-containers" style="display:none;">
-            <div id="dawn-recon-container"></div>
-            <div id="diplomatic-tabs"></div>
-            <div id="diplomatic-container"></div>
-            <div id="ma-surveillance-container"></div>
-            <div id="defense-container"></div>
-            <div id="trinity-container"></div>
-            <div id="retreat-container"></div>
-            <div id="retreat-wrapper"></div>
-            <div id="guerrilla-section"></div>
-            <div id="guerrilla-container"></div>
-            <div id="vi-alert-container"></div>
-            <div id="feed-container"></div>
-            <div id="live-clock" class="hidden"></div>
-            <div id="market-close-timer" class="hidden"></div>
-            <div id="market-status-badge" class="hidden"></div>
-            <div id="countdown-timer" class="hidden"></div>
-            <div id="btn-deep-analyze" class="hidden"></div>
-            <div id="zhuge-deep-text" class="hidden"></div>
-        </div>
-
-        <script>
-            function toggleControlDrawer() {
-                const drawer = document.getElementById('control-center-drawer');
-                drawer.classList.toggle('open');
-            }
-        </script>
-<!-- TradingView Advanced Chart Modal -->
+    <!-- TradingView Advanced Chart Modal -->
     <div id="tv-chart-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[100] hidden flex flex-col justify-center items-center p-4">
-        <div class="w-full max-w-5xl h-[80vh] bg-[#131722] border border-slate-700/50 rounded-xl  relative flex flex-col overflow-hidden">
+        <div class="w-full max-w-5xl h-[80vh] bg-[#131722] border border-slate-700/50 rounded-xl relative flex flex-col overflow-hidden">
+            <div class="flex justify-between items-center p-3 bg-gray-900 border-b border-slate-700/50 shrink-0">
+                <div class="flex items-center gap-3">
+                    <span id="tv-modal-title" class="text-slate-100 font-black text-lg tracking-wider">Loading...</span>
+                    <button id="tv-modal-copy-btn" class="text-xs bg-gray-800 hover:bg-gray-700 border border-gray-600 px-2 py-1 rounded text-slate-300 transition-colors">이름 복사</button>
+                </div>
+                <button onclick="closeTvChart()" class="text-slate-400 hover:text-slate-100 transition-colors p-1">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div id="tv_chart_container" class="w-full h-full flex-1"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>x-col overflow-hidden">
             <div class="flex justify-between items-center p-3 bg-gray-900 border-b border-slate-700/50 shrink-0">
                 <div class="flex items-center gap-3">
                     <span id="tv-modal-title" class="text-slate-100 font-black text-lg tracking-wider">Loading...</span>
@@ -1532,76 +1570,61 @@
 
             // 상위 5개만 V3 대시보드에 표시 (수익률 확정 5종목 제한)
             masterList = masterList.slice(0, 5);
-            container.innerHTML = '';
+            
+            let tableHtml = `
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b border-white/10 text-[10px] text-on-surface-variant font-label-caps">
+                            <th class="pb-2 font-label-caps text-label-caps">RANK</th>
+                            <th class="pb-2 font-label-caps text-label-caps">TICKER</th>
+                            <th class="pb-2 font-label-caps text-label-caps text-right">SCORE</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/5">
+            `;
 
             masterList.forEach((item, index) => {
-                // UI 계산
-                const isPlus = item.chg >= 0;
-                const colorText = isPlus ? 'text-slate-100' : 'text-slate-100';
-                const bgBorder = isPlus ? 'border-slate-700/50 bg-slate-800/40' : 'border-slate-700/50 bg-slate-800/40';
+                // 여의도호랑이 테마분류에 기초한 배지 커스텀 스타일링
+                let themeBadge = '';
+                const isLeader = item.badges.some(b => b.includes('대장주') || b.includes('LEADER') || (item.ma_signal && item.ma_signal.includes('씽크풀')));
+                const isReal = item.badges.some(b => b.includes('실체수혜') || b.includes('REAL') || b.includes('부품') || b.includes('공급'));
                 
-                // ATR 기반 기계적 타점 (개략적 공식: 손절선 5%, 단기 익절 10%)
-                const currentPrice = item.price ? parseFloat(item.price.replace(/,/g, '')) : 0;
-                let stopLossStr = "N/A", targetStr = "N/A";
-                if(currentPrice > 0){
-                    const stopPrice = Math.floor(currentPrice * 0.95);
-                    const targetPrice = Math.floor(currentPrice * 1.10);
-                    stopLossStr = stopPrice.toLocaleString() + "원";
-                    targetStr = targetPrice.toLocaleString() + "원";
+                if (isLeader) {
+                    themeBadge = `<span class="text-[9px] px-1.5 py-0.5 bg-[#00ffd1]/10 text-[#00ffd1] border border-[#00ffd1]/20 rounded-sm w-fit mt-1">주도주</span>`;
+                } else if (isReal) {
+                    themeBadge = `<span class="text-[9px] px-1.5 py-0.5 bg-secondary-fixed/10 text-secondary-fixed border border-secondary-fixed/20 rounded-sm w-fit mt-1">실체수혜주</span>`;
+                } else {
+                    themeBadge = `<span class="text-[9px] px-1.5 py-0.5 bg-on-surface-variant/10 text-on-surface-variant border border-on-surface-variant/20 rounded-sm w-fit mt-1">단순테마주</span>`;
                 }
 
-                // AI 코멘트 확인
-                const verdict = window.aiVerdictsCache.find(v => v.coin_name === item.name);
-                const aiHTML = verdict 
-                    ? `<div class="mt-2 text-[11px] text-teal-300 bg-teal-950/40 p-1.5 rounded border border-teal-800/50 leading-tight"><i class="fas fa-brain mr-1"></i>${verdict.reason}</div>` 
-                    : ``;
-
-                const div = document.createElement('div');
-                // 가장 높은 점수는 특별하게 발광
-                const rankClass = index === 0 ? "border-amber-500  animate-pulse bg-amber-950/20" : bgBorder;
-                const scoreColor = item.killScore >= 80 ? 'text-amber-500' : 'text-amber-400';
-
-                div.className = `p-3 rounded-lg border relative overflow-hidden transition-all hover:brightness-125 hover:scale-[1.01] flex flex-col ${rankClass}`;
+                // 랭크 및 점수 스타일링
+                const rankNum = String(index + 1).padStart(2, '0');
+                const rankColor = index === 0 ? 'text-[#00ffd1] animate-pulse' : 'text-slate-400';
+                const scoreColor = item.killScore >= 80 ? 'text-[#00ffd1] font-bold' : 'text-slate-300';
                 
-                div.innerHTML = `
-                    ${generateSparklineSVG(item.chg, index)}
-                    <div class="flex justify-between items-start relative z-10 w-full">
-                        <div class="flex flex-col">
-                            <div class="flex items-center gap-2">
-                                <span class="bg-gray-800 text-slate-300 text-[11px] font-bold px-1.5 rounded-sm">RANK #${index+1}</span>
-                                <span class="text-base font-black text-amber-500 ">${item.name}</span>
-                                <span class="text-xs font-black text-amber-400 tracking-tighter">현재가 ${isPlus?'+':''}${item.chg}% <span class="text-slate-400 text-xs ml-1 font-normal tracking-normal">고점: ${item.peak !== undefined ? item.peak : item.chg}%</span></span>
+                tableHtml += `
+                    <tr class="hover:bg-white/5 transition-colors cursor-pointer" onclick="openTvChart('${item.name}')">
+                        <td class="py-3 font-data-md ${rankColor}">${rankNum}</td>
+                        <td class="py-3">
+                            <div class="flex flex-col">
+                                <span class="font-bold text-white">${item.name}</span>
+                                <div class="flex items-center gap-1 mt-1">
+                                    ${themeBadge}
+                                    ${item.killScore >= 85 ? '<span class="text-[8px] px-1 bg-red-700 text-slate-100 rounded-sm font-black animate-pulse">🎯BUY</span>' : ''}
+                                </div>
                             </div>
-                            <div class="flex items-center gap-1 mt-1.5 flex-wrap">
-                                ${item.badges.join('')}
-                                ${item.killScore >= 85 ? '<span class="bg-red-700 text-slate-100 px-1 py-0.5 rounded text-[10px] font-black border border-slate-700/50  animate-pulse">🎯BUY-ZONE</span>' : ''}
-                                ${item.ma_signal || ''}
-                            </div>
-                        </div>
-                        <div class="flex flex-col items-end">
-                            <span class="text-xs font-black ${scoreColor} tracking-tighter " >${item.killScore} Pts</span>
-                            <span class="text-[11px] text-slate-500 font-bold">${(item.vol ? item.vol.toLocaleString() : '0')}억 KRW</span>
-                        </div>
-                    </div>
-                    
-                    ${aiHTML}
-
-                    <!-- 기계적 작전 타점 (Entry & Stop_Loss) -->
-                    ${currentPrice > 0 ? `
-<div class="flex justify-between mt-2 pt-2 border-t border-slate-700/50 relative z-10">
-                        <div class="flex flex-col">
-                            <span class="text-[10px] text-slate-400 font-bold">1차 목표가</span>
-                            <span class="text-xs text-teal-400 font-bold">${targetStr}</span>
-                        </div>
-                        <div class="flex flex-col items-end text-right">
-                            <span class="text-[10px] text-amber-500 font-bold">지옥의 손절선 (-5%)</span>
-                            <span class="text-xs text-amber-500 font-bold">${stopLossStr} (즉시 이탈)</span>
-                        </div>
-                    </div>
-` : ''}
+                        </td>
+                        <td class="py-3 text-right font-data-md ${scoreColor}">${item.killScore} Pts</td>
+                    </tr>
                 `;
-                container.appendChild(div);
             });
+
+            tableHtml += `
+                    </tbody>
+                </table>
+            `;
+
+            container.innerHTML = tableHtml;
         }
 
         function confirmKisBuy(stockName) {
