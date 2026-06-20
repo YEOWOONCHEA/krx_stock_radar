@@ -7,12 +7,15 @@
     <title>1004MAS KRX 전술 레이더 (Ultimate 3-Panel)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         body { 
-            background: #0A0E17; 
+            background: #051424; 
             background-image: 
-                radial-gradient(at 0% 0%, rgba(30, 5, 5, 0.5) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(5, 5, 20, 0.5) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(0, 242, 255, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(255, 202, 40, 0.05) 0px, transparent 50%);
             color: #cbd5e1; 
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif; 
             min-height: 100vh !important;
@@ -42,9 +45,10 @@
         }
         
         .panel {
-            background: rgba(12, 12, 15, 0.4);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(5, 20, 36, 0.45);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 242, 255, 0.1);
             border-radius: 0.75rem;
             display: flex;
             flex-direction: column;
@@ -53,7 +57,7 @@
 
         .panel-header {
             padding: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(0, 242, 255, 0.1);
             background: rgba(0, 0, 0, 0.2);
             font-weight: 800;
             display: flex;
@@ -68,17 +72,21 @@
 
         /* Premium Glowing and Glassmorphism Styles (v12.0) */
         .glass-panel {
-            background: rgba(10, 14, 23, 0.75) !important;
-            backdrop-filter: blur(16px) !important;
-            border: 1px solid rgba(102, 252, 241, 0.08) !important;
+            background: rgba(5, 20, 36, 0.5) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(0, 242, 255, 0.1) !important;
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6) !important;
             border-radius: 16px !important;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .glass-panel:hover {
-            border: 1px solid rgba(102, 252, 241, 0.3) !important;
-            box-shadow: 0 16px 48px rgba(69, 162, 158, 0.15) !important;
+            border: 1px solid rgba(0, 242, 255, 0.35) !important;
+            box-shadow: 0 16px 48px rgba(0, 242, 255, 0.15) !important;
             transform: translateY(-2px);
+        }
+        .font-mono-jetbrains {
+            font-family: 'JetBrains Mono', monospace !important;
         }
         .gold-pulsing-glow {
             box-shadow: 0 0 20px rgba(245, 158, 11, 0.15), inset 0 0 15px rgba(245, 158, 11, 0.05);
@@ -181,95 +189,162 @@
             50%  { outline: 6px solid rgba(220,38,38,0.9); box-shadow: inset 0 0 60px 20px rgba(220,38,38,0.3); }
             75%  { outline: 6px solid rgba(255,255,255,0.95); box-shadow: inset 0 0 40px 10px rgba(255,50,50,0.25); }
             100% { outline: 6px solid rgba(255,255,255,0); box-shadow: inset 0 0 0px 0px rgba(255,255,255,0); }
+        @keyframes neonPulse {
+            0% {
+                border-color: rgba(0, 242, 255, 0.2);
+                box-shadow: 0 0 0 rgba(0, 242, 255, 0);
+            }
+            30% {
+                border-color: rgba(0, 242, 255, 1);
+                box-shadow: 0 0 15px rgba(0, 242, 255, 0.6);
+            }
+            100% {
+                border-color: rgba(0, 242, 255, 0.2);
+                box-shadow: 0 0 0 rgba(0, 242, 255, 0);
+            }
+        }
+
+        .panel-highlight {
+            animation: neonPulse 1.5s ease-in-out;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
     </style>
 
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 </head>
-<body class="flex flex-col p-4 gap-4">
+<body class="h-screen overflow-hidden flex flex-col">
 
-    <!-- 🌍 TradingView 글로벌 시장 실시간 티커 -->
-    <div class="tradingview-widget-container shrink-0" style="height:46px;">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-      {
-        "symbols": [
-          {"proName": "FX_IDC:USDKRW", "title": "원/달러 환율"},
-          {"description": "미 10년물 국채", "proName": "US10Y"},
-          {"description": "WTI 원유", "proName": "TVC:USOIL"},
-          {"description": "국제 금", "proName": "TVC:GOLD"},
-          {"description": "나스닥 100", "proName": "FOREXCOM:NAS100"},
-          {"description": "다우존스", "proName": "FOREXCOM:DJI"}
-        ],
-        "showSymbolLogo": true,
-        "isTransparent": false,
-        "displayMode": "adaptive",
-        "colorTheme": "dark",
-        "locale": "kr"
-      }
-      </script>
-    </div>
-
-    <!-- 📡 [기둥 1] 글로벌-로컬 동조 신호등 (Global-Local Sync Light) -->
-    <div id="global-sync-light" class="w-full shrink-0 transition-all">
-        <div class="flex items-center gap-3 bg-slate-900/60 border border-slate-700/50 rounded-xl px-4 py-2.5">
-            <span class="flex h-3 w-3 relative">
-                <span class="relative inline-flex rounded-full h-3 w-3 bg-slate-400"></span>
-            </span>
-            <span class="text-xs md:text-sm font-black text-slate-300">글로벌-로컬 동조 신호등 초기화 중... (데이터 로딩 대기)</span>
+    <!-- 🌍 [상단 내비게이션 바] Premium Neon Terminal Header -->
+    <header class="w-full bg-[#051424]/90 backdrop-blur-md border-b border-[#00f2ff]/10 px-6 py-4 flex items-center justify-between z-50 shrink-0 select-none">
+        <div class="flex items-center gap-8">
+            <span class="text-xl font-extrabold text-[#00f2ff] tracking-widest font-mono-jetbrains animate-pulse">NEON_TERMINAL</span>
+            <nav class="hidden md:flex items-center gap-6 text-xs font-black tracking-wider text-slate-400">
+                <a href="#panel-intel" id="nav-intel" class="nav-link hover:text-[#00f2ff] transition-colors pb-1 border-b-2 border-[#00f2ff] text-[#00f2ff]">DASHBOARD</a>
+                <a href="#panel-macro" id="nav-macro" class="nav-link hover:text-[#00f2ff] transition-colors pb-1">WATCHLIST</a>
+                <a href="#panel-xray" id="nav-xray" class="nav-link hover:text-[#00f2ff] transition-colors pb-1">ANALYSIS</a>
+                <a href="#panel-sniper" id="nav-sniper" class="nav-link hover:text-[#00f2ff] transition-colors pb-1">ORDERS</a>
+            </nav>
         </div>
-    </div>
+        <div class="flex items-center gap-4 text-slate-400">
+            <button onclick="toggleControlDrawer()" class="hover:text-[#00f2ff] transition-colors relative">
+                <i class="fas fa-bell"></i>
+                <span class="absolute -top-1.5 -right-1.5 w-2 h-2 bg-[#ffca28] rounded-full animate-ping"></span>
+            </button>
+            <button onclick="document.getElementById('settings-modal').classList.remove('hidden')" class="hover:text-[#00f2ff] transition-colors"><i class="fas fa-cog"></i></button>
+            <div class="flex items-center gap-2 bg-[#0A192F] border border-[#00f2ff]/20 rounded-full px-3 py-1 text-xs font-bold text-slate-300">
+                <span class="w-1.5 h-1.5 bg-[#00f2ff] rounded-full animate-pulse"></span>
+                <span>ELITE_TRADER</span>
+                <i class="fas fa-user-circle text-sm text-[#00f2ff]"></i>
+            </div>
+        </div>
+    </header>
 
-    <!-- 🏛️ [기둥 2] 1004MAS 핵심 전술 교리 (Tactical Doctrine) -->
-    <div id="tactical-doctrine-panel" class="w-full shrink-0 transition-all mb-1">
-        <div class="flex flex-col lg:flex-row gap-3 bg-[#0B0E14] border border-slate-700/50 rounded-xl p-4 glass-panel relative overflow-hidden">
-            <div class="flex items-center gap-3 shrink-0 lg:border-r lg:border-slate-800 lg:pr-5">
-                <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-yellow-600 text-black shadow-inner shadow-amber-300">
-                    <i class="fas fa-gavel text-lg"></i>
-                </div>
-                <div class="flex flex-col">
-                    <span class="text-sm font-black text-amber-500 tracking-wider">1004MAS 핵심 전술 교리</span>
-                    <span class="text-[9px] text-slate-500 font-bold uppercase tracking-widest">Tactical Doctrine</span>
+    <!-- [전체 콘텐츠 영역 래퍼] -->
+    <div class="flex flex-1 w-full overflow-hidden relative">
+        <!-- 🧭 [좌측 세로 내비게이션 바] Premium Sidebar Icons -->
+        <aside class="hidden lg:flex flex-col items-center gap-6 bg-[#051424]/80 backdrop-blur-md border-r border-[#00f2ff]/10 w-16 py-6 z-40 shrink-0 select-none">
+            <button id="side-intel" class="side-btn w-10 h-10 flex items-center justify-center rounded-lg bg-[#00f2ff]/10 text-[#00f2ff] hover:bg-[#00f2ff]/20 hover:text-white transition-all duration-300" title="Tactical Intel">
+                <i class="fas fa-th-large"></i>
+            </button>
+            <button id="side-macro" class="side-btn w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-[#00f2ff]/10 hover:text-[#00f2ff] transition-all duration-300" title="Macro & Heatmap">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button id="side-xray" class="side-btn w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-[#00f2ff]/10 hover:text-[#00f2ff] transition-all duration-300" title="X-Ray & Stealth">
+                <i class="fas fa-chart-line"></i>
+            </button>
+            <button id="side-sniper" class="side-btn w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-[#00f2ff]/10 hover:text-[#00f2ff] transition-all duration-300" title="Sniper Execution">
+                <i class="fas fa-exchange-alt"></i>
+            </button>
+            <button onclick="toggleControlDrawer()" class="w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-[#00f2ff]/10 hover:text-[#00f2ff] transition-all duration-300 mt-auto" title="Settings & Logs">
+                <i class="fas fa-history"></i>
+            </button>
+        </aside>
+
+        <!-- 🖥️ [우측 메인 대시보드 콘텐츠 스크롤 영역] -->
+        <div id="main-content-scroll" class="flex-1 flex flex-col p-4 gap-4 overflow-y-auto custom-scrollbar scroll-smooth">
+            
+            <!-- 🌍 TradingView 글로벌 시장 실시간 티커 -->
+            <div class="tradingview-widget-container shrink-0" style="height:46px;">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+              {
+                "symbols": [
+                  {"proName": "FX_IDC:USDKRW", "title": "원/달러 환율"},
+                  {"description": "미 10년물 국채", "proName": "US10Y"},
+                  {"description": "WTI 원유", "proName": "TVC:USOIL"},
+                  {"description": "국제 금", "proName": "TVC:GOLD"},
+                  {"description": "나스닥 100", "proName": "FOREXCOM:NAS100"},
+                  {"description": "다우존스", "proName": "FOREXCOM:DJI"}
+                ],
+                "showSymbolLogo": true,
+                "isTransparent": false,
+                "displayMode": "adaptive",
+                "colorTheme": "dark",
+                "locale": "kr"
+              }
+              </script>
+            </div>
+
+            <!-- 📡 [기둥 1] 글로벌-로컬 동조 신호등 (Global-Local Sync Light) -->
+            <div id="global-sync-light" class="w-full shrink-0 transition-all">
+                <div class="flex items-center gap-3 bg-slate-900/60 border border-slate-700/50 rounded-xl px-4 py-2.5">
+                    <span class="flex h-3 w-3 relative">
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-slate-400"></span>
+                    </span>
+                    <span class="text-xs md:text-sm font-black text-slate-300">글로벌-로컬 동조 신호등 초기화 중... (데이터 로딩 대기)</span>
                 </div>
             </div>
 
-            <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-3 items-center mt-3 lg:mt-0 text-xs">
-                <!-- 1순위: 예탁금 -->
-                <div class="flex gap-2.5 items-start bg-black/40 p-2.5 rounded-lg border border-slate-800/40 hover:border-slate-700 transition-colors">
-                    <span class="bg-amber-500/20 text-amber-400 font-black px-1.5 py-0.5 rounded text-[10px] uppercase shrink-0 mt-0.5">1순위 수급</span>
-                    <div class="flex flex-col">
-                        <span class="font-bold text-slate-200">고객예탁금 추이 검증</span>
-                        <span class="text-[10px] text-slate-400 mt-0.5">대기 자금(유동성) 급증 확인 후 상승장 판단</span>
+            <!-- 🏛️ [기둥 2] 1004MAS 핵심 전술 교리 (Tactical Doctrine) -->
+            <div id="tactical-doctrine-panel" class="w-full shrink-0 transition-all mb-1">
+                <div class="flex flex-col lg:flex-row gap-3 bg-[#0B0E14] border border-slate-700/50 rounded-xl p-4 glass-panel relative overflow-hidden">
+                    <div class="flex items-center gap-3 shrink-0 lg:border-r lg:border-slate-800 lg:pr-5">
+                        <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-yellow-600 text-black shadow-inner shadow-amber-300">
+                            <i class="fas fa-gavel text-lg"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-sm font-black text-amber-500 tracking-wider">1004MAS 핵심 전술 교리</span>
+                            <span class="text-[9px] text-slate-500 font-bold uppercase tracking-widest">Tactical Doctrine</span>
+                        </div>
                     </div>
-                </div>
-                
-                <!-- 1순위: 수출데이터 -->
-                <div class="flex gap-2.5 items-start bg-black/40 p-2.5 rounded-lg border border-slate-800/40 hover:border-slate-700 transition-colors">
-                    <span class="bg-amber-500/20 text-amber-400 font-black px-1.5 py-0.5 rounded text-[10px] uppercase shrink-0 mt-0.5">1순위 실적</span>
-                    <div class="flex flex-col">
-                        <span class="font-bold text-slate-200">품목별 수출 데이터 확인</span>
-                        <span class="text-[10px] text-slate-400 mt-0.5">관세청 월간 지표 기준 급증 종목 우선 추천</span>
-                    </div>
-                </div>
 
-                <!-- 2순위: 투자 사이클 -->
-                <div class="flex gap-2.5 items-start bg-black/40 p-2.5 rounded-lg border border-slate-800/40 hover:border-slate-700 transition-colors">
-                    <span class="bg-teal-500/20 text-teal-400 font-black px-1.5 py-0.5 rounded text-[10px] uppercase shrink-0 mt-0.5">2순위 사이클</span>
-                    <div class="flex flex-col">
-                        <span class="font-bold text-slate-200">모멘텀 단계 대응</span>
-                        <span class="text-[10px] text-slate-400 mt-0.5">횡보기(매집) → 상승기(스윙매수) → 확장기(추세보유) 매칭</span>
+                    <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-3 items-center mt-3 lg:mt-0 text-xs">
+                        <!-- 1순위: 예탁금 -->
+                        <div class="flex gap-2.5 items-start bg-black/40 p-2.5 rounded-lg border border-slate-800/40 hover:border-slate-700 transition-colors">
+                            <span class="bg-amber-500/20 text-amber-400 font-black px-1.5 py-0.5 rounded text-[10px] uppercase shrink-0 mt-0.5">1순위 수급</span>
+                            <div class="flex flex-col">
+                                <span class="font-bold text-slate-200">고객예탁금 추이 검증</span>
+                                <span class="text-[10px] text-slate-400 mt-0.5">대기 자금(유동성) 급증 확인 후 상승장 판단</span>
+                            </div>
+                        </div>
+                        
+                        <!-- 1순위: 수출데이터 -->
+                        <div class="flex gap-2.5 items-start bg-black/40 p-2.5 rounded-lg border border-slate-800/40 hover:border-slate-700 transition-colors">
+                            <span class="bg-amber-500/20 text-amber-400 font-black px-1.5 py-0.5 rounded text-[10px] uppercase shrink-0 mt-0.5">1순위 실적</span>
+                            <div class="flex flex-col">
+                                <span class="font-bold text-slate-200">품목별 수출 데이터 확인</span>
+                                <span class="text-[10px] text-slate-400 mt-0.5">관세청 월간 지표 기준 급증 종목 우선 추천</span>
+                            </div>
+                        </div>
+
+                        <!-- 2순위: 투자 사이클 -->
+                        <div class="flex gap-2.5 items-start bg-black/40 p-2.5 rounded-lg border border-slate-800/40 hover:border-slate-700 transition-colors">
+                            <span class="bg-teal-500/20 text-teal-400 font-black px-1.5 py-0.5 rounded text-[10px] uppercase shrink-0 mt-0.5">2순위 사이클</span>
+                            <div class="flex flex-col">
+                                <span class="font-bold text-slate-200">모멘텀 단계 대응</span>
+                                <span class="text-[10px] text-slate-400 mt-0.5">횡보기(매집) → 상승기(스윙매수) → 확장기(추세보유) 매칭</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- 4-Panel Main Area (v12.0 Ultra-High Win-Rate Tactical Command) -->
-    <main class="flex flex-col lg:flex-row gap-4 min-h-[calc(100vh-170px)] w-full">
+            <!-- 4-Panel Main Area (v12.0 Ultra-High Win-Rate Tactical Command) -->
+            <main class="flex flex-col lg:flex-row gap-4 min-h-[calc(100vh-170px)] w-full">
         
         <!-- ================= PANEL 1: TACTICAL INTEL & BRIEFING (좌측 1) ================= -->
-        <section class="panel w-full lg:w-1/4 flex flex-col gap-4">
+        <section id="panel-intel" class="panel w-full lg:w-1/4 flex flex-col gap-4">
             <div class="panel-header text-slate-100 shrink-0">
                 <span><i class="fas fa-brain text-teal-400 mr-2"></i>🏛️ TACTICAL INTEL</span>
                 <span id="command-title" class="hidden"></span> <!-- JS 호환용 숨김 -->
@@ -280,7 +355,7 @@
             </div>
 
             <!-- Morning Rundown 마크다운 리포트 -->
-            <div class="mx-3 bg-[rgba(10,12,16,0.85)] border border-slate-700/50 rounded-xl p-4 flex-1 flex flex-col h-[calc(100vh-230px)] glass-panel">
+            <div class="mx-3 bg-[rgba(10,12,16,0.85)] border border-slate-700/50 rounded-xl p-4 flex-1 flex flex-col h-[calc(100vh-290px)] glass-panel">
                 <div class="flex justify-between items-center mb-3 pb-2 border-b border-indigo-800/40 shrink-0">
                     <span class="text-[11px] font-black text-indigo-200 tracking-widest uppercase">
                         <i class="fas fa-sun text-amber-400 mr-2 animate-pulse"></i>Morning Rundown
@@ -294,10 +369,21 @@
                     </div>
                 </div>
             </div>
+
+            <!-- [v20.0] Sentiment Score 위젯 추가 -->
+            <div class="mx-3 mb-4 p-3 bg-gradient-to-r from-teal-950/40 to-slate-900/60 border border-teal-500/20 rounded-xl flex items-center justify-between shrink-0 glass-panel">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-chart-line text-teal-400 text-sm animate-pulse"></i>
+                    <span class="text-[10px] font-black text-slate-300 tracking-wider">MARKET SENTIMENT</span>
+                </div>
+                <span class="text-[11px] font-black text-teal-400 font-mono-jetbrains bg-teal-950/60 px-2 py-0.5 rounded border border-teal-500/30">
+                    74% BULLISH
+                </span>
+            </div>
         </section>
 
         <!-- ================= PANEL 2: MACRO & SECTOR HEATMAP (중앙 2) ================= -->
-        <section class="panel w-full lg:w-1/4 flex flex-col gap-4">
+        <section id="panel-macro" class="panel w-full lg:w-1/4 flex flex-col gap-4">
             <div class="panel-header text-slate-300 shrink-0">
                 <span><i class="fas fa-globe text-teal-400 mr-2"></i>🌐 MACRO & HEATMAP</span>
             </div>
@@ -337,7 +423,7 @@
         </section>
 
         <!-- ================= PANEL 3: PRE-MARKET X-RAY & STEALTH (중앙 3) ================= -->
-        <section class="panel w-full lg:w-1/4 flex flex-col gap-4">
+        <section id="panel-xray" class="panel w-full lg:w-1/4 flex flex-col gap-4">
             <div class="panel-header text-slate-300 shrink-0">
                 <span><i class="fas fa-mask text-teal-400 mr-2"></i>🔍 X-RAY & STEALTH</span>
             </div>
@@ -379,7 +465,7 @@
         </section>
 
         <!-- ================= PANEL 4: GOLDEN SNIPER EXECUTION (우측 4) ================= -->
-        <section class="panel w-full lg:w-1/4 flex flex-col gap-4">
+        <section id="panel-sniper" class="panel w-full lg:w-1/4 flex flex-col gap-4">
             <div class="panel-header text-slate-100 shrink-0">
                 <span><i class="fas fa-crosshairs text-red-500 mr-2"></i>🎯 SNIPER EXECUTION</span>
             </div>
@@ -420,6 +506,8 @@
                 </div>
             </div>
         </main>
+        </div>
+    </div>
 
         <!-- Collapsible Drawer Toggle Gear Button -->
         <button onclick="toggleControlDrawer()" class="fixed bottom-4 left-4 z-50 w-10 h-10 bg-slate-900/90 border border-teal-500/50 rounded-full flex items-center justify-center text-teal-400 hover:text-teal-200 shadow-xl hover:scale-105 active:scale-95 transition-all">
@@ -1950,6 +2038,11 @@
                 return;
             }
 
+            // 전역 스크랩라인 히스토리 저장소 초기화
+            if (!window.kostolanyHistory) {
+                window.kostolanyHistory = {};
+            }
+
             const html = kostolanyList.slice(0, 2).map((item, idx) => {
                 let borderColor = "border-slate-700/50 bg-slate-800/40";
                 let titleColor = "text-amber-500 font-black animate-pulse";
@@ -1979,7 +2072,7 @@
                     dartBadge = `<span class="text-[11px] bg-green-900/60 text-green-400 border border-green-700 px-1 rounded ml-1" title="DART 공시 검증 통과">✅</span>`;
                 }
 
-                let liveStatus = `<span class="${chgColor} font-black text-sm tracking-tight mr-2">현재가 ${sign}${displayChg.toFixed(1)}% <span class="text-amber-500 text-xs font-normal tracking-normal ml-0.5">고점: ${displayPeak.toFixed(2)}%</span></span>`;
+                let liveStatus = `<span class="${chgColor} font-black text-sm tracking-tight mr-2 font-mono-jetbrains">현재가 ${sign}${displayChg.toFixed(1)}% <span class="text-amber-500 text-xs font-normal tracking-normal ml-0.5 font-mono-jetbrains">고점: ${displayPeak.toFixed(2)}%</span></span>`;
 
                 // 🎯 [v18.0] 체급 판정 및 다이내믹 수급 요구율 연산
                 const volAmt = parseFloat(item.vol || 0); // 100M KRW 단위
@@ -2007,12 +2100,38 @@
                 // 코멘트 조립
                 const customReason = `[V-VI 스퀴즈] 섹터대장 거래대금 ${Math.round(volAmt)}억 폭발 (요구 ${finalThreshold}% 돌파)`;
 
+                // 📈 [v20.0] 실시간 수급 스파크라인 히스토리 업데이트 및 렌더링
+                if (!window.kostolanyHistory[item.name]) {
+                    window.kostolanyHistory[item.name] = [];
+                }
+                window.kostolanyHistory[item.name].push(volAmt);
+                if (window.kostolanyHistory[item.name].length > 8) {
+                    window.kostolanyHistory[item.name].shift();
+                }
+
+                const history = window.kostolanyHistory[item.name];
+                const maxInHistory = Math.max(...history, 1);
+                
+                const sparklineBars = history.map(v => {
+                    const heightPct = Math.max(15, Math.round((v / maxInHistory) * 100));
+                    return `<div class="w-1 bg-[#00f2ff] rounded-t transition-all duration-300" style="height: ${heightPct}%; min-height: 2px;"></div>`;
+                }).join('');
+
+                const sparklineHtml = `
+                    <div class="flex items-end gap-0.5 h-6 px-1.5 py-0.5 bg-slate-950/60 rounded border border-slate-800/80 ml-auto shrink-0" title="최근 수급 유입 추이">
+                        ${sparklineBars}
+                    </div>
+                `;
+
                 return `
                     <div class="flex flex-col p-2.5 rounded-lg border ${borderColor} transition-all mb-2">
                         <div class="flex flex-col gap-1 mb-1.5">
-                            <div class="flex flex-row items-baseline">
-                                <span class="text-base ${titleColor} font-extrabold mr-1">${icon}${item.name}${dartBadge}</span>
-                                ${weightBadge}
+                            <div class="flex flex-row items-center justify-between">
+                                <div class="flex items-baseline">
+                                    <span class="text-base ${titleColor} font-extrabold mr-1">${icon}${item.name}${dartBadge}</span>
+                                    ${weightBadge}
+                                </div>
+                                ${sparklineHtml}
                             </div>
                             <div class="flex flex-row items-center border-b border-slate-700/50 pb-1 mt-1">
                                 <span class="text-xs text-slate-400 font-bold mr-1 shrink-0">락온됨..</span>
@@ -3247,6 +3366,128 @@
             const observer = new MutationObserver(fix);
             observer.observe(body, { attributes: true, attributeFilter: ['class', 'style'] });
             observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'style'] });
+        // 🧭 [ScrollSpy & Section Highlight System]
+        (function setupInteractiveNavigation() {
+            const scrollContainer = document.getElementById('main-content-scroll');
+            const sections = [
+                { id: 'panel-intel', navId: 'nav-intel', sideId: 'side-intel' },
+                { id: 'panel-macro', navId: 'nav-macro', sideId: 'side-macro' },
+                { id: 'panel-xray', navId: 'nav-xray', sideId: 'side-xray' },
+                { id: 'panel-sniper', navId: 'nav-sniper', sideId: 'side-sniper' }
+            ];
+
+            let isScrollingByClick = false;
+
+            // 1. 공통 활성화 갱신 함수
+            function activateMenu(targetId) {
+                sections.forEach(sec => {
+                    const navEl = document.getElementById(sec.navId);
+                    const sideEl = document.getElementById(sec.sideId);
+                    
+                    if (sec.id === targetId) {
+                        // 상단 nav 활성화
+                        if (navEl) {
+                            navEl.className = "nav-link hover:text-[#00f2ff] transition-colors pb-1 border-b-2 border-[#00f2ff] text-[#00f2ff]";
+                        }
+                        // 좌측 side 버튼 활성화
+                        if (sideEl) {
+                            sideEl.className = "side-btn w-10 h-10 flex items-center justify-center rounded-lg bg-[#00f2ff]/10 text-[#00f2ff] hover:bg-[#00f2ff]/20 hover:text-white transition-all duration-300";
+                        }
+                    } else {
+                        // 상단 nav 비활성화
+                        if (navEl) {
+                            navEl.className = "nav-link hover:text-[#00f2ff] transition-colors pb-1 text-slate-400";
+                        }
+                        // 좌측 side 버튼 비활성화
+                        if (sideEl) {
+                            sideEl.className = "side-btn w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-[#00f2ff]/10 hover:text-[#00f2ff] transition-all duration-300";
+                        }
+                    }
+                });
+            }
+
+            // 2. 섹션 하이라이트 애니메이션 함수
+            function highlightSection(sectionId) {
+                const secEl = document.getElementById(sectionId);
+                if (secEl) {
+                    secEl.classList.remove('panel-highlight');
+                    void secEl.offsetWidth; // Trigger reflow to restart animation
+                    secEl.classList.add('panel-highlight');
+                    setTimeout(() => {
+                        secEl.classList.remove('panel-highlight');
+                    }, 1500);
+                }
+            }
+
+            // 3. 클릭 이벤트 연결 (상단 nav 및 좌측 사이드바)
+            function setupClickHandlers() {
+                sections.forEach(sec => {
+                    const navEl = document.getElementById(sec.navId);
+                    const sideEl = document.getElementById(sec.sideId);
+                    const targetEl = document.getElementById(sec.id);
+
+                    const handleClick = (e) => {
+                        e.preventDefault();
+                        if (targetEl) {
+                            isScrollingByClick = true;
+                            activateMenu(sec.id);
+                            
+                            // 스크롤 이동
+                            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            
+                            // 이동이 어느 정도 완료된 후 하이라이트 트리거 (smooth scroll 완료 시점 500ms 후)
+                            setTimeout(() => {
+                                highlightSection(sec.id);
+                                isScrollingByClick = false;
+                            }, 500);
+                        }
+                    };
+
+                    if (navEl) navEl.addEventListener('click', handleClick);
+                    if (sideEl) sideEl.addEventListener('click', handleClick);
+                });
+            }
+
+            // 4. ScrollSpy 이벤트 핸들러
+            function handleScroll() {
+                if (isScrollingByClick || !scrollContainer) return;
+
+                const containerScrollTop = scrollContainer.scrollTop;
+                const containerHeight = scrollContainer.clientHeight;
+                const scrollHeight = scrollContainer.scrollHeight;
+                
+                // 만약 맨 아래까지 완전히 스크롤된 경우, 마지막 섹션 강제 선택
+                if (containerScrollTop + containerHeight >= scrollHeight - 20) {
+                    activateMenu(sections[sections.length - 1].id);
+                    return;
+                }
+
+                let currentActiveSection = sections[0].id;
+                
+                // 각 섹션 중 뷰포트(컨테이너 기준) 상단에 가장 가까운 활성 섹션 매칭
+                for (let i = 0; i < sections.length; i++) {
+                    const secEl = document.getElementById(sections[i].id);
+                    if (secEl) {
+                        // 컨테이너 좌표계 내의 섹션 상단 오프셋 위치
+                        const offsetTop = secEl.offsetTop - scrollContainer.offsetTop;
+                        
+                        // 현재 컨테이너 스크롤 탑이 섹션의 중간 라인 영역(예: offsetTop - 120)을 넘어가면 활성화
+                        if (containerScrollTop >= offsetTop - 120) {
+                            currentActiveSection = sections[i].id;
+                        }
+                    }
+                }
+                
+                activateMenu(currentActiveSection);
+            }
+
+            // 초기 실행 및 리스너 바인딩
+            setupClickHandlers();
+            if (scrollContainer) {
+                scrollContainer.addEventListener('scroll', handleScroll);
+                // 초기 스크롤 위치에 맞추어 상태 갱신
+                handleScroll();
+            }
         })();
 
     </script>
