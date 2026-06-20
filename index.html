@@ -703,6 +703,7 @@
         //         window.krxMaTargets 주입 시 자동 갱신됨
         let MA_TARGETS = [];
         let hasAlertedMA = new Set(); // 당일 알림 중복 방지
+        let isInitialRender = true; // 최초 로드 시 알림 도배 방지용 플래그
 
         // 코스톨라니 스나이퍼 종목 캐시 (파이썬 백엔드가 조건에 맞는 종배 타겟을 자동 생성하여 주입)
         let kostolanyList = [];
@@ -1411,6 +1412,7 @@
                     }
                     lastDataHash = currentHash;
                 }
+                isInitialRender = false;
             }
 
             function fetchRundown() {
@@ -2848,8 +2850,10 @@
 
                 // 5% 돌파 시 텔레그램 알림 (1회)
                 if (isHot && !hasAlertedGuerrilla.has(item.name)) {
-                    showToast(`🔥 [게릴라] ${item.name} +${itemChg.toFixed(1)}% 돌파!`, 'red');
-                    sendTelegramMessage(`💣 <b>[게릴라 스텔스 타점]</b>\n\n🔥 <b>${item.name}</b> +${itemChg.toFixed(1)}%\n📊 고점대비: ${itemPeak.toFixed(1)}%\n🎯 패턴: ${item.pattern_label || '-'}\n\n⚡ 5% 스캘핑 타점 도달!`);
+                    if (!isInitialRender) {
+                        showToast(`🔥 [게릴라] ${item.name} +${itemChg.toFixed(1)}% 돌파!`, 'red');
+                        sendTelegramMessage(`💣 <b>[게릴라 스텔스 타점]</b>\n\n🔥 <b>${item.name}</b> +${itemChg.toFixed(1)}%\n📊 고점대비: ${itemPeak.toFixed(1)}%\n🎯 패턴: ${item.pattern_label || '-'}\n\n⚡ 5% 스캘핑 타점 도달!`);
+                    }
                     hasAlertedGuerrilla.add(item.name);
                 }
 
@@ -2946,7 +2950,9 @@
 
                 // 세력 진입 알람 (거래대금 300억↑ or +5% 이상)
                 if ((itemVol >= 300 || itemChg >= 5.0) && !hasAlertedMA.has(item.name)) {
-                    showToast(`🔥 [특별감시구역] ${item.name} 세력(고래) 수급 대폭발! M&A 찌라시 임박 추정!`, 'red');
+                    if (!isInitialRender) {
+                        showToast(`🔥 [특별감시구역] ${item.name} 세력(고래) 수급 대폭발! M&A 찌라시 임박 추정!`, 'red');
+                    }
                     if ('speechSynthesis' in window) {
                         const u = new SpeechSynthesisUtterance(`${item.name}의 거대 자본이 포착되었습니다. 타점을 확인하십시오.`);
                         u.lang = 'ko-KR';
