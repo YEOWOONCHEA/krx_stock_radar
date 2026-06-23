@@ -305,7 +305,7 @@
         </aside>
 
         <!-- 🖥️ [우측 메인 대시보드 콘텐츠 스크롤 영역] -->
-        <main class="pl-16 w-full h-full grid grid-cols-4 gap-panel-gap p-panel-gap box-border overflow-y-auto custom-scrollbar">
+        <main id="main-content-scroll" class="pl-16 w-full h-full grid grid-cols-4 gap-panel-gap p-panel-gap box-border overflow-y-auto custom-scrollbar">
             
             <!-- 🌍 TradingView 글로벌 시장 실시간 티커 (Full Width) -->
             <div class="col-span-4 tradingview-widget-container shrink-0" style="height:46px;">
@@ -3502,7 +3502,7 @@
 
             let isScrollingByClick = false;
 
-            // 1. 공통 활성화 갱신 함수
+            // 1. 공통 활성화 갱신 함수 (기존 Tailwind 디자인 시스템 완벽 유지)
             function activateMenu(targetId) {
                 sections.forEach(sec => {
                     const navEl = document.getElementById(sec.navId);
@@ -3511,20 +3511,20 @@
                     if (sec.id === targetId) {
                         // 상단 nav 활성화
                         if (navEl) {
-                            navEl.className = "nav-link hover:text-[#00f2ff] transition-colors pb-1 border-b-2 border-[#00f2ff] text-[#00f2ff]";
+                            navEl.className = "text-primary-fixed border-b-2 border-primary-fixed font-label-caps text-label-caps h-16 flex items-center transition-colors";
                         }
                         // 좌측 side 버튼 활성화
                         if (sideEl) {
-                            sideEl.className = "side-btn w-10 h-10 flex items-center justify-center rounded-lg bg-[#00f2ff]/10 text-[#00f2ff] hover:bg-[#00f2ff]/20 hover:text-white transition-all duration-300";
+                            sideEl.className = "flex items-center gap-4 px-5 py-3 bg-[#00ffd1]/10 text-primary-fixed border-l-4 border-primary-fixed group cursor-pointer transition-colors";
                         }
                     } else {
                         // 상단 nav 비활성화
                         if (navEl) {
-                            navEl.className = "nav-link hover:text-[#00f2ff] transition-colors pb-1 text-slate-400";
+                            navEl.className = "text-on-surface-variant hover:text-primary-fixed-dim font-label-caps text-label-caps h-16 flex items-center transition-colors";
                         }
                         // 좌측 side 버튼 비활성화
                         if (sideEl) {
-                            sideEl.className = "side-btn w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-[#00f2ff]/10 hover:text-[#00f2ff] transition-all duration-300";
+                            sideEl.className = "flex items-center gap-4 px-5 py-3 text-on-surface-variant hover:bg-surface-container-highest/50 hover:text-on-surface group cursor-pointer transition-colors";
                         }
                     }
                 });
@@ -3556,10 +3556,18 @@
                             isScrollingByClick = true;
                             activateMenu(sec.id);
                             
-                            // 스크롤 이동
-                            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            // 스크롤이 확실하게 지정된 메인 컨테이너 내부에서 발생하도록 처리
+                            if (scrollContainer) {
+                                const targetOffsetTop = targetEl.offsetTop - scrollContainer.offsetTop;
+                                scrollContainer.scrollTo({
+                                    top: targetOffsetTop,
+                                    behavior: 'smooth'
+                                });
+                            } else {
+                                targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
                             
-                            // 이동이 어느 정도 완료된 후 하이라이트 트리거 (smooth scroll 완료 시점 500ms 후)
+                            // 이동 완료 및 하이라이트 처리
                             setTimeout(() => {
                                 highlightSection(sec.id);
                                 isScrollingByClick = false;
