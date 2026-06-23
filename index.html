@@ -1680,7 +1680,7 @@
                 // 랭크 및 점수 스타일링
                 const rankNum = String(index + 1).padStart(2, '0');
                 const rankColor = index === 0 ? 'text-[#00ffd1] animate-pulse' : 'text-slate-400';
-                const scoreColor = item.killScore >= 80 ? 'text-[#00ffd1] font-bold' : 'text-slate-300';
+                const scoreColor = item.killScore >= 80 ? 'text-[#00ffd1]' : 'text-slate-300';
                 
                 // 실시간 시세 데이터 가공
                 const closePrice = item.close ? parseInt(item.close).toLocaleString() : '-';
@@ -1707,7 +1707,7 @@
                                 <span class="text-[10px] font-mono-jetbrains ${chgColor} mt-0.5">${chgText}</span>
                             </div>
                         </td>
-                        <td class="py-3 text-right font-data-md ${scoreColor}">${item.killScore} Pts</td>
+                        <td class="py-3 text-right font-mono-jetbrains text-[12px] font-black ${scoreColor}">${item.killScore} Pts</td>
                     </tr>
                 `;
             });
