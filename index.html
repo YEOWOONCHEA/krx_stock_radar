@@ -1795,7 +1795,7 @@
                     powerBar.style.width = '15%';
                     powerBar.className = 'h-full bg-red-600 rounded-full transition-all duration-500';
                 }
-                if(powerText) powerText.innerText = '허수 주문 감지 (진입 금지 / SUSPEND)';
+                if(powerText) powerText.innerHTML = '<span class="text-[10px] text-red-400 font-bold">허수 주문 감지 (진입 금지 / SUSPEND)</span>';
             } else if (h === 8 && m >= 40 && m <= 59) {
                 gaugeEl.innerHTML = `
                     <span class="flex items-center gap-1.5 text-xs bg-emerald-950/60 text-emerald-400 px-2.5 py-1 rounded-full border border-emerald-900/50 font-bold tracking-wider">
@@ -1813,7 +1813,7 @@
                     powerBar.style.width = `${power}%`;
                     powerBar.className = 'h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]';
                 }
-                if(powerText) powerText.innerText = `세력 매수 파워: ${power}% (수급 안착 진행 중 / ACCUMULATING)`;
+                if(powerText) powerText.innerHTML = `<span class="text-[10px] text-slate-300 font-semibold">매수 파워: <span class="text-emerald-400 font-bold">${power}%</span> <span class="text-[9px] text-slate-500">(ACCUMULATING)</span></span>`;
             } else {
                 // 정규장 시간: 동적으로 체결 강도를 계산하여 네온 빛 펄싱 바 렌더링
                 gaugeEl.innerHTML = `
@@ -1842,7 +1842,7 @@
                     powerBar.style.width = `${power}%`;
                     powerBar.className = 'h-full bg-gradient-to-r from-teal-400 to-cyan-500 rounded-full transition-all duration-500 shadow-[0_0_15px_rgba(6,182,212,0.8)] animate-pulse';
                 }
-                if(powerText) powerText.innerHTML = `실시간 매집 강도: <span class="text-cyan-400 font-extrabold">${avgExec}%</span> (정규장 가동 중 / LIVE)`;
+                if(powerText) powerText.innerHTML = `<span class="text-[10px] text-slate-300 font-semibold">매집 강도: <span class="text-cyan-400 font-extrabold text-xs">${avgExec}%</span> <span class="text-[8px] text-emerald-400 font-bold ml-0.5">LIVE</span></span>`;
             }
         }
         setInterval(updateXrayGauge, 1000);
