@@ -1654,9 +1654,10 @@
                 <table class="w-full text-left">
                     <thead>
                         <tr class="border-b border-white/10 text-[10px] text-on-surface-variant font-label-caps">
-                            <th class="pb-2 font-label-caps text-label-caps">RANK</th>
-                            <th class="pb-2 font-label-caps text-label-caps">TICKER</th>
-                            <th class="pb-2 font-label-caps text-label-caps text-right">SCORE</th>
+                            <th class="pb-2 font-label-caps text-label-caps w-[10%]">RANK</th>
+                            <th class="pb-2 font-label-caps text-label-caps w-[42%]">TICKER</th>
+                            <th class="pb-2 font-label-caps text-label-caps text-right w-[30%]">PRICE / CHG</th>
+                            <th class="pb-2 font-label-caps text-label-caps text-right w-[18%]">SCORE</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-white/5">
@@ -1681,6 +1682,13 @@
                 const rankColor = index === 0 ? 'text-[#00ffd1] animate-pulse' : 'text-slate-400';
                 const scoreColor = item.killScore >= 80 ? 'text-[#00ffd1] font-bold' : 'text-slate-300';
                 
+                // 실시간 시세 데이터 가공
+                const closePrice = item.close ? parseInt(item.close).toLocaleString() : '-';
+                const chgVal = item.chg !== undefined ? parseFloat(item.chg) : 0;
+                const sign = chgVal > 0 ? '+' : '';
+                const chgColor = chgVal > 0 ? 'text-[#ff2a5f]' : (chgVal < 0 ? 'text-[#00f2ff]' : 'text-slate-400');
+                const chgText = `${sign}${chgVal.toFixed(2)}%`;
+
                 tableHtml += `
                     <tr class="hover:bg-white/5 transition-colors cursor-pointer" onclick="openTvChart('${item.name}')">
                         <td class="py-3 font-data-md ${rankColor}">${rankNum}</td>
@@ -1691,6 +1699,12 @@
                                     ${themeBadge}
                                     ${item.killScore >= 85 ? '<span class="text-[8px] px-1 bg-red-700 text-slate-100 rounded-sm font-black animate-pulse">🎯BUY</span>' : ''}
                                 </div>
+                            </div>
+                        </td>
+                        <td class="py-3 text-right">
+                            <div class="flex flex-col">
+                                <span class="font-bold text-white text-xs font-mono-jetbrains">${closePrice}</span>
+                                <span class="text-[10px] font-mono-jetbrains ${chgColor} mt-0.5">${chgText}</span>
                             </div>
                         </td>
                         <td class="py-3 text-right font-data-md ${scoreColor}">${item.killScore} Pts</td>
