@@ -385,9 +385,11 @@
                 <!-- Top: Morning Rundown -->
                 <div class="glass-panel rounded-xl p-element-medium h-[320px] flex flex-col overflow-hidden shrink-0">
                     <div class="flex items-center justify-between mb-4 shrink-0">
-                        <h2 class="font-headline-md text-headline-md text-primary-fixed flex items-center gap-1.5" style="font-size: 0.8rem; font-weight: bold; letter-spacing: 0.3px;">
-                            <i class="fas fa-brain text-teal-400"></i>MORNING RUNDOWN <span class="text-[9px] text-slate-400 font-bold ml-1.5">장전 브리핑</span>
-                        </h2>
+                        <div class="flex items-baseline gap-1.5">
+                            <i class="fas fa-brain text-teal-400 text-[11px]"></i>
+                            <span class="text-xs font-black text-primary-fixed tracking-wider font-mono-jetbrains">MORNING RUNDOWN</span>
+                            <span class="text-[10px] text-slate-400 font-bold ml-0.5">장전 브리핑</span>
+                        </div>
                         <span class="text-[9px] text-on-surface-variant font-data-md font-mono" id="rundown-date">Loading...</span>
                     </div>
                     
@@ -418,12 +420,10 @@
                 <!-- Bottom: Sakana Swarm Core -->
                 <div class="glass-panel rounded-xl p-element-medium flex-grow flex flex-col overflow-hidden">
                     <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3 shrink-0">
-                        <div class="flex items-center gap-1.5">
-                            <span class="material-symbols-outlined text-teal-400 animate-pulse text-base">psychology</span>
-                            <h3 class="font-headline-md text-label-caps text-teal-400 flex flex-col" style="font-size: 0.8rem; font-weight: bold; letter-spacing: 0.3px;">
-                                <span class="text-[11px] font-black tracking-wider">SWARM CONSENSUS CORE</span>
-                                <span class="text-[8px] text-slate-500 font-bold">자율 에이전트 합의 엔진</span>
-                            </h3>
+                        <div class="flex items-baseline gap-1.5">
+                            <span class="material-symbols-outlined text-teal-400 animate-pulse text-[13px]">psychology</span>
+                            <span class="text-xs font-black text-teal-400 tracking-wider font-mono-jetbrains">SWARM CONSENSUS</span>
+                            <span class="text-[10px] text-slate-400 font-bold ml-0.5">합의 엔진</span>
                         </div>
                         <div class="flex gap-1.5 items-center">
                             <input type="text" id="swarm-search-input" placeholder="042700" class="bg-[#05070A] border border-white/10 rounded px-1.5 py-0.5 text-[9px] text-white w-14 outline-none focus:border-teal-500 font-mono text-center">
@@ -498,9 +498,11 @@
                 <!-- Bottom: Heatmap -->
                 <div class="glass-panel rounded-xl p-element-medium flex-grow flex flex-col overflow-hidden">
                     <div class="flex justify-between items-center mb-4 shrink-0">
-                        <h3 class="font-headline-md text-label-caps text-on-surface flex items-center gap-1.5" style="font-size: 0.8rem; font-weight: bold; letter-spacing: 0.3px;">
-                            <i class="fas fa-th text-teal-400 mr-1.5"></i>SECTOR HEATMAP <span class="text-[9px] text-slate-400 font-bold ml-1.5">섹터별 자금 흐름</span>
-                        </h3>
+                        <div class="flex items-baseline gap-1.5">
+                            <i class="fas fa-th text-teal-400 text-[11px]"></i>
+                            <span class="text-xs font-black text-white tracking-wider font-mono-jetbrains">SECTOR HEATMAP</span>
+                            <span class="text-[10px] text-slate-400 font-bold ml-0.5">섹터별 자금 흐름</span>
+                        </div>
                         <button onclick="selectTheme('ALL')" class="text-[9px] bg-slate-800 hover:bg-slate-700 border border-slate-700 px-2 py-0.5 rounded text-slate-300 transition-colors">
                             <i class="fas fa-sync-alt"></i> 초기화
                         </button>
@@ -516,9 +518,10 @@
                 <!-- Top: Net Power Gauge -->
                 <div id="xray-gauge-panel" class="glass-panel rounded-xl p-element-medium h-40 flex flex-col shrink-0">
                     <div class="flex justify-between items-center pb-2 border-b border-white/10 mb-2">
-                        <h3 class="font-headline-md text-label-caps text-primary-fixed flex items-center gap-1.5" style="font-size: 0.8rem; font-weight: bold; letter-spacing: 0.3px;">
-                            ACCUMULATION GAUGE <span class="text-[9px] text-slate-400 font-bold ml-1.5">실시간 세력 매집 계기판</span>
-                        </h3>
+                        <div class="flex items-baseline gap-1.5">
+                            <span class="text-xs font-black text-primary-fixed tracking-wider font-mono-jetbrains">ACCUMULATION GAUGE</span>
+                            <span class="text-[10px] text-slate-400 font-bold ml-0.5">세력 매집 계기판</span>
+                        </div>
                         <div id="xray-gauge-status">
                             <span class="text-[9px] text-slate-500 font-mono">초기화 중...</span>
                         </div>
@@ -546,9 +549,11 @@
                 <div class="glass-panel rounded-xl p-element-medium flex-grow flex flex-col overflow-hidden">
                     <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-4 shrink-0">
                         <div class="flex flex-col">
-                            <h3 class="font-headline-md text-label-caps text-on-surface flex items-center gap-1.5" style="font-size: 0.8rem; font-weight: bold; letter-spacing: 0.3px;">
-                                <i class="fas fa-crosshairs text-amber-500 text-sm"></i>STEALTH SCORER <span class="text-[9px] text-slate-400 font-bold ml-1.5">스텔스 3대 패턴 스코어러</span>
-                            </h3>
+                            <div class="flex items-baseline gap-1.5">
+                                <i class="fas fa-crosshairs text-amber-500 text-[11px]"></i>
+                                <span class="text-xs font-black text-white tracking-wider font-mono-jetbrains">STEALTH SCORER</span>
+                                <span class="text-[10px] text-slate-400 font-bold ml-0.5">스텔스 3대 패턴</span>
+                            </div>
                             <span class="text-[8px] text-slate-500 mt-0.5">P1 투명인간 + P2 압력밥솥 + P3 사각지대</span>
                         </div>
                         <span class="section-update-time text-[8px] text-slate-500 font-mono"></span>
@@ -565,10 +570,11 @@
                 <div class="glass-panel rounded-xl p-element-medium h-[240px] flex flex-col overflow-hidden shrink-0">
                     <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
                         <div class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-secondary-fixed animate-pulse text-base">radar</span>
-                            <h3 class="font-headline-md text-label-caps text-secondary-fixed flex items-center gap-1.5" style="font-size: 0.8rem; font-weight: bold; letter-spacing: 0.3px;">
-                                FORCE DETECTION <span class="text-[8px] text-slate-500 font-bold ml-1">세력 매집 시그널 감시</span>
-                            </h3>
+                            <span class="material-symbols-outlined text-secondary-fixed animate-pulse text-xs">radar</span>
+                            <div class="flex items-baseline gap-1.5">
+                                <span class="text-xs font-black text-secondary-fixed tracking-wider font-mono-jetbrains">FORCE DETECTION</span>
+                                <span class="text-[10px] text-slate-400 font-bold ml-0.5">세력 매집 시그널</span>
+                            </div>
                         </div>
                         <span id="vi-alert-count" class="text-[9px] bg-amber-950/30 text-yellow-300 px-1.5 py-0.5 rounded border border-yellow-700/50 font-bold">대기 중</span>
                     </div>
@@ -583,9 +589,10 @@
                             <div class="w-5 h-5 flex items-center justify-center rounded bg-red-950/80 border border-red-800/40 shadow-inner">
                                 <i class="fas fa-bolt text-amber-500 text-[10px] animate-pulse"></i>
                             </div>
-                            <h3 class="font-headline-md text-label-caps text-on-surface flex items-center gap-1.5" style="font-size: 0.8rem; font-weight: bold; letter-spacing: 0.3px;">
-                                SQUEEZE SCANNER <span class="text-[8px] text-slate-500 font-bold ml-1">실시간 수급 스퀴즈</span>
-                            </h3>
+                            <div class="flex items-baseline gap-1.5">
+                                <span class="text-xs font-black text-white tracking-wider font-mono-jetbrains">SQUEEZE SCANNER</span>
+                                <span class="text-[10px] text-slate-400 font-bold ml-0.5">실시간 수급 스퀴즈</span>
+                            </div>
                         </div>
                         <span id="kostolany-count" class="text-[9px] bg-red-950/60 text-red-400 px-1.5 py-0.5 rounded border border-red-900/30 font-bold tracking-wider">대기 중</span>
                     </div>
