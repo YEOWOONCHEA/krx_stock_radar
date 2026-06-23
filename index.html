@@ -150,6 +150,18 @@
         .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
         .font-mono-jetbrains { font-family: 'JetBrains Mono', monospace !important; }
 
+        /* Number Animation */
+        .count-up { font-variant-numeric: tabular-nums; }
+
+        /* Swarm Terminal Styling */
+        .terminal-youngsook { color: #818cf8; font-weight: bold; }
+        .terminal-hyunbin { color: #10b981; font-weight: bold; }
+        .terminal-marlin { color: #ef4444; font-weight: bold; }
+        .terminal-system { color: #00d2ff; }
+        .terminal-time { color: #45a29e; margin-right: 5px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 3px; height: 3px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 2px; }
+
         /* Drawer Slide-out Control Center */
         .control-drawer {
             position: fixed;
@@ -489,9 +501,9 @@
             </section>
 
             <!-- ================= COLUMN 4: SNIPER EXECUTION (우측 4) ================= -->
-            <section id="panel-sniper" class="col-span-1 flex flex-col gap-panel-gap h-[calc(100vh-270px)] overflow-hidden">
+            <section id="panel-sniper" class="col-span-1 flex flex-col gap-panel-gap h-[calc(100vh-270px)] overflow-y-auto custom-scrollbar pb-6">
                 <!-- Top: Alert Window -->
-                <div class="glass-panel rounded-xl p-element-medium h-[40%] flex flex-col overflow-hidden shrink-0">
+                <div class="glass-panel rounded-xl p-element-medium h-[240px] flex flex-col overflow-hidden shrink-0">
                     <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
                         <div class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-secondary-fixed animate-pulse text-base">radar</span>
@@ -504,7 +516,7 @@
                     </div>
                 </div>
                 <!-- Bottom: Squeeze List -->
-                <div class="glass-panel rounded-xl p-element-medium flex-grow flex flex-col overflow-hidden">
+                <div class="glass-panel rounded-xl p-element-medium h-[310px] flex flex-col overflow-hidden shrink-0">
                     <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-4 shrink-0">
                         <div class="flex items-center gap-1.5">
                             <div class="w-5 h-5 flex items-center justify-center rounded bg-red-950/80 border border-red-800/40 shadow-inner">
@@ -526,6 +538,55 @@
                         <button id="instant-buy-btn" class="w-full py-3 bg-primary-container text-on-primary-fixed font-bold rounded-lg border-t border-white/20 hover:bg-[#15ffd1] transition-all active:scale-95 neon-glow-teal uppercase tracking-wide">
                             INSTANT EXECUTION (BUY)
                         </button>
+                    </div>
+                </div>
+
+                <!-- Swarm Intelligence Terminal Card -->
+                <div class="glass-panel rounded-xl p-element-medium flex flex-col overflow-hidden shrink-0">
+                    <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-teal-400 animate-pulse text-base">psychology</span>
+                            <h3 class="font-headline-md text-label-caps text-teal-400" style="font-size: 0.8rem; font-weight: bold; letter-spacing: 0.3px;">Sakana Swarm Core</h3>
+                        </div>
+                        <div class="flex gap-1.5 items-center">
+                            <input type="text" id="swarm-search-input" placeholder="티커 (예: 042700)" class="bg-[#05070A] border border-white/10 rounded px-1.5 py-0.5 text-[9px] text-white w-20 outline-none focus:border-teal-500">
+                            <button id="swarm-search-btn" class="bg-teal-500/20 border border-teal-500/30 text-teal-400 text-[9px] font-bold px-2 py-0.5 rounded hover:bg-teal-500/30">GO</button>
+                        </div>
+                    </div>
+                    
+                    <div id="swarm-dashboard-content">
+                        <div class="flex justify-between items-center mb-2">
+                            <div>
+                                <span id="swarm-stock-name" class="text-[11px] font-bold text-white">한미반도체</span>
+                                <span id="swarm-stock-category" class="text-[8px] bg-indigo-950/40 text-indigo-400 border border-indigo-800/40 px-1 py-0.5 rounded ml-2">실체 수혜주</span>
+                            </div>
+                            <span id="swarm-signal-value" class="text-[9px] font-bold text-teal-400">눌림목 진입</span>
+                        </div>
+                        
+                        <!-- Terminal Log -->
+                        <div id="swarm-terminal" class="bg-[#02050a] border border-white/5 rounded p-2 font-mono text-[9px] h-24 overflow-y-auto text-emerald-300 mb-2 custom-scrollbar">
+                            <!-- Logs printed here -->
+                        </div>
+                        
+                        <!-- Chart container -->
+                        <div class="h-28 w-full relative">
+                            <canvas id="swarmPriceChart"></canvas>
+                        </div>
+                        
+                        <!-- Risk comments -->
+                        <div class="mt-2 text-[9px] text-slate-400 leading-normal border-t border-white/5 pt-2 space-y-1">
+                            <div class="flex justify-between">
+                                <span>추천 비중:</span>
+                                <span id="swarm-marlin-ratio" class="font-bold text-teal-400">10%~15% 이내</span>
+                            </div>
+                            <p id="swarm-marlin-comment" class="text-[8px] text-slate-500"></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Loading state -->
+                    <div id="swarm-loading-state" class="hidden flex flex-col items-center justify-center py-8 gap-2">
+                        <div class="w-6 h-6 border-2 border-teal-500/20 border-t-teal-500 rounded-full animate-spin"></div>
+                        <span class="text-[9px] text-slate-500">에이전트 합의 진행 중...</span>
                     </div>
                 </div>
             </section>
@@ -3521,6 +3582,265 @@
             }
         })();
 
+    </script>
+
+    <!-- Sakana Swarm Core Logic Script -->
+    <script>
+        (function() {
+            const SWARM_STOCKS_DB = {
+                "005930": {
+                    name: "삼성전자",
+                    category: "대장주",
+                    theme: "반도체 대표주 / HBM",
+                    close: 78500,
+                    ma20: 76800,
+                    volume_dry: false,
+                    risk_level: "보통",
+                    ratio: "15% ~ 20% 이내",
+                    comment: "HBM3E 공급망 중심 메모리 반도체 대장주. 최근 이격도가 다소 높은 구간이므로 지지 조정을 대기하십시오.",
+                    signal: "추격 매수 금지"
+                },
+                "086520": {
+                    name: "에코프로",
+                    category: "대장주",
+                    theme: "이차전지 소재",
+                    close: 103000,
+                    ma20: 122115,
+                    volume_dry: false,
+                    risk_level: "보통",
+                    ratio: "15% ~ 20% 이내",
+                    comment: "이차전지 양극재 공급망의 대표 대장주. 이격도가 과대하므로 20일선 부근 지지 확인 후 천천히 분할 매수하십시오.",
+                    signal: "추격 매수 금지"
+                },
+                "000660": {
+                    name: "SK하이닉스",
+                    category: "대장주",
+                    theme: "HBM 반도체",
+                    close: 224500,
+                    ma20: 221000,
+                    volume_dry: true,
+                    risk_level: "보통",
+                    ratio: "15% ~ 20% 이내",
+                    comment: "공급망 선점 기업으로 거래량이 건조(Dry)해지며 20일선 지지에 안착한 아주 우수한 매집 타점입니다.",
+                    signal: "눌림목 매수 유효"
+                },
+                "042700": {
+                    name: "한미반도체",
+                    category: "실체 수혜주",
+                    theme: "HBM 반도체 / TC 본더",
+                    close: 258000,
+                    ma20: 299750,
+                    volume_dry: true,
+                    risk_level: "보통-낮음",
+                    ratio: "10% ~ 15% 이내",
+                    comment: "듀얼 TC 본더 장비 독점 공급 등 매출 실체가 검증됨. 단기 거래량 급감 조정 구간이므로 20일선 근처 분할 대기 제안.",
+                    signal: "관망 및 대기"
+                },
+                "022510": {
+                    name: "국전약품",
+                    category: "단순 테마주",
+                    theme: "치매 치료제 / 기대감",
+                    close: 5800,
+                    ma20: 6200,
+                    volume_dry: true,
+                    risk_level: "매우 높음",
+                    ratio: "5% ~ 10% 이내",
+                    comment: "실질적 매출이 미비한 기대감 종목이므로 무조건 5% 이내 초소액 단기 스캘핑 및 칼손절 대응이 유효합니다.",
+                    signal: "눌림목 진입 (주의)"
+                }
+            };
+
+            let swarmChart = null;
+
+            function loadSwarmAnalysis(ticker) {
+                const loading = document.getElementById("swarm-loading-state");
+                const content = document.getElementById("swarm-dashboard-content");
+                if(!loading || !content) return;
+
+                loading.classList.remove("hidden");
+                content.classList.add("hidden");
+
+                const stock = SWARM_STOCKS_DB[ticker] || {
+                    name: `신규테크 (${ticker})`,
+                    category: "단순 테마주",
+                    theme: "일반 중소형 수급 테마",
+                    close: 14500,
+                    ma20: 16000,
+                    volume_dry: true,
+                    risk_level: "높음",
+                    ratio: "5% 이내 단기 매매",
+                    comment: "공시상 뚜렷한 관련 매출이 확인되지 않는 소문주입니다. 무조건 극소액 비중 조절 및 분할 진입하십시오.",
+                    signal: "눌림목 진입 (주의)"
+                };
+
+                const terminal = document.getElementById("swarm-terminal");
+                if (terminal) terminal.innerHTML = "";
+
+                addSwarmTerminalLine("system", "Swarm Core Initializing...");
+                addSwarmTerminalLine("system", `Target Ticker: [${ticker}] (${stock.name})`);
+
+                setTimeout(() => {
+                    addSwarmTerminalLine("youngsook", `영숙(공시): 실체 판독 -> [${stock.category}] (${stock.theme})`);
+                }, 400);
+
+                setTimeout(() => {
+                    addSwarmTerminalLine("hyunbin", `현빈(차트): 기준 20일선 = ${stock.ma20.toLocaleString()}원 | 시그널 = ${stock.signal}`);
+                }, 800);
+
+                setTimeout(() => {
+                    addSwarmTerminalLine("marlin", `말린(리스크): 리스크 등급 = [${stock.risk_level}] | 비중 = ${stock.ratio}`);
+                }, 1200);
+
+                setTimeout(() => {
+                    loading.classList.add("hidden");
+                    content.classList.remove("hidden");
+
+                    document.getElementById("swarm-stock-name").textContent = stock.name;
+                    const catBadge = document.getElementById("swarm-stock-category");
+                    catBadge.textContent = stock.category;
+                    
+                    const sigVal = document.getElementById("swarm-signal-value");
+                    sigVal.textContent = stock.signal;
+                    if(stock.signal.includes("매수") || stock.signal.includes("유효")) {
+                        sigVal.style.color = "#10b981";
+                    } else if(stock.signal.includes("대기") || stock.signal.includes("관망")) {
+                        sigVal.style.color = "#ffb703";
+                    } else {
+                        sigVal.style.color = "#ff2a5f";
+                    }
+
+                    document.getElementById("swarm-marlin-ratio").textContent = stock.ratio;
+                    document.getElementById("swarm-marlin-comment").textContent = stock.comment;
+
+                    renderSwarmStockChart(stock);
+                }, 1600);
+            }
+
+            function addSwarmTerminalLine(sender, text) {
+                const terminal = document.getElementById("swarm-terminal");
+                if (!terminal) return;
+                const line = document.createElement("div");
+                line.style.display = "flex";
+                line.style.lineHeight = "1.3";
+                line.style.marginBottom = "2px";
+
+                const timeSpan = document.createElement("span");
+                timeSpan.className = "terminal-time";
+                timeSpan.textContent = `[${new Date().toLocaleTimeString()}]`;
+
+                const senderSpan = document.createElement("span");
+                senderSpan.className = `terminal-${sender}`;
+                senderSpan.textContent = sender === "system" ? "CORE:" : sender === "youngsook" ? "영숙:" : sender === "hyunbin" ? "현빈:" : "말린:";
+
+                const textSpan = document.createElement("span");
+                textSpan.textContent = ` ${text}`;
+                textSpan.style.marginLeft = "4px";
+
+                line.appendChild(timeSpan);
+                line.appendChild(senderSpan);
+                line.appendChild(textSpan);
+                terminal.appendChild(line);
+                terminal.scrollTop = terminal.scrollHeight;
+            }
+
+            function renderSwarmStockChart(stock) {
+                const canvas = document.getElementById("swarmPriceChart");
+                if(!canvas) return;
+                const ctx = canvas.getContext("2d");
+                
+                if (swarmChart) {
+                    swarmChart.destroy();
+                }
+
+                const labels = [];
+                const priceData = [];
+                const ma20Data = [];
+                
+                let basePrice = stock.ma20 * 0.94;
+                for (let i = 19; i >= 0; i--) {
+                    labels.push(`${i}일전`);
+                    let currentP;
+                    if (i === 0) {
+                        currentP = stock.close;
+                    } else {
+                        let trend = (stock.close - basePrice) / (i + 1);
+                        currentP = basePrice + trend + (Math.random() - 0.5) * (stock.close * 0.05);
+                        basePrice = currentP;
+                    }
+                    priceData.push(currentP);
+                    
+                    let sum = 0;
+                    let pIndex = priceData.length - 1;
+                    for (let k = 0; k < 10; k++) {
+                        sum += priceData[Math.max(0, pIndex - k)] || basePrice;
+                    }
+                    ma20Data.push(sum / 10);
+                }
+
+                swarmChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                data: priceData,
+                                borderColor: stock.close >= stock.ma20 ? '#00f5d4' : '#ff2a5f',
+                                backgroundColor: 'rgba(0, 245, 212, 0.02)',
+                                borderWidth: 1.5,
+                                pointRadius: 0.5,
+                                tension: 0.2,
+                                fill: true
+                            },
+                            {
+                                data: ma20Data,
+                                borderColor: '#818cf8',
+                                borderWidth: 1,
+                                borderDash: [3, 3],
+                                pointRadius: 0,
+                                tension: 0.2
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                grid: { color: 'rgba(255, 255, 255, 0.015)' },
+                                ticks: { color: '#64748b', font: { size: 7 } }
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: '#64748b', font: { size: 7 } }
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+
+            window.addEventListener("load", () => {
+                loadSwarmAnalysis("042700");
+
+                const btn = document.getElementById("swarm-search-btn");
+                const input = document.getElementById("swarm-search-input");
+
+                if(btn && input) {
+                    btn.addEventListener("click", () => {
+                        const ticker = input.value.trim();
+                        if(ticker) loadSwarmAnalysis(ticker);
+                    });
+                    input.addEventListener("keypress", (e) => {
+                        if(e.key === "Enter") {
+                            const ticker = input.value.trim();
+                            if(ticker) loadSwarmAnalysis(ticker);
+                        }
+                    });
+                }
+            });
+        })();
     </script>
 
 </body>
