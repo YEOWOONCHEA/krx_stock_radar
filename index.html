@@ -335,7 +335,7 @@
                     <span class="flex h-3 w-3 relative">
                         <span class="relative inline-flex rounded-full h-3 w-3 bg-slate-400"></span>
                     </span>
-                    <span class="text-xs md:text-sm font-black text-slate-300">글로벌-로컬 동조 신호등 초기화 중... (데이터 로딩 대기)</span>
+                    <span class="text-xs md:text-sm font-black text-slate-300">GLOBAL-LOCAL SYNC INDICATOR 글로벌-로컬 동조 신호등 초기화 중...</span>
                 </div>
             </div>
 
@@ -382,10 +382,13 @@
 
             <!-- ================= COLUMN 1: TACTICAL INTEL (좌측 1) ================= -->
             <section id="panel-intel" class="col-span-1 flex flex-col gap-panel-gap h-[calc(100vh-270px)] overflow-hidden">
-                <div class="glass-panel rounded-xl p-element-medium flex flex-col h-full">
+                <!-- Top: Morning Rundown -->
+                <div class="glass-panel rounded-xl p-element-medium h-[320px] flex flex-col overflow-hidden shrink-0">
                     <div class="flex items-center justify-between mb-4 shrink-0">
-                        <h2 class="font-headline-md text-headline-md text-primary-fixed"><i class="fas fa-brain text-teal-400 mr-2"></i>Morning Rundown</h2>
-                        <span class="text-[10px] text-on-surface-variant font-data-md" id="rundown-date">Loading...</span>
+                        <h2 class="font-headline-md text-headline-md text-primary-fixed flex items-center gap-1.5" style="font-size: 0.8rem; font-weight: bold; letter-spacing: 0.3px;">
+                            <i class="fas fa-brain text-teal-400"></i>MORNING RUNDOWN <span class="text-[9px] text-slate-400 font-bold ml-1.5">장전 브리핑</span>
+                        </h2>
+                        <span class="text-[9px] text-on-surface-variant font-data-md font-mono" id="rundown-date">Loading...</span>
                     </div>
                     
                     <div id="legacy-zhuge-briefing-wrapper" style="display:none;">
@@ -401,14 +404,66 @@
                     </div>
                     
                     <!-- Sentiment Score 위젯 고정 배치 -->
-                    <div class="mt-4 pt-4 border-t border-white/10 shrink-0">
-                        <div class="flex justify-between items-center px-2">
-                            <span class="text-label-caps font-label-caps text-on-surface-variant">SENTIMENT SCORE</span>
-                            <span class="text-primary-fixed font-data-lg">74% BULLISH</span>
+                    <div class="mt-3 pt-3 border-t border-white/10 shrink-0">
+                        <div class="flex justify-between items-center px-1">
+                            <span class="text-[9px] font-label-caps text-on-surface-variant tracking-wider">SENTIMENT SCORE <span class="text-slate-500 font-bold ml-1">시장 심리</span></span>
+                            <span class="text-primary-fixed text-[10px] font-bold">74% BULLISH</span>
                         </div>
-                        <div class="w-full bg-white/10 h-1 mt-2 rounded-full overflow-hidden">
+                        <div class="w-full bg-white/10 h-1 mt-1.5 rounded-full overflow-hidden">
                             <div class="h-full bg-[#00ffd1] neon-glow-teal" style="width: 74%"></div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Bottom: Sakana Swarm Core -->
+                <div class="glass-panel rounded-xl p-element-medium flex-grow flex flex-col overflow-hidden">
+                    <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3 shrink-0">
+                        <div class="flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-teal-400 animate-pulse text-base">psychology</span>
+                            <h3 class="font-headline-md text-label-caps text-teal-400 flex flex-col" style="font-size: 0.8rem; font-weight: bold; letter-spacing: 0.3px;">
+                                <span class="text-[11px] font-black tracking-wider">SWARM CONSENSUS CORE</span>
+                                <span class="text-[8px] text-slate-500 font-bold">자율 에이전트 합의 엔진</span>
+                            </h3>
+                        </div>
+                        <div class="flex gap-1.5 items-center">
+                            <input type="text" id="swarm-search-input" placeholder="042700" class="bg-[#05070A] border border-white/10 rounded px-1.5 py-0.5 text-[9px] text-white w-14 outline-none focus:border-teal-500 font-mono text-center">
+                            <button id="swarm-search-btn" class="bg-teal-500/20 border border-teal-500/30 text-teal-400 text-[8px] font-bold px-1.5 py-0.5 rounded hover:bg-teal-500/30">GO</button>
+                        </div>
+                    </div>
+                    
+                    <div id="swarm-dashboard-content" class="flex-grow flex flex-col overflow-hidden">
+                        <div class="flex justify-between items-center mb-1.5 shrink-0">
+                            <div>
+                                <span id="swarm-stock-name" class="text-[11px] font-bold text-white">한미반도체</span>
+                                <span id="swarm-stock-category" class="text-[8px] bg-indigo-950/40 text-indigo-400 border border-indigo-800/40 px-1 py-0.5 rounded ml-1.5">실체 수혜주</span>
+                            </div>
+                            <span id="swarm-signal-value" class="text-[9px] font-bold text-teal-400">눌림목 진입</span>
+                        </div>
+                        
+                        <!-- Terminal Log -->
+                        <div id="swarm-terminal" class="bg-[#02050a] border border-white/5 rounded p-1.5 font-mono text-[8px] h-20 overflow-y-auto text-emerald-300 mb-1.5 custom-scrollbar shrink-0">
+                            <!-- Logs printed here -->
+                        </div>
+                        
+                        <!-- Chart container -->
+                        <div class="flex-grow w-full relative min-h-[90px]">
+                            <canvas id="swarmPriceChart"></canvas>
+                        </div>
+                        
+                        <!-- Risk comments -->
+                        <div class="mt-2 text-[9px] text-slate-400 leading-normal border-t border-white/5 pt-1.5 space-y-0.5 shrink-0">
+                            <div class="flex justify-between">
+                                <span class="text-[8px] text-slate-500">추천 비중 Ratio:</span>
+                                <span id="swarm-marlin-ratio" class="font-bold text-teal-400 text-[9px]">10%~15% 이내</span>
+                            </div>
+                            <p id="swarm-marlin-comment" class="text-[8px] text-slate-500 truncate"></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Loading state -->
+                    <div id="swarm-loading-state" class="hidden flex-grow flex flex-col items-center justify-center gap-2">
+                        <div class="w-5 h-5 border-2 border-teal-500/20 border-t-teal-500 rounded-full animate-spin"></div>
+                        <span class="text-[9px] text-slate-500">에이전트 합의 진행 중...</span>
                     </div>
                 </div>
             </section>
@@ -443,7 +498,9 @@
                 <!-- Bottom: Heatmap -->
                 <div class="glass-panel rounded-xl p-element-medium flex-grow flex flex-col overflow-hidden">
                     <div class="flex justify-between items-center mb-4 shrink-0">
-                        <h3 class="font-headline-md text-label-caps text-on-surface"><i class="fas fa-th text-teal-400 mr-1.5"></i>Sector Volume Heatmap</h3>
+                        <h3 class="font-headline-md text-label-caps text-on-surface flex items-center gap-1.5" style="font-size: 0.8rem; font-weight: bold; letter-spacing: 0.3px;">
+                            <i class="fas fa-th text-teal-400 mr-1.5"></i>SECTOR HEATMAP <span class="text-[9px] text-slate-400 font-bold ml-1.5">섹터별 자금 흐름</span>
+                        </h3>
                         <button onclick="selectTheme('ALL')" class="text-[9px] bg-slate-800 hover:bg-slate-700 border border-slate-700 px-2 py-0.5 rounded text-slate-300 transition-colors">
                             <i class="fas fa-sync-alt"></i> 초기화
                         </button>
@@ -459,7 +516,9 @@
                 <!-- Top: Net Power Gauge -->
                 <div id="xray-gauge-panel" class="glass-panel rounded-xl p-element-medium h-40 flex flex-col shrink-0">
                     <div class="flex justify-between items-center pb-2 border-b border-white/10 mb-2">
-                        <h3 class="font-headline-md text-label-caps text-primary-fixed">장전 실시간 세력 계기판</h3>
+                        <h3 class="font-headline-md text-label-caps text-primary-fixed flex items-center gap-1.5" style="font-size: 0.8rem; font-weight: bold; letter-spacing: 0.3px;">
+                            ACCUMULATION GAUGE <span class="text-[9px] text-slate-400 font-bold ml-1.5">실시간 세력 매집 계기판</span>
+                        </h3>
                         <div id="xray-gauge-status">
                             <span class="text-[9px] text-slate-500 font-mono">초기화 중...</span>
                         </div>
@@ -487,8 +546,8 @@
                 <div class="glass-panel rounded-xl p-element-medium flex-grow flex flex-col overflow-hidden">
                     <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-4 shrink-0">
                         <div class="flex flex-col">
-                            <h3 class="font-headline-md text-label-caps text-on-surface flex items-center gap-1.5">
-                                <i class="fas fa-crosshairs text-amber-500 text-sm"></i>스텔스 3대 패턴 스코어러
+                            <h3 class="font-headline-md text-label-caps text-on-surface flex items-center gap-1.5" style="font-size: 0.8rem; font-weight: bold; letter-spacing: 0.3px;">
+                                <i class="fas fa-crosshairs text-amber-500 text-sm"></i>STEALTH SCORER <span class="text-[9px] text-slate-400 font-bold ml-1.5">스텔스 3대 패턴 스코어러</span>
                             </h3>
                             <span class="text-[8px] text-slate-500 mt-0.5">P1 투명인간 + P2 압력밥솥 + P3 사각지대</span>
                         </div>
@@ -501,13 +560,15 @@
             </section>
 
             <!-- ================= COLUMN 4: SNIPER EXECUTION (우측 4) ================= -->
-            <section id="panel-sniper" class="col-span-1 flex flex-col gap-panel-gap h-[calc(100vh-270px)] overflow-y-auto custom-scrollbar pb-6">
+            <section id="panel-sniper" class="col-span-1 flex flex-col gap-panel-gap h-[calc(100vh-270px)] overflow-hidden">
                 <!-- Top: Alert Window -->
                 <div class="glass-panel rounded-xl p-element-medium h-[240px] flex flex-col overflow-hidden shrink-0">
                     <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
                         <div class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-secondary-fixed animate-pulse text-base">radar</span>
-                            <h3 class="font-headline-md text-label-caps text-secondary-fixed">장전 세력 매집 시그널 감시</h3>
+                            <h3 class="font-headline-md text-label-caps text-secondary-fixed flex items-center gap-1.5" style="font-size: 0.8rem; font-weight: bold; letter-spacing: 0.3px;">
+                                FORCE DETECTION <span class="text-[8px] text-slate-500 font-bold ml-1">세력 매집 시그널 감시</span>
+                            </h3>
                         </div>
                         <span id="vi-alert-count" class="text-[9px] bg-amber-950/30 text-yellow-300 px-1.5 py-0.5 rounded border border-yellow-700/50 font-bold">대기 중</span>
                     </div>
@@ -522,10 +583,9 @@
                             <div class="w-5 h-5 flex items-center justify-center rounded bg-red-950/80 border border-red-800/40 shadow-inner">
                                 <i class="fas fa-bolt text-amber-500 text-[10px] animate-pulse"></i>
                             </div>
-                            <div class="flex flex-col">
-                                <span class="text-[11px] font-black text-amber-500 tracking-wider">실시간 수급 Squeeze</span>
-                                <span class="text-[8px] text-slate-500 mt-0.5">거래대금 폭발 감지</span>
-                            </div>
+                            <h3 class="font-headline-md text-label-caps text-on-surface flex items-center gap-1.5" style="font-size: 0.8rem; font-weight: bold; letter-spacing: 0.3px;">
+                                SQUEEZE SCANNER <span class="text-[8px] text-slate-500 font-bold ml-1">실시간 수급 스퀴즈</span>
+                            </h3>
                         </div>
                         <span id="kostolany-count" class="text-[9px] bg-red-950/60 text-red-400 px-1.5 py-0.5 rounded border border-red-900/30 font-bold tracking-wider">대기 중</span>
                     </div>
@@ -538,55 +598,6 @@
                         <button id="instant-buy-btn" class="w-full py-3 bg-primary-container text-on-primary-fixed font-bold rounded-lg border-t border-white/20 hover:bg-[#15ffd1] transition-all active:scale-95 neon-glow-teal uppercase tracking-wide">
                             INSTANT EXECUTION (BUY)
                         </button>
-                    </div>
-                </div>
-
-                <!-- Swarm Intelligence Terminal Card -->
-                <div class="glass-panel rounded-xl p-element-medium flex flex-col overflow-hidden shrink-0">
-                    <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
-                        <div class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-teal-400 animate-pulse text-base">psychology</span>
-                            <h3 class="font-headline-md text-label-caps text-teal-400" style="font-size: 0.8rem; font-weight: bold; letter-spacing: 0.3px;">Sakana Swarm Core</h3>
-                        </div>
-                        <div class="flex gap-1.5 items-center">
-                            <input type="text" id="swarm-search-input" placeholder="티커 (예: 042700)" class="bg-[#05070A] border border-white/10 rounded px-1.5 py-0.5 text-[9px] text-white w-20 outline-none focus:border-teal-500">
-                            <button id="swarm-search-btn" class="bg-teal-500/20 border border-teal-500/30 text-teal-400 text-[9px] font-bold px-2 py-0.5 rounded hover:bg-teal-500/30">GO</button>
-                        </div>
-                    </div>
-                    
-                    <div id="swarm-dashboard-content">
-                        <div class="flex justify-between items-center mb-2">
-                            <div>
-                                <span id="swarm-stock-name" class="text-[11px] font-bold text-white">한미반도체</span>
-                                <span id="swarm-stock-category" class="text-[8px] bg-indigo-950/40 text-indigo-400 border border-indigo-800/40 px-1 py-0.5 rounded ml-2">실체 수혜주</span>
-                            </div>
-                            <span id="swarm-signal-value" class="text-[9px] font-bold text-teal-400">눌림목 진입</span>
-                        </div>
-                        
-                        <!-- Terminal Log -->
-                        <div id="swarm-terminal" class="bg-[#02050a] border border-white/5 rounded p-2 font-mono text-[9px] h-24 overflow-y-auto text-emerald-300 mb-2 custom-scrollbar">
-                            <!-- Logs printed here -->
-                        </div>
-                        
-                        <!-- Chart container -->
-                        <div class="h-28 w-full relative">
-                            <canvas id="swarmPriceChart"></canvas>
-                        </div>
-                        
-                        <!-- Risk comments -->
-                        <div class="mt-2 text-[9px] text-slate-400 leading-normal border-t border-white/5 pt-2 space-y-1">
-                            <div class="flex justify-between">
-                                <span>추천 비중:</span>
-                                <span id="swarm-marlin-ratio" class="font-bold text-teal-400">10%~15% 이내</span>
-                            </div>
-                            <p id="swarm-marlin-comment" class="text-[8px] text-slate-500"></p>
-                        </div>
-                    </div>
-                    
-                    <!-- Loading state -->
-                    <div id="swarm-loading-state" class="hidden flex flex-col items-center justify-center py-8 gap-2">
-                        <div class="w-6 h-6 border-2 border-teal-500/20 border-t-teal-500 rounded-full animate-spin"></div>
-                        <span class="text-[9px] text-slate-500">에이전트 합의 진행 중...</span>
                     </div>
                 </div>
             </section>
@@ -1713,7 +1724,7 @@
                             <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
                         </span>
                         <div class="text-xs md:text-sm font-black text-red-200">
-                            🔴 [긴급 반도체 폭등 예보] 미 DRAM ETF +${dramChg.toFixed(2)}% 폭등! 국내 반도체 테마 강력 시초가 갭 동조화 (승률 90%+)
+                            🔴 [URGENT] 반도체 폭등 예보 (DRAM ETF +${dramChg.toFixed(2)}%) - 국내 반도체 시초가 갭 동조화 (Win Rate 90%+)
                         </div>
                     </div>
                 `;
@@ -1725,7 +1736,7 @@
                             <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
                         </span>
                         <div class="text-xs md:text-sm font-black text-emerald-200">
-                            🟢 [강한 동조 갭상승 확률 높음] 미 DRAM ETF +${dramChg.toFixed(2)}% 강세! HBM/반도체 테마 시가 매수 유효 (승률 78.4%)
+                            🟢 [ACCORD] 동조 갭상승 우세 (DRAM ETF +${dramChg.toFixed(2)}%) - HBM/반도체 시가 매수 유효 (Win Rate 78%)
                         </div>
                     </div>
                 `;
@@ -1736,7 +1747,7 @@
                             <span class="relative inline-flex rounded-full h-3 w-3 bg-slate-400"></span>
                         </span>
                         <div class="text-xs md:text-sm font-black text-slate-300">
-                            ⚪ [동조 중립 / 개별 수급 관망] 미 DRAM ETF ${dramChg.toFixed(2)}% 보합. 미국장 영향 최소화, 개별 호가 실수급 추종
+                            ⚪ [NEUTRAL] 개별 수급 관망 (DRAM ETF ${dramChg.toFixed(2)}%) - 미국장 영향 최소화, 개별 호가 실수급 추종
                         </div>
                     </div>
                 `;
@@ -1770,18 +1781,18 @@
             if (h === 8 && m >= 30 && m <= 39) {
                 gaugeEl.innerHTML = `
                     <span class="flex items-center gap-1.5 text-xs bg-red-950/60 text-red-400 px-2.5 py-1 rounded-full border border-red-900/50 font-bold tracking-wider animate-pulse">
-                        <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span> [허수/허매수 경계]
+                        <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span> [WARN] 허수/허매수 경계
                     </span>
                 `;
                 if(powerBar) {
                     powerBar.style.width = '15%';
                     powerBar.className = 'h-full bg-red-600 rounded-full transition-all duration-500';
                 }
-                if(powerText) powerText.innerText = '허수 주문 유입 중 (진입 금지)';
+                if(powerText) powerText.innerText = '허수 주문 감지 (진입 금지 / SUSPEND)';
             } else if (h === 8 && m >= 40 && m <= 59) {
                 gaugeEl.innerHTML = `
                     <span class="flex items-center gap-1.5 text-xs bg-emerald-950/60 text-emerald-400 px-2.5 py-1 rounded-full border border-emerald-900/50 font-bold tracking-wider">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> [수급 안착 감시 중]
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> [MONITOR] 수급 안착 감시 중
                     </span>
                 `;
                 let avgExec = 0;
@@ -1795,7 +1806,7 @@
                     powerBar.style.width = `${power}%`;
                     powerBar.className = 'h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]';
                 }
-                if(powerText) powerText.innerText = `세력 매수 파워: ${power}% (수급 안착 진행 중)`;
+                if(powerText) powerText.innerText = `세력 매수 파워: ${power}% (수급 안착 진행 중 / ACCUMULATING)`;
             } else {
                 // 정규장 시간: 동적으로 체결 강도를 계산하여 네온 빛 펄싱 바 렌더링
                 gaugeEl.innerHTML = `
@@ -1803,7 +1814,7 @@
                         <span class="w-1.5 h-1.5 relative flex h-2 w-2 shrink-0">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                             <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-                        </span> [정규장 실시간 수급 추적]
+                        </span> [LIVE] 실시간 수급 추적
                     </span>
                 `;
                 
@@ -1824,7 +1835,7 @@
                     powerBar.style.width = `${power}%`;
                     powerBar.className = 'h-full bg-gradient-to-r from-teal-400 to-cyan-500 rounded-full transition-all duration-500 shadow-[0_0_15px_rgba(6,182,212,0.8)] animate-pulse';
                 }
-                if(powerText) powerText.innerHTML = `실시간 매집 강도: <span class="text-cyan-400 font-extrabold">${avgExec}%</span> (정규장 가동 중)`;
+                if(powerText) powerText.innerHTML = `실시간 매집 강도: <span class="text-cyan-400 font-extrabold">${avgExec}%</span> (정규장 가동 중 / LIVE)`;
             }
         }
         setInterval(updateXrayGauge, 1000);
